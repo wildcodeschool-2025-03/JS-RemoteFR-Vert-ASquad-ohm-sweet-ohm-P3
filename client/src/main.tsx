@@ -13,6 +13,7 @@ import App from "./App";
 
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
+import HomePage from "./pages/HomePage";
 
 /* ************************************************************************* */
 
@@ -20,8 +21,13 @@ import App from "./App";
 // You can add more routes as you build out your app!
 const router = createBrowserRouter([
   {
-    path: "/", // The root path
-    element: <App />, // Renders the App component for the home page
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+    ],
   },
   // Try adding a new route! For example, "/about" with an About component
 ]);
