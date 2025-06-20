@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/inter/Inter_24pt-Bold.ttf") format("ttf");
+}
+
+footer {
+  background-color: #1f2a2d;
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-size: large;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+  .ListFooter {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    gap: 1rem;
+  }
+  .StorePicture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .StoreBadge {
+    height: 60px;
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  .ListFooter {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 1rem 3rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .StorePicture {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    order: -1;
+  }
+}

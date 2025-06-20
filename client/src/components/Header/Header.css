@@ -44,6 +44,7 @@
   font-weight: bold;
   font-size: 22px;
   cursor: pointer;
+  box-shadow: 2.5px 3px 2.5px #000;
 }
 
 @media screen and (min-width: 1200px) {
@@ -91,6 +92,7 @@
     cursor: pointer;
     width: fit-content;
     max-width: 300px;
+    box-shadow: 2.5px 3px 2.5px #000;
   }
 
   .header-btn2 {
