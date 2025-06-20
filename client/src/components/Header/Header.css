@@ -1,0 +1,151 @@
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/inter/Inter_24pt-Bold.ttf") format("ttf");
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0;
+}
+
+.header-text h1 {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.header-text h2 {
+  font-size: 21px;
+  margin-bottom: 20px;
+  font-weight: normal;
+}
+
+.header-img {
+  width: 60%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.header-btn1 {
+  display: none;
+}
+
+.header-btn2 {
+  background: linear-gradient(270deg, #7cd858 1.35%, #21a89a 101.35%);
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 1200px) {
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20%;
+  }
+
+  .header-title {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .header-text h1 {
+    font-size: 40px;
+  }
+
+  .header-text h2 {
+    font-size: 35px;
+  }
+
+  .header-img {
+    max-width: 550px;
+  }
+
+  .header-btn1 {
+    display: flex;
+    background: linear-gradient(270deg, #7cd858 1.35%, #21a89a 101.35%);
+    color: black;
+    border: none;
+    padding: 20px 20px;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 22px;
+    cursor: pointer;
+    width: fit-content;
+    max-width: 300px;
+  }
+
+  .header-btn2 {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 90px;
+  }
+
+  .header-title {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  .header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .header-text h1 {
+    font-size: 30px;
+  }
+
+  .header-text h2 {
+    font-size: 25px;
+  }
+
+  .header-img {
+    max-width: 350px;
+  }
+
+  .header-btn1 {
+    display: flex;
+    background: linear-gradient(270deg, #7cd858 1.35%, #21a89a 101.35%);
+    color: black;
+    border: none;
+    padding: 15px 15px;
+    border-radius: 14px;
+    font-weight: bold;
+    font-size: 22px;
+    cursor: pointer;
+    width: fit-content;
+    max-width: 300px;
+  }
+
+  .header-btn2 {
+    display: none;
+  }
+}

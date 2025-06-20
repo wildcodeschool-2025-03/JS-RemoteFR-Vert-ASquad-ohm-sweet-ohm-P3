@@ -1,0 +1,42 @@
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/inter/Inter_24pt-Bold.ttf") format("ttf");
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(270deg, #7cd858 1.35%, #21a89a 101.35%);
+  z-index: 0;
+}
+
+.navbar ul {
+  display: none;
+  gap: 20px;
+}
+
+.logo {
+  height: 70px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .navbar ul {
+    display: flex;
+    gap: 60px;
+    list-style: none;
+    margin: 20px;
+    color: white;
+    font-weight: bold;
+  }
+
+  .logo {
+    height: 110px;
+    margin: 0 auto;
+    margin-top: 10px;
+    z-index: 1;
+  }
+}
