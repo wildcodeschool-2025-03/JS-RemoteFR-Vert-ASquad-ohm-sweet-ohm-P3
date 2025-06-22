@@ -7,7 +7,7 @@ function HomePage() {
     <>
       <Header />
       <MapImage />
-      <Review/>
+      <Review />
     </>
   );
 }

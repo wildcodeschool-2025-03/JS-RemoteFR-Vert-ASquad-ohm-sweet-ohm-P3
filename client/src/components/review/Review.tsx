@@ -1,4 +1,3 @@
-
 import {
   A11y,
   Autoplay,
@@ -72,10 +71,10 @@ function Review() {
           </SwiperSlide>
         ))}
       </Swiper>
-        <button type="button" className="btnReview">
-          Laisser un avis
-        </button>
-          </div>
+      <button type="button" className="btnReview">
+        Laisser un avis
+      </button>
+    </div>
   );
 }
 
