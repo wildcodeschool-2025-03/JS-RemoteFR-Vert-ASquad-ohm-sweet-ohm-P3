@@ -1,4 +1,3 @@
-// import Swiper core and required modules
 import {
   A11y,
   Autoplay,
