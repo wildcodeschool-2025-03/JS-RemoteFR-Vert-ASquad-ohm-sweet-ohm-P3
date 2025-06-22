@@ -6,8 +6,8 @@ function HomePage() {
   return (
     <>
       <Header />
-      <Review />
       <MapImage />
+      <Review/>
     </>
   );
 }
