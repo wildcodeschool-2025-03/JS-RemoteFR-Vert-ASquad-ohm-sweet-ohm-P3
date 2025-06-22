@@ -1,0 +1,27 @@
+.navmobile {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(270deg, #7cd858 1.35%, #21a89a 101.35%);
+  border-radius: 40px;
+  padding: 10px 30px;
+  z-index: 1;
+}
+
+.navmobile ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+.nav-icone {
+  height: 32px;
+  color: black;
+}
+
+@media screen and (min-width: 768px) {
+  .navmobile {
+    display: none;
+  }
+}

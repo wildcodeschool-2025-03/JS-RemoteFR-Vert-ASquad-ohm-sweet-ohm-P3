@@ -1,11 +1,15 @@
+import Header from "../components/Header/Header";
+import MapImage from "../components/MapImage/mapImage";
 import Review from "../components/review/Review";
-
-export default HomePage;
 
 function HomePage() {
   return (
     <>
+      <Header />
       <Review />
+      <MapImage />
     </>
   );
 }
+
+export default HomePage;

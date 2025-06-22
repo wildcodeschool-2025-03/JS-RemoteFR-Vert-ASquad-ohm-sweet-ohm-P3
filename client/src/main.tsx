@@ -25,11 +25,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />, // Renders the App component for the home page
+        element: <HomePage />,
       },
     ],
-    // Try adding a new route! For example, "/about" with an About component
   },
+  // Try adding a new route! For example, "/about" with an About component
 ]);
 /* ************************************************************************* */
 
