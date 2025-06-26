@@ -1,4 +1,4 @@
-import MapContainers from "../components/Map/mapContainer";
+import MapContainers from "../components/Map/MapCont";
 
 function MapPage() {
   return (
