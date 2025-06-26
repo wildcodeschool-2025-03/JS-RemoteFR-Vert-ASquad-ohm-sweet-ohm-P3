@@ -1,0 +1,103 @@
+.reviewBloc {
+  margin: 2em 0 5em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reviewstitle {
+  font-size: 1em;
+  margin-bottom: 1em;
+}
+
+.reviewStar {
+  margin-bottom: 1em;
+}
+
+.swiperBloc {
+  width: 50%;
+}
+
+.swiperContent {
+  margin-left: 0.7em;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.reviewsItem {
+  background-color: #ffdc92;
+}
+
+.idReview {
+  display: flex;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.reviewAvatar {
+  width: 25%;
+  border-radius: 80px;
+  margin: 0 1em 1em 0;
+}
+
+.reviewGrade {
+  margin: 1em 0 1em 0;
+  background-color: white;
+  border: solid white;
+  border-radius: 100px;
+  width: fit-content;
+  position: fixed;
+  bottom: 0;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  display: none !important;
+}
+
+.swiper-slide {
+  width: 100%;
+  height: 11em !important;
+  object-fit: cover;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  margin-bottom: 2em;
+  box-shadow: black;
+}
+
+.btnReview {
+  margin-top: 29em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, -50%);
+  background-image: linear-gradient(to right, #21a89a 0%, #7cd858 100%);
+
+  @media (min-width: 375px) and (max-width: 768px) {
+    margin-top: 14em;
+    bottom: 0%;
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    margin-top: 2em;
+  }
+
+  @media (min-width: 1080px) {
+    margin-top: 32em;
+    bottom: 0%;
+  }
+}
