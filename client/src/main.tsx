@@ -37,7 +37,6 @@ const router = createBrowserRouter([
   },
   // Try adding a new route! For example, "/about" with an About component
 ]);
-
 /* ************************************************************************* */
 
 // Find the root element in the HTML document
