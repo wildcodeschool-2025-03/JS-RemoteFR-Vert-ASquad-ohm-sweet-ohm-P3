@@ -1,4 +1,5 @@
 import "./NavBar.css";
+import { Link } from "react-router";
 import logo from "../../assets/images/Logo-principal.png";
 
 function NavBar() {
@@ -12,7 +13,9 @@ function NavBar() {
       <img className="logo" src={logo} alt="logo de geocode" />
 
       <ul>
-        <li>PROFIL</li>
+        <Link to="profil">
+          <li>PROFIL</li>
+        </Link>
         <li>RESERVATION</li>
       </ul>
     </nav>
