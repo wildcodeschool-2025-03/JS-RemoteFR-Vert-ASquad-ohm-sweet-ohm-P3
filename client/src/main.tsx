@@ -1,7 +1,7 @@
 // Import necessary modules from React and React Router
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router";
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router";
 
 /* ************************************************************************* */
 
@@ -9,6 +9,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 import App from "./App";
 import HomePage from "./pages/HomePage";
 import MapPage from "./pages/MapPage";
+import Register from "./pages/User/Registrer/Registrer";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: "/maps",
         element: <MapPage />,
+      },
+      {
+        path: "/inscription",
+        element: <Register />,
+      },
+      {
+        path: "*",
+        element: <Navigate to="/" replace />,
       },
     ],
   },
