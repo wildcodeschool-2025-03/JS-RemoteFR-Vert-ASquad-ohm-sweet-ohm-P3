@@ -35,7 +35,7 @@ function Register() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-        },
+        }
       );
 
       if (response.ok) {
@@ -153,9 +153,13 @@ function Register() {
                 <label htmlFor="password">Confirmez le mot de passe</label>
                 <input
                   {...register("confirm_password", {
-                    validate: (value) =>
-                      value === password ||
-                      "Les mots de passe ne correspondent pas",
+                    validate: (value: string | undefined) => {
+                      if (!value) return "Ce champ est requis";
+                      return (
+                        value === password ||
+                        "Les mots de passe ne correspondent pas"
+                      );
+                    },
                   })}
                   name="confirm_password"
                   type="password"
@@ -192,6 +196,7 @@ function Register() {
                   />
                 </div>
               </div>
+
               <div className="form-group">
                 <label htmlFor="text">Type de prise</label>
                 <input
