@@ -1,24 +1,14 @@
+import fs from "node:fs";
+import csv from "csv-parser";
+import mysql from "mysql2";
 import z from "zod";
-
-const csv = require("csv-parser");
-const fs = require("node:fs");
-const mysql = require("mysql2");
+import "dotenv/config";
 
 const bool = z.preprocess((val) => {
   if (typeof val === "string" && val === "true") {
     return true;
   }
 }, z.coerce.boolean());
-
-const nullableString = z.preprocess(
-  (val) => (val === "" ? null : val),
-  z.string().nullable(),
-);
-
-const nullableNumber = z.preprocess(
-  (val) => (val === "" ? null : val),
-  z.coerce.number().nullable(),
-);
 
 const nullableDate = z.preprocess(
   (val) => (val === "" ? null : val),
@@ -42,33 +32,42 @@ const nullableDate = z.preprocess(
 );
 
 const rowSchema = z.object({
-  nom_amenageur: nullableString,
-  siren_amenageur: nullableNumber,
+  nom_amenageur: z.string().nullable().default(null),
+  siren_amenageur: z.coerce.number().nullable().default(null),
   contact_amenageur: z.preprocess(
     (val) => (val === "" ? null : val),
-    z.string().email().nullable(),
+    z.string().email().nullable().default(null),
   ),
-  nom_operateur: nullableString,
+  nom_operateur: z.string().nullable().default(null),
   contact_operateur: z
     .string()
     .regex(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)
     .nullable(),
-  telephone_operateur: nullableString,
-  nom_enseigne: nullableString,
-  id_station_itinerance: nullableString,
-  id_station_local: z.union([nullableString, nullableNumber]),
-  nom_station: nullableString,
-  implantation_station: nullableString,
-  adresse_station: nullableString,
-  code_insee_commune: z.union([nullableString, nullableNumber]),
+  telephone_operateur: z.string().nullable().default(null),
+  nom_enseigne: z.string().nullable().default(null),
+  id_station_itinerance: z.string().nullable().default(null),
+  id_station_local: z
+    .union([z.string(), z.coerce.number()])
+    .nullable()
+    .default(null),
+  nom_station: z.string().nullable().default(null),
+  implantation_station: z.string().nullable().default(null),
+  adresse_station: z.string().nullable().default(null),
+  code_insee_commune: z
+    .union([z.string(), z.coerce.number()])
+    .nullable()
+    .default(null),
   coordonneesXY: z
     .string()
     .transform((val) => JSON.parse(val))
     .pipe(z.array(z.coerce.number()).min(2).max(2)),
-  nbre_pdc: nullableNumber,
-  id_pdc_itinerance: nullableString,
-  id_pdc_local: z.union([nullableString, nullableNumber]),
-  puissance_nominale: nullableNumber,
+  nbre_pdc: z.coerce.number().nullable().default(null),
+  id_pdc_itinerance: z.string().nullable().default(null),
+  id_pdc_local: z
+    .union([z.string(), z.coerce.number()])
+    .nullable()
+    .default(null),
+  puissance_nominale: z.coerce.number().nullable().default(null),
   prise_type_ef: bool,
   prise_type_2: bool,
   prise_type_combo_ccs: bool,
@@ -78,33 +77,36 @@ const rowSchema = z.object({
   paiement_acte: bool,
   paiement_cb: bool.nullable(),
   paiement_autre: bool.nullable(),
-  tarification: z.union([nullableString, nullableNumber]),
-  condition_acces: nullableString,
+  tarification: z
+    .union([z.string(), z.coerce.number()])
+    .nullable()
+    .default(null),
+  condition_acces: z.string().nullable().default(null),
   reservation: bool,
-  horaires: nullableString,
-  accessibilite_pmr: nullableString,
-  restriction_gabarit: nullableString,
+  horaires: z.string().nullable().default(null),
+  accessibilite_pmr: z.string().nullable().default(null),
+  restriction_gabarit: z.string().nullable().default(null),
   station_deux_roues: bool,
-  raccordement: nullableString,
-  num_pdl: z.union([nullableString, nullableNumber]),
+  raccordement: z.string().nullable().default(null),
+  num_pdl: z.union([z.string(), z.coerce.number()]).nullable().default(null),
   date_mise_en_service: nullableDate,
-  observations: nullableString,
+  observations: z.string().nullable().default(null),
   date_maj: nullableDate,
   cable_t2_attache: bool.nullable(),
   last_modified: z.union([
     z.string().datetime(),
     z.string().datetime({ offset: true }),
   ]),
-  datagouv_dataset_id: nullableString,
+  datagouv_dataset_id: z.string().nullable().default(null),
   datagouv_resource_id: z
     .string()
     .regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/),
-  datagouv_organization_or_owner: nullableString,
+  datagouv_organization_or_owner: z.string().default("null"),
   created_at: z.string().datetime({ offset: true }),
-  consolidated_longitude: nullableNumber,
-  consolidated_latitude: nullableNumber,
-  consolidated_code_postal: nullableNumber,
-  consolidated_commune: nullableString,
+  consolidated_longitude: z.coerce.number().nullable().default(null),
+  consolidated_latitude: z.coerce.number().nullable().default(null),
+  consolidated_code_postal: z.coerce.number().nullable().default(null),
+  consolidated_commune: z.string().nullable().default(null),
   consolidated_is_lon_lat_correct: bool,
   consolidated_is_code_insee_verified: bool,
   consolidated_is_code_insee_modified: bool,
@@ -114,27 +116,31 @@ type ValidatedRow = z.infer<typeof rowSchema>;
 type data = z.infer<typeof rowSchema>;
 
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "Alex",
-  password: "Baloo",
-  database: "Geocode",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   charset: "utf8mb4",
 });
 
 const results: ValidatedRow[] = [];
 let rowCount = 0;
 
-fs.createReadStream("/Users/Alexandre/Desktop/tableau_bornes.csv")
+// N'oubliez pas d'ajouter une variable avec le chemin d'accés dans le fichier server/.env
+const csvPath = process.env.CSV_PATH;
+
+if (!csvPath) {
+  console.error("CSV_PATH n'est pas défini dans le fichier .env");
+  process.exit(1);
+}
+
+fs.createReadStream(csvPath)
   .pipe(csv({ separator: "," }))
   .on("data", (data: data) => {
     rowCount++;
     results.push(data);
   })
   .on("end", async () => {
-    console.log(
-      `Fichier CSV terminé d'être analysé. ${results.length} lignes trouvées.`,
-    );
-
     const sql =
       "INSERT INTO terminal (nom_amenageur, siren_amenageur, contact_amenageur, nom_operateur, contact_operateur, telephone_operateur, nom_enseigne, id_station_itinerance, id_station_local, nom_station, implantation_station, adresse_station, code_insee_commune, coordonneesXY, nbre_pdc, id_pdc_itinerance, id_pdc_local, puissance_nominale, prise_type_ef, prise_type_2, prise_type_combo_ccs, prise_type_chademo, prise_type_autre, gratuit, paiement_acte, paiement_cb, paiement_autre, tarification, condition_acces, reservation, horaires, accessibilite_pmr, restriction_gabarit, station_deux_roues, raccordement, num_pdl, date_mise_en_service, observations, date_maj, cable_t2_attache, last_modified, datagouv_dataset_id, datagouv_resource_id, datagouv_organization_or_owner, created_at, consolidated_longitude, consolidated_latitude, consolidated_code_postal, consolidated_commune, consolidated_is_lon_lat_correct, consolidated_is_code_insee_verified, consolidated_is_code_insee_modified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -225,17 +231,13 @@ fs.createReadStream("/Users/Alexandre/Desktop/tableau_bornes.csv")
       }
     }
 
-    connection
-      .end((err: Error | null) => {
-        if (err) {
-          console.error(
-            "Erreur lors de la fermeture de la connexion à la base de données :",
-            err.message,
-          );
-          return;
-        }
-      })
-      .on("error", (error: Error | null) => {
-        connection.end();
-      });
+    connection.end((err: Error | null) => {
+      if (err) {
+        console.error(
+          "Erreur lors de la fermeture de la connexion à la base de données :",
+          err.message,
+        );
+        return;
+      }
+    });
   });
