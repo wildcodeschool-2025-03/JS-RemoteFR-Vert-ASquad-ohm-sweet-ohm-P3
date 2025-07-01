@@ -19,4 +19,12 @@ router.post("/api/items", itemActions.add);
 router.get("/api/review", reviewActions.browse);
 router.get("/api/review/:id", reviewActions.read);
 
+/* ************************************************************************* */
+
+import authActions from "./modules/auth/authAction";
+import userActions from "./modules/user/userActions";
+
+router.get("/api/users", userActions.browse);
+router.post("/api/users", authActions.hashPassword, userActions.add);
+
 export default router;
