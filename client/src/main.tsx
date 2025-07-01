@@ -9,6 +9,7 @@ import { Navigate, RouterProvider, createBrowserRouter } from "react-router";
 import App from "./App";
 import HomePage from "./pages/HomePage";
 import MapPage from "./pages/MapPage";
+import Login from "./pages/User/Login/Login";
 import Register from "./pages/User/Registrer/Registrer";
 
 // Import additional components for new routes
@@ -40,6 +41,14 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <Navigate to="/" replace />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "*",
+        element: <Navigate to="/maps" replace />,
       },
     ],
   },
