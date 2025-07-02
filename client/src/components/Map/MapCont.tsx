@@ -1,8 +1,9 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "./mapContainer.css";
+import "./MapContainer.css";
 import L from "leaflet";
 import LocationMarker from "./MapGeoloc";
+import RoutingMachine from "./RoutingMachine";
 
 function MapContainers() {
   const positionDefault = L.latLng([48.86, 2.33]);
@@ -15,6 +16,7 @@ function MapContainers() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <LocationMarker />
+        <RoutingMachine />
       </MapContainer>
     </>
   );
