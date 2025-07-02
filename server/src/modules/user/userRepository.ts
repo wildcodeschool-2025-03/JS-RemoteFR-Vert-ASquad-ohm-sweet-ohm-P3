@@ -8,7 +8,6 @@ type User = {
   gender: string;
   birthdate: Date;
   email: string;
-  phone: number;
   city: string;
   postcode: number;
   number_of_electric_car: number;
@@ -21,14 +20,13 @@ type User = {
 class UserRepository {
   async create(user: Omit<User, "id">) {
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO user (firstname, lastname, gender, birthdate, email, phone, city, postcode, number_of_electric_car, username, password, profile_pic, role_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO user (firstname, lastname, gender, birthdate, email, city, postcode, number_of_electric_car, username, password, profile_pic, role_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         user.firstname,
         user.lastname,
         user.gender,
         user.birthdate,
         user.email,
-        user.phone,
         user.city,
         user.postcode,
         user.number_of_electric_car,

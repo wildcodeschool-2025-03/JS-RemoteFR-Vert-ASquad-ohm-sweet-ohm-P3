@@ -28,4 +28,9 @@ router.get("/api/users", userActions.browse);
 router.post("/api/login", authActions.login);
 router.post("/api/users", authActions.hashPassword, userActions.add);
 
+import bookingActions from "./modules/booking/bookingActions";
+
+router.get("/api/bookings", bookingActions.browse);
+router.post("/api/bookings", bookingActions.add);
+
 export default router;

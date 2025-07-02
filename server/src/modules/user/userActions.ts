@@ -16,7 +16,6 @@ const add: RequestHandler = async (req, res, next) => {
       gender: req.body.gender,
       birthdate: req.body.birthdate,
       email: req.body.email,
-      phone: req.body.phone,
       city: req.body.city,
       postcode: req.body.postcode,
       number_of_electric_car: req.body.number_of_electric_car,

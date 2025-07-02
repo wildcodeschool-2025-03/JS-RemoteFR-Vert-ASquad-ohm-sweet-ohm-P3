@@ -4,16 +4,22 @@ import type { Result, Rows } from "../../../database/client";
 
 type Booking = {
   id: number;
-  payment: number;
-  date: Date;
-  booking_number: number;
+  start_time: Date;
+  end_time: Date;
+  user_id: number;
+  terminal_id: number;
 };
 
 class BookingRepository {
   async create(booking: Omit<Booking, "id">) {
     const [result] = await databaseClient.query<Result>(
-      "insert into booking (payment, date, booking_number) values (?, ?, ?)",
-      [booking.payment, booking.date, booking.booking_number],
+      "INSERT INTO booking (start_time, end_time, user_id, terminal_id) values (?, ?, ?, ?)",
+      [
+        booking.start_time,
+        booking.end_time,
+        booking.user_id,
+        booking.terminal_id,
+      ],
     );
     return result.insertId;
   }

@@ -1,6 +1,6 @@
 CREATE TABLE role (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    role VARCHAR(50) NOT NULL
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE user (
@@ -15,7 +15,7 @@ CREATE TABLE user (
   postcode INT NOT NULL,
   number_of_electric_car INT NOT NULL,
   username VARCHAR(30),
-  password VARCHAR(30) NOT NULL,
+  password VARCHAR(255) NOT NULL,
   profile_pic VARCHAR(255) NOT NULL,
   role_id INT UNSIGNED NOT NULL,
   foreign key(role_id) references role(id)
@@ -143,13 +143,14 @@ CREATE TABLE terminal_type_of_socket (
 
 CREATE TABLE booking (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    Payment DECIMAL(4, 2),
-    calendar DATE NOT NULL,
-    booking_number INT NOT NULL,
+    amount DECIMAL(4, 2) NOT NULL DEFAULT 2,
+    start_time DATETIME NOT NULL,
+    end_time DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     user_id INT UNSIGNED NOT NULL,
     terminal_id INT UNSIGNED NOT NULL,
-    foreign key (user_id) references user (id),
-    foreign key (terminal_id) references terminal (id)
+    foreign key (user_id) REFERENCES user (id),
+    foreign key (terminal_id) REFERENCES terminal (id)
 );
 
 CREATE TABLE dealer (
