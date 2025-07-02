@@ -25,6 +25,7 @@ import authActions from "./modules/auth/authAction";
 import userActions from "./modules/user/userActions";
 
 router.get("/api/users", userActions.browse);
+router.post("/api/login", authActions.login);
 router.post("/api/users", authActions.hashPassword, userActions.add);
 
 export default router;
