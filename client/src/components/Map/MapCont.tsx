@@ -13,7 +13,7 @@ function MapContainers() {
   const [terminals, setTerminals] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3310/api/terminals")
+    fetch(`${import.meta.env.VITE_API_URL}/api/terminals`)
       .then((res) => res.json())
       .then((data) => {
         setTerminals(data.slice(0, 10000));
