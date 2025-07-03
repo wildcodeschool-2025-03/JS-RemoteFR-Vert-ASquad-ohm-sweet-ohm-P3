@@ -2,11 +2,26 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./MapContainer.css";
 import L from "leaflet";
+import { useEffect, useState } from "react";
+import Cluster from "./MapCluster";
 import LocationMarker from "./MapGeoloc";
 import RoutingMachine from "./RoutingMachine";
 
 function MapContainers() {
   const positionDefault = L.latLng([48.86, 2.33]);
+
+  const [terminals, setTerminals] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3310/api/terminals")
+      .then((res) => res.json())
+      .then((data) => {
+        setTerminals(data.slice(0, 10000));
+      })
+      .catch((err) => {
+        console.error("Erreur en récupérant les terminals :", err);
+      });
+  }, []);
 
   return (
     <>
@@ -17,6 +32,7 @@ function MapContainers() {
         />
         <LocationMarker />
         <RoutingMachine />
+        <Cluster terminals={terminals} />
       </MapContainer>
     </>
   );
