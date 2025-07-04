@@ -22,7 +22,6 @@ const add: RequestHandler = async (req, res, next) => {
       username: req.body.username,
       hashed_password: req.body.hashed_password,
       profile_pic: req.body.profile_pic,
-      role_id: req.body.role_id,
       vehicle_user: req.body.vehicle_user,
       vehicle_socket: req.body.vehicle_socket,
     };

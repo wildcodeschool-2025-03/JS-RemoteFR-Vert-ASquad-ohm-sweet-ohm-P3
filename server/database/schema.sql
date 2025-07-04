@@ -7,17 +7,17 @@ CREATE TABLE user (
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
   firstname VARCHAR(50) NOT NULL,
   lastname VARCHAR(50) NOT NULL,
-  gender VARCHAR(50) NOT NULL,
-  birthdate DATE NOT NULL,
+  gender VARCHAR(50),
+  birthdate DATE,
   telephone_number VARCHAR(20),
   email VARCHAR(100) NOT NULL,
-  city VARCHAR(50) NOT NULL,
-  postcode INT NOT NULL,
-  number_of_electric_car INT NOT NULL,
+  city VARCHAR(50),
+  postcode INT,
+  number_of_electric_car INT,
   username VARCHAR(30),
   password VARCHAR(255) NOT NULL,
-  profile_pic VARCHAR(255) NOT NULL,
-  role_id INT UNSIGNED NOT NULL,
+  profile_pic VARCHAR(255),
+  role_id INT UNSIGNED DEFAULT 2,
   foreign key(role_id) references role(id)
 );
 
@@ -160,3 +160,8 @@ CREATE TABLE dealer (
     latitude DECIMAL(22, 20) NOT NULL,
     URL_website VARCHAR(100) NOT NULL
 );
+
+INSERT INTO role(id, role_name)
+VALUES 
+(1, "admin"),
+(2, "user");

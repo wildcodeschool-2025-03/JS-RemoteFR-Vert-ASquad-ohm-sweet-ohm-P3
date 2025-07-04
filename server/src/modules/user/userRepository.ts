@@ -14,13 +14,12 @@ type User = {
   username: string;
   hashed_password: string;
   profile_pic: string;
-  role_id: number;
 };
 
 class UserRepository {
   async create(user: Omit<User, "id">) {
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO user (firstname, lastname, gender, birthdate, email, city, postcode, number_of_electric_car, username, password, profile_pic, role_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO user (firstname, lastname, gender, birthdate, email, city, postcode, number_of_electric_car, username, password, profile_pic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         user.firstname,
         user.lastname,
@@ -33,7 +32,6 @@ class UserRepository {
         user.username,
         user.hashed_password,
         user.profile_pic,
-        user.role_id,
       ],
     );
     return result.insertId;
