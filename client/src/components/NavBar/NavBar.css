@@ -17,6 +17,11 @@
   gap: 20px;
 }
 
+.navbar li a {
+  color: white;
+  text-decoration-color: transparent;
+}
+
 .logo {
   height: 70px;
   margin: 0 auto;

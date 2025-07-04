@@ -1,3 +1,5 @@
+import { NavLink } from "react-router";
+
 import "./NavBar.css";
 import logo from "../../assets/images/Logo-principal.png";
 
@@ -5,15 +7,21 @@ function NavBar() {
   return (
     <nav className="navbar">
       <ul>
-        <li>ACCUEIL</li>
-        <li>CARTE</li>
+        <li>
+          <NavLink to="/">ACCUEIL</NavLink>
+        </li>
+        <li>
+          <NavLink to="/maps">CARTE</NavLink>
+        </li>
       </ul>
-
-      <img className="logo" src={logo} alt="logo de geocode" />
-
+      <NavLink to="/">
+        <img className="logo" src={logo} alt="logo de geocode" />
+      </NavLink>
       <ul>
         <li>PROFIL</li>
-        <li>RESERVATION</li>
+        <li>
+          <NavLink to="/reservation">RESERVATION</NavLink>
+        </li>
       </ul>
     </nav>
   );
