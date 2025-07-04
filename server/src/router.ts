@@ -28,4 +28,9 @@ router.get("/api/users", userActions.browse);
 router.post("/api/login", authActions.login);
 router.post("/api/users", authActions.hashPassword, userActions.add);
 
+import terminalAction from "./modules/terminal/terminalAction";
+
+router.get("/api/terminals", terminalAction.browse);
+router.get("/api/terminals/:id", terminalAction.read);
+
 export default router;
