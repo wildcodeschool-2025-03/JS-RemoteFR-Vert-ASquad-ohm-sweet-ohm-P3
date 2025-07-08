@@ -5,23 +5,54 @@ import L from "leaflet";
 import { useEffect, useState } from "react";
 import Cluster from "./MapCluster";
 import LocationMarker from "./MapGeoloc";
-import RoutingMachine from "./RoutingMachine";
+import MapLocationLeafletUser from "./MapLocationLeafletUser";
+
+type Terminal = {
+  id: number;
+  nom_station: string;
+  adresse_station: string;
+  consolidated_latitude: number;
+  consolidated_longitude: number;
+};
 
 function MapContainers() {
   const positionDefault = L.latLng([48.86, 2.33]);
 
-  const [terminals, setTerminals] = useState([]);
+  const [terminals, setTerminals] = useState<Terminal[]>([]);
+  const [mapLimit, setMapLimit] = useState<L.LatLngBounds | null>(null);
+  const [mapZoom, setMapZoom] = useState<number>(12);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/terminals`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTerminals(data.slice(0, 10000));
+    if (!mapLimit) {
+      return;
+    }
+    if (mapZoom < 14) {
+      setTerminals([]);
+      return;
+    }
+
+    const northEastLat = mapLimit.getNorthEast().lat;
+    const northEastLng = mapLimit.getNorthEast().lng;
+    const southWestLat = mapLimit.getSouthWest().lat;
+    const southWestLng = mapLimit.getSouthWest().lng;
+
+    const bbox = `${southWestLng},${southWestLat},${northEastLng},${northEastLat}`;
+    const apiUrl = `${import.meta.env.VITE_API_URL}/api/terminals?bbox=${bbox}`;
+
+    fetch(apiUrl)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
       })
-      .catch((err) => {
-        console.error("Erreur en récupérant les terminals :", err);
+      .then((data: Terminal[]) => {
+        setTerminals(data);
+      })
+      .catch(() => {
+        setTerminals([]);
       });
-  }, []);
+  }, [mapLimit, mapZoom]);
 
   return (
     <>
@@ -31,8 +62,11 @@ function MapContainers() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <LocationMarker />
-        <RoutingMachine />
         <Cluster terminals={terminals} />
+        <MapLocationLeafletUser
+          setMapLimit={setMapLimit}
+          setMapZoom={setMapZoom}
+        />
       </MapContainer>
     </>
   );
