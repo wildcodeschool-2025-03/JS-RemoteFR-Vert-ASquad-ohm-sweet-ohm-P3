@@ -33,9 +33,11 @@ import terminalAction from "./modules/terminal/terminalAction";
 router.get("/api/terminals", terminalAction.browse);
 router.get("/api/terminals/:id", terminalAction.read);
 
+import { validateBooking } from "./modules/middleware/bookingValidation";
+
 import bookingActions from "./modules/booking/bookingActions";
 
 router.get("/api/bookings", bookingActions.browse);
-router.post("/api/bookings", bookingActions.add);
+router.post("/api/bookings", validateBooking, bookingActions.add);
 
 export default router;

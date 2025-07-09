@@ -216,10 +216,10 @@ function Register() {
           </form>
         </div>
 
-        <div className="already-account">
-          Vous avez déjà créé un compte ?
-          <NavLink to="/login"> Identifiez-vous !</NavLink>
-        </div>
+        <p className="already-account">
+          Vous avez déjà créé un compte ?<br />
+          <NavLink to="/login">Identifiez-vous !</NavLink>
+        </p>
       </div>
     </>
   );

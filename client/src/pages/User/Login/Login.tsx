@@ -59,7 +59,7 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
+    <section className="login-container">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -120,7 +120,7 @@ function Login() {
         Vous n'avez pas encore de compte ?{" "}
         <NavLink to="/inscription">Inscrivez-vous !</NavLink>
       </p>
-    </div>
+    </section>
   );
 }
 

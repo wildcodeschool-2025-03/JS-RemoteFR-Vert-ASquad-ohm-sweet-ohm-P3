@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         element: <Navigate to="/maps" replace />,
       },
       {
-        path: "/reservation",
+        path: "/booking",
         element: <Booking />,
       },
     ],
