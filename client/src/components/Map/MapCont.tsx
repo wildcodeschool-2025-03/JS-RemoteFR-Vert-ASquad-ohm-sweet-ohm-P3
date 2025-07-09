@@ -13,6 +13,11 @@ type Terminal = {
   adresse_station: string;
   consolidated_latitude: number;
   consolidated_longitude: number;
+  prise_type_ef: number;
+  prise_type_2: number;
+  prise_type_combo_ccs: number;
+  prise_type_chademo: number;
+  prise_type_autre: number;
 };
 
 function MapContainers() {
@@ -26,7 +31,7 @@ function MapContainers() {
     if (!mapLimit) {
       return;
     }
-    if (mapZoom < 14) {
+    if (mapZoom < 10) {
       setTerminals([]);
       return;
     }

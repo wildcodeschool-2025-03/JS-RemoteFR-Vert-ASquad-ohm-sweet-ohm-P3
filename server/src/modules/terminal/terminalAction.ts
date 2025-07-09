@@ -3,9 +3,33 @@ import terminalRepository from "./terminalRepository";
 
 const browse: RequestHandler = async (req, res, next) => {
   try {
-    const Terminal = await terminalRepository.readAll();
+    const bbox = req.query.bbox as string;
+    if (!bbox) {
+      res.status(404).json();
+      return;
+    }
 
-    res.json(Terminal);
+    const [southWestLng, southWestLat, northEastLng, northEastLat] = bbox
+      .split(",")
+      .map(Number);
+
+    if (
+      [southWestLng, southWestLat, northEastLng, northEastLat].some(
+        Number.isNaN,
+      )
+    ) {
+      res.status(404).json();
+      return;
+    }
+
+    const terminals = await terminalRepository.readBbox(
+      southWestLat,
+      southWestLng,
+      northEastLat,
+      northEastLng,
+    );
+
+    res.json(terminals);
   } catch (err) {
     next(err);
   }
