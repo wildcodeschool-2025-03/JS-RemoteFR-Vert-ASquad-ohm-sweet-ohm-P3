@@ -13,10 +13,8 @@ function Header() {
           </h1>
           <h2>Recharger partout !</h2>
         </div>
-        <NavLink to="/login">
-          <button type="button" className="header-btn1">
-            S'inscrire/Connexion
-          </button>
+        <NavLink to="/login" className="header-btn1">
+          S'inscrire/Connexion
         </NavLink>
       </div>
 

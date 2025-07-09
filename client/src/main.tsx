@@ -7,7 +7,7 @@ import { Navigate, RouterProvider, createBrowserRouter } from "react-router";
 
 // Import the main app component
 import App from "./App";
-import Booking from "./pages/Bookings";
+import Bookings from "./pages/Bookings";
 import HomePage from "./pages/HomePage";
 import MapPage from "./pages/MapPage";
 import Login from "./pages/User/Login/Login";
@@ -52,8 +52,8 @@ const router = createBrowserRouter([
         element: <Navigate to="/maps" replace />,
       },
       {
-        path: "/booking",
-        element: <Booking />,
+        path: "/bookings",
+        element: <Bookings />,
       },
     ],
   },

@@ -117,7 +117,7 @@ function Login() {
         </form>
       </div>
       <p className="inscription">
-        Vous n'avez pas encore de compte ?{" "}
+        Vous n'avez pas encore de compte ?<br />
         <NavLink to="/inscription">Inscrivez-vous !</NavLink>
       </p>
     </section>
