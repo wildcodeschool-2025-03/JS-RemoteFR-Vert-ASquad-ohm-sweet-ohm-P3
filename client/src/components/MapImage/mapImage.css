@@ -38,6 +38,8 @@
   border-radius: 20px;
   box-shadow: 2.5px 3px 2.5px #000;
   background: linear-gradient(to right, #21a89a, #7cd858);
+  text-decoration: transparent;
+  color: black;
 }
 
 @media (min-width: 768px) {

@@ -1,5 +1,6 @@
 import "./login.css";
 import { useForm } from "react-hook-form";
+import { NavLink } from "react-router-dom";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 
@@ -49,7 +50,7 @@ function Login() {
       setAuth(result);
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/maps");
       }, 2000);
     } catch (err: unknown) {
       const error = err as Error;
@@ -58,7 +59,7 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
+    <section className="login-container">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -115,7 +116,11 @@ function Login() {
           </button>
         </form>
       </div>
-    </div>
+      <p className="inscription">
+        Vous n'avez pas encore de compte ?<br />
+        <NavLink to="/inscription">Inscrivez-vous !</NavLink>
+      </p>
+    </section>
   );
 }
 
