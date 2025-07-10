@@ -41,6 +41,7 @@ function Register() {
   } = useForm<FormData>();
 
   const password = watch("password");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBrands = async () => {
