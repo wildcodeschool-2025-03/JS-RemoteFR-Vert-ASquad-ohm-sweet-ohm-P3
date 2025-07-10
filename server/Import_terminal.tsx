@@ -127,7 +127,7 @@ const results: ValidatedRow[] = [];
 let rowCount = 0;
 
 // N'oubliez pas d'ajouter une variable avec le chemin d'accés dans le fichier server/.env
-const csvPath = process.env.CSV_PATH;
+const csvPath = process.env.CSV_PATH1;
 
 if (!csvPath) {
   console.error("CSV_PATH n'est pas défini dans le fichier .env");

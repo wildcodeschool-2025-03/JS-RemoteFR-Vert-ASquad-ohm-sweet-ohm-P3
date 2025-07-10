@@ -13,17 +13,11 @@ const add: RequestHandler = async (req, res, next) => {
     const newUser = {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      gender: req.body.gender,
-      birthdate: req.body.birthdate,
       email: req.body.email,
-      city: req.body.city,
-      postcode: req.body.postcode,
-      number_of_electric_car: req.body.number_of_electric_car,
-      username: req.body.username,
       hashed_password: req.body.hashed_password,
-      profile_pic: req.body.profile_pic,
-      vehicle_user: req.body.vehicle_user,
-      vehicle_socket: req.body.vehicle_socket,
+      car_brand: req.body.car_brand,
+      car_template: req.body.car_template,
+      car_socket: req.body.car_socket,
     };
 
     const insertId = await userRepository.create(newUser);

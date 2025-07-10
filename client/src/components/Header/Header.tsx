@@ -1,3 +1,5 @@
+import { NavLink } from "react-router";
+
 import "./Header.css";
 import header from "../../assets/images/header.png";
 
@@ -11,9 +13,9 @@ function Header() {
           </h1>
           <h2>Recharger partout !</h2>
         </div>
-        <button type="button" className="header-btn1">
+        <NavLink to="/login" className="header-btn1">
           S'inscrire/Connexion
-        </button>
+        </NavLink>
       </div>
 
       <img className="header-img" src={header} alt="header" />

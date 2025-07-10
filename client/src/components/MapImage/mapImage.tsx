@@ -5,10 +5,8 @@ function MapImage() {
   return (
     <>
       <div className="image_map">
-        <NavLink to="/maps">
-          <button className="map_button" type="button">
-            Voir la carte
-          </button>
+        <NavLink to="/maps" className="map_button">
+          Voir la carte
         </NavLink>
       </div>
     </>

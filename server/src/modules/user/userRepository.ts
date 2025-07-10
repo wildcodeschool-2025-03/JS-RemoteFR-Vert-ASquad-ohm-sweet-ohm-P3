@@ -5,33 +5,25 @@ type User = {
   id: number;
   firstname: string;
   lastname: string;
-  gender: string;
-  birthdate: Date;
   email: string;
-  city: string;
-  postcode: number;
-  number_of_electric_car: number;
-  username: string;
   hashed_password: string;
-  profile_pic: string;
+  car_brand: string;
+  car_template: string;
+  car_socket: string;
 };
 
 class UserRepository {
   async create(user: Omit<User, "id">) {
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO user (firstname, lastname, gender, birthdate, email, city, postcode, number_of_electric_car, username, password, profile_pic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO user (firstname, lastname, email, password, car_brand, car_template, car_socket) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
         user.firstname,
         user.lastname,
-        user.gender,
-        user.birthdate,
         user.email,
-        user.city,
-        user.postcode,
-        user.number_of_electric_car,
-        user.username,
         user.hashed_password,
-        user.profile_pic,
+        user.car_brand,
+        user.car_template,
+        user.car_socket,
       ],
     );
     return result.insertId;

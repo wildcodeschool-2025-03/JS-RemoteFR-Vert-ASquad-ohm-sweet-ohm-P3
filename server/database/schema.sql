@@ -7,15 +7,12 @@ CREATE TABLE user (
   id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
   firstname VARCHAR(50) NOT NULL,
   lastname VARCHAR(50) NOT NULL,
-  gender VARCHAR(50),
-  birthdate DATE,
-  telephone_number VARCHAR(20),
   email VARCHAR(100) NOT NULL,
-  city VARCHAR(50),
-  postcode INT,
-  number_of_electric_car INT,
-  username VARCHAR(30),
+  birthdate DATE,
   password VARCHAR(255) NOT NULL,
+  car_brand VARCHAR(50) NOT NULL,
+  car_template VARCHAR(50) NOT NULL,
+  car_socket VARCHAR(50) NOT NULL,
   profile_pic VARCHAR(255),
   role_id INT UNSIGNED DEFAULT 2,
   foreign key(role_id) references role(id)
@@ -45,7 +42,7 @@ CREATE TABLE vehicle_user (
 
 CREATE TABLE vehicle_socket (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(10)
+    name VARCHAR(20)
 );
 
 CREATE TABLE template (
