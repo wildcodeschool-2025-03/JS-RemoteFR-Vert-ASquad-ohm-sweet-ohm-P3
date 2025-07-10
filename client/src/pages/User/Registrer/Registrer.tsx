@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "./register.css";
 
@@ -107,6 +108,9 @@ function Register() {
 
       if (response.ok) {
         toast.success("Votre compte a bien été créé !");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
       } else {
         toast.error("Erreur lors de la création de votre compte");
       }
@@ -293,10 +297,10 @@ function Register() {
           </form>
         </div>
 
-        <div className="already-account">
-          Vous avez déjà créé un compte ?
-          <NavLink to="/login"> Identifiez-vous !</NavLink>
-        </div>
+        <p className="already-account">
+          Vous avez déjà créé un compte ?<br />
+          <NavLink to="/login">Identifiez-vous !</NavLink>
+        </p>
       </div>
     </>
   );

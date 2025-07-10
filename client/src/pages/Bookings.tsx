@@ -1,4 +1,4 @@
-function Booking() {
+function Bookings() {
   return (
     <>
       <h1>Booking page</h1>
@@ -6,4 +6,4 @@ function Booking() {
   );
 }
 
-export default Booking;
+export default Bookings;

@@ -14,24 +14,14 @@ const add: RequestHandler = async (req, res, next) => {
   try {
     const { terminal_id, start_time, user_id } = req.body;
 
-    if (
-      !terminal_id ||
-      !start_time ||
-      user_id === undefined ||
-      user_id === null
-    ) {
-      res.status(400).json({ error: "Il manque un des champs requis" });
-      return;
-    }
-
     const parsedStartTime = new Date(start_time);
     const endTime = addMinutes(parsedStartTime, 60);
 
     const newBooking = {
       start_time: parsedStartTime,
       end_time: endTime,
-      user_id: req.body.user_id,
-      terminal_id: req.body.terminal_id,
+      user_id: user_id,
+      terminal_id: terminal_id,
     };
 
     const insertId = await bookingRepository.create(newBooking);

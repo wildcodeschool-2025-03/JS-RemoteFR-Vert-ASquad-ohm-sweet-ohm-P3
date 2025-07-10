@@ -50,7 +50,7 @@ function Login() {
       setAuth(result);
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/maps");
       }, 2000);
     } catch (err: unknown) {
       const error = err as Error;
