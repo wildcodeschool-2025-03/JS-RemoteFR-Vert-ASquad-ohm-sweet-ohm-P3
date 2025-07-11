@@ -55,6 +55,10 @@ const router = createBrowserRouter([
         path: "/bookings",
         element: <Bookings />,
       },
+      {
+        path: "bookings/:id",
+        element: <Bookings />,
+      },
     ],
   },
   // Try adding a new route! For example, "/about" with an About component
