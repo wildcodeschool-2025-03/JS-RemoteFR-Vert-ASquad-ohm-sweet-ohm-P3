@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import AppleStoreLogo from "../../assets/images/AppleStore.png";
 import GoogleStoreLogo from "../../assets/images/GooglePlay.png";
 import "../Footer/Footer.css";
@@ -7,7 +8,9 @@ function Footer() {
     <>
       <footer>
         <ul className="ListFooter">
-          <li>Contact</li>
+          <li>
+            <NavLink to="/contact">Contact</NavLink>
+          </li>
           <li>Actualités / Informations</li>
           <li>Qui sommes nous ?</li>
           <li>Mention legales</li>
