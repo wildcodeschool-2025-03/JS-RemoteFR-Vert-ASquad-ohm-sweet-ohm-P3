@@ -1,8 +1,7 @@
 import fs from "node:fs";
 import csv from "csv-parser";
-import mysql from "mysql2";
 import z from "zod";
-import "dotenv/config";
+import connection from "./connection";
 
 const rowSchema = z.object({
   name: z.string(),
@@ -10,14 +9,6 @@ const rowSchema = z.object({
 
 type ValidatedRow = z.infer<typeof rowSchema>;
 type data = z.infer<typeof rowSchema>;
-
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  charset: "utf8mb4",
-});
 
 const results: ValidatedRow[] = [];
 let rowCount = 0;

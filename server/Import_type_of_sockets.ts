@@ -1,46 +1,34 @@
 import fs from "node:fs";
 import csv from "csv-parser";
-import mysql from "mysql2";
 import z from "zod";
-import "dotenv/config";
+import connection from "./connection";
 
 const rowSchema = z.object({
   name: z.string(),
-  vehicle_id: z.coerce.number(),
-  vehicle_socket_id: z.coerce.number(),
 });
 
 type ValidatedRow = z.infer<typeof rowSchema>;
 type data = z.infer<typeof rowSchema>;
 
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  charset: "utf8mb4",
-});
-
 const results: ValidatedRow[] = [];
 let rowCount = 0;
 
 // N'oubliez pas d'ajouter une variable avec le chemin d'accés dans le fichier server/.env
-const csvPath = process.env.CSV_PATH4;
+const csvPath = process.env.CSV_PATH3;
 
 if (!csvPath) {
-  console.error("CSV_PATH4 n'est pas défini dans le fichier .env");
+  console.error("CSV_PATH3 n'est pas défini dans le fichier .env");
   process.exit(1);
 }
 
 fs.createReadStream(csvPath)
-  .pipe(csv({ separator: ";" }))
+  .pipe(csv({ separator: "," }))
   .on("data", (data: data) => {
     rowCount++;
     results.push(data);
   })
   .on("end", async () => {
-    const sql =
-      "INSERT INTO template (name, vehicle_id, vehicle_socket_id) VALUES (?, ?, ?)";
+    const sql = "INSERT INTO vehicle_socket (name) VALUES (?)";
 
     let insertedRowsCount = 0;
     for (let i = 0; i < results.length; i++) {
@@ -58,11 +46,7 @@ fs.createReadStream(csvPath)
 
       const verifiedRow = parsedData.data;
 
-      const values = [
-        verifiedRow.name,
-        verifiedRow.vehicle_id,
-        verifiedRow.vehicle_socket_id,
-      ];
+      const values = [verifiedRow.name];
 
       try {
         await connection.execute(sql, values);

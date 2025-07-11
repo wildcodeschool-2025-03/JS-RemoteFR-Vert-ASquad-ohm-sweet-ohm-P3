@@ -3,9 +3,9 @@ import brandRepository from "./brandRepository";
 
 const browse: RequestHandler = async (req, res, next) => {
   try {
-    const Brand = await brandRepository.readAll();
+    const brand = await brandRepository.readAll();
 
-    res.json(Brand);
+    res.json(brand);
   } catch (err) {
     next(err);
   }
