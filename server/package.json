@@ -8,10 +8,10 @@
     "build": "tsx ./bin/migrate",
     "start": "tsx ./src/main",
     "test": "jest --verbose",
-    "csv1": "ts ./Import_terminal.ts",
-    "csv2": "ts ./Import_vehicle_brand.ts",
-    "csv3": "ts ./Import_type_of_sockets.ts",
-    "csv4": "ts ./Import_vehicle_template.ts"
+    "csv1": "tsx ./Import_terminal.ts",
+    "csv2": "tsx ./Import_vehicle_brand.ts",
+    "csv3": "tsx ./Import_type_of_sockets.ts",
+    "csv4": "tsx ./Import_vehicle_template.ts"
   },
   "dependencies": {
     "argon2": "^0.43.0",
