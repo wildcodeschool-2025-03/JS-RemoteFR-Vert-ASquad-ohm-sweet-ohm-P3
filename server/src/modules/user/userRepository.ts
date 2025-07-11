@@ -36,7 +36,7 @@ class UserRepository {
 
   async readByEmailWithPassword(email: string): Promise<User | null> {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT id, email, password AS hashed_password FROM user WHERE email = ?",
+      "SELECT id, firstname, lastname, email, role_id, password AS hashed_password FROM user WHERE email = ?",
       [email],
     );
 

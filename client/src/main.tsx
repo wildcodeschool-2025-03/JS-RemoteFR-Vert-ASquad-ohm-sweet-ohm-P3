@@ -1,7 +1,11 @@
 // Import necessary modules from React and React Router
-import { StrictMode } from "react";
+import { type JSX, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Navigate, RouterProvider, createBrowserRouter } from "react-router";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
 /* ************************************************************************* */
 
@@ -13,6 +17,8 @@ import MapPage from "./pages/MapPage";
 import Login from "./pages/User/Login/Login";
 import Register from "./pages/User/Registrer/Registrer";
 
+import { AuthProvider, useAuth } from "./context/AuthContext";
+
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
 
@@ -23,6 +29,11 @@ import Register from "./pages/User/Registrer/Registrer";
 
 // Create router configuration with routes
 // You can add more routes as you build out your app!
+const PrivateRoute = ({ children }: { children: JSX.Element }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
+
 const router = createBrowserRouter([
   {
     element: <App />,
@@ -33,27 +44,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/maps",
-        element: <MapPage />,
+        element: (
+          <PrivateRoute>
+            <MapPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/inscription",
         element: <Register />,
       },
       {
-        path: "*",
-        element: <Navigate to="/" replace />,
-      },
-      {
         path: "/login",
         element: <Login />,
       },
       {
-        path: "*",
-        element: <Navigate to="/maps" replace />,
-      },
-      {
         path: "/bookings",
-        element: <Bookings />,
+        element: (
+          <PrivateRoute>
+            <Bookings />
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -70,7 +81,9 @@ if (rootElement == null) {
 // Render the app inside the root element
 createRoot(rootElement).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 );
 

@@ -39,7 +39,7 @@ router.get("/api/brands", brandAction.browse);
 
 import templateAction from "./modules/vehicle/template/templateAction";
 
-router.get("/api/templates", templateAction.browse);
+router.get("/api/brands/:brandId/templates", templateAction.browse);
 
 import { validateBooking } from "./modules/middleware/bookingValidation";
 
