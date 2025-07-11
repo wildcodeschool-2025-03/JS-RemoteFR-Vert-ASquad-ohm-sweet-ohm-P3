@@ -1,0 +1,14 @@
+.bookingsButton {
+  padding: 8px 12px;
+  background: linear-gradient(to right, #21a89a 0%, #7cd858 100%);
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 16px;
+  display: flex;
+}
+
+.bookingsButton:hover {
+  background: linear-gradient(to right, #1a8a80 0%, #6abf4e 100%);
+}

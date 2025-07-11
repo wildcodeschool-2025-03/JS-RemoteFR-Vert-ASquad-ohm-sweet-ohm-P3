@@ -66,6 +66,10 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "bookings/:id",
+        element: <Bookings />,
+      },
     ],
   },
   // Try adding a new route! For example, "/about" with an About component
