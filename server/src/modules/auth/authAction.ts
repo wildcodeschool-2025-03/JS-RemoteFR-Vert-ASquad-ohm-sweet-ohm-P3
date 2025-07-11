@@ -11,19 +11,9 @@ type User = {
   id: number;
   firstname: string;
   lastname: string;
-  gender: string;
-  birthdate: Date;
   email: string;
-  phone: number;
-  city: string;
-  postcode: number;
-  number_of_electric_car: number;
-  username: string;
   hashed_password: string;
-  profile_pic: string;
   role_id: number;
-  vehicle_user: number;
-  vehicle_socket: number;
 };
 
 const login: RequestHandler = async (req, res, next) => {

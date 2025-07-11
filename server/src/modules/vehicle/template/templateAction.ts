@@ -3,9 +3,10 @@ import templateRepository from "./templateRepository";
 
 const browse: RequestHandler = async (req, res, next) => {
   try {
-    const Template = await templateRepository.read();
+    const brandId = Number.parseInt(req.params.brandId as string, 10);
+    const template = await templateRepository.readByBrandId(brandId);
 
-    res.json(Template);
+    res.json(template);
   } catch (err) {
     next(err);
   }

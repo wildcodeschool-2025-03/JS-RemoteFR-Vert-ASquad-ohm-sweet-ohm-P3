@@ -50,7 +50,6 @@ function Register() {
           `${import.meta.env.VITE_API_URL}/api/brands`,
         );
         const data = await response.json();
-        console.log("Brands fetched:", data);
         setBrands(data);
       } catch (error) {
         console.error("Erreur lors du chargement des marques:", error);
@@ -60,28 +59,23 @@ function Register() {
   }, []);
 
   useEffect(() => {
-    const filteredModels = async () => {
-      try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/templates`,
-        );
-        const data: Models[] = await res.json();
-
-        if (selectedBrand) {
-          const filtered = data.filter(
-            (models) => models.brand_id === Number(selectedBrand),
+    const modelsByBrand = async () => {
+      if (selectedBrand) {
+        try {
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/api/brands/${selectedBrand}/templates`,
           );
-          setModels(filtered);
+          const data: Models[] = await response.json();
+          setModels(data);
           setValue("vehicle_user", "");
-        } else {
+        } catch (err) {
+          err;
           setModels([]);
           setValue("vehicle_user", "");
         }
-      } catch (err) {
-        console.error("Erreur lors du chargement des modèles", err);
       }
     };
-    filteredModels();
+    modelsByBrand();
   }, [selectedBrand, setValue]);
 
   const handleForm = async (data: FormData) => {

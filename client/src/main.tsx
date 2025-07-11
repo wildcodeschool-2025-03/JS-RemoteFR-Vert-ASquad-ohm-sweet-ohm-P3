@@ -1,7 +1,7 @@
 // Import necessary modules from React and React Router
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Navigate, RouterProvider, createBrowserRouter } from "react-router";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 /* ************************************************************************* */
 
@@ -23,6 +23,7 @@ import Register from "./pages/User/Registrer/Registrer";
 
 // Create router configuration with routes
 // You can add more routes as you build out your app!
+
 const router = createBrowserRouter([
   {
     element: <App />,
@@ -40,16 +41,8 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "*",
-        element: <Navigate to="/" replace />,
-      },
-      {
         path: "/login",
         element: <Login />,
-      },
-      {
-        path: "*",
-        element: <Navigate to="/maps" replace />,
       },
       {
         path: "/bookings",

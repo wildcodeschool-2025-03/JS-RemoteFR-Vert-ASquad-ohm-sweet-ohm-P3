@@ -9,9 +9,10 @@ type Template = {
 };
 
 class TemplateRepository {
-  async read(): Promise<Template[]> {
+  async readByBrandId(brandId: number): Promise<Template[]> {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT t.id, t.name, v.id AS brand_id FROM template AS t JOIN vehicle AS v ON v.id=t.vehicle_id",
+      "SELECT t.id, t.name, v.id AS brand_id FROM template AS t JOIN vehicle AS v ON v.id=t.vehicle_id WHERE v.id = ?",
+      [brandId],
     );
     return rows as Template[];
   }

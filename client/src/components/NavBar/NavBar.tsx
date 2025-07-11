@@ -20,7 +20,7 @@ function NavBar() {
       <ul>
         <li>PROFIL</li>
         <li>
-          <NavLink to="/reservation">RESERVATION</NavLink>
+          <NavLink to="/bookings">RESERVATION</NavLink>
         </li>
       </ul>
     </nav>
