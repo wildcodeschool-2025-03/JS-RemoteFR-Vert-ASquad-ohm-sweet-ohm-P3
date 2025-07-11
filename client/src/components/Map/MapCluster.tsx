@@ -2,6 +2,8 @@ import { Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import { NavLink } from "react-router-dom";
+import "../Map/MapCluster.css";
 
 type Terminal = {
   id: number;
@@ -46,6 +48,9 @@ function Cluster({ terminals }: { terminals: Terminal[] }) {
                   <li>Aucun type de prise spécifié</li>
                 )}
             </ul>
+            <NavLink className="bookingsButton" to={`/bookings/${terminal.id}`}>
+              Réserver cette borne
+            </NavLink>
           </Popup>
         </Marker>
       ))}
