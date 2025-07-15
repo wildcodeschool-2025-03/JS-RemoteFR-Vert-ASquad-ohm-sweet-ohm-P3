@@ -5,7 +5,7 @@ const browse: RequestHandler = async (req, res, next) => {
   try {
     const brand = await brandRepository.readAll();
 
-    res.json(brand);
+    res.status(200).json(brand);
   } catch (err) {
     next(err);
   }
