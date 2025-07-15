@@ -33,6 +33,14 @@ import terminalAction from "./modules/terminal/terminalAction";
 router.get("/api/terminals", terminalAction.browse);
 router.get("/api/terminals/:id", terminalAction.read);
 
+import brandAction from "./modules/vehicle/brand/brandAction";
+
+router.get("/api/brands", brandAction.browse);
+
+import templateAction from "./modules/vehicle/template/templateAction";
+
+router.get("/api/brands/:brandId/templates", templateAction.browse);
+
 import { validateBooking } from "./modules/middleware/bookingValidation";
 
 import bookingActions from "./modules/booking/bookingActions";

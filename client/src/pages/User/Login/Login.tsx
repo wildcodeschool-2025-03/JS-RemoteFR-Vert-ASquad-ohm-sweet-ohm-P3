@@ -1,18 +1,8 @@
 import "./login.css";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
-
-type User = {
-  id: number;
-  email: string;
-};
-
-type Auth = {
-  user: User;
-  token: string;
-};
 
 type FormData = {
   email: string;
@@ -25,9 +15,6 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-  const { setAuth } = useOutletContext() as {
-    setAuth: (auth: Auth | null) => void;
-  };
 
   const navigate = useNavigate();
 
@@ -44,10 +31,7 @@ function Login() {
 
       if (!response.ok) throw new Error("Identifiants incorrects");
 
-      const result = await response.json();
-
       toast.success("Connexion réussie !");
-      setAuth(result);
 
       setTimeout(() => {
         navigate("/maps");

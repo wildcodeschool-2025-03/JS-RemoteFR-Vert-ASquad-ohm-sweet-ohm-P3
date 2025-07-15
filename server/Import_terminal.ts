@@ -1,8 +1,7 @@
 import fs from "node:fs";
 import csv from "csv-parser";
-import mysql from "mysql2";
 import z from "zod";
-import "dotenv/config";
+import connection from "./connection";
 
 const bool = z.preprocess((val) => {
   if (typeof val === "string" && val === "true") {
@@ -115,19 +114,11 @@ const rowSchema = z.object({
 type ValidatedRow = z.infer<typeof rowSchema>;
 type data = z.infer<typeof rowSchema>;
 
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  charset: "utf8mb4",
-});
-
 const results: ValidatedRow[] = [];
 let rowCount = 0;
 
 // N'oubliez pas d'ajouter une variable avec le chemin d'accés dans le fichier server/.env
-const csvPath = process.env.CSV_PATH;
+const csvPath = process.env.CSV_PATH1;
 
 if (!csvPath) {
   console.error("CSV_PATH n'est pas défini dans le fichier .env");
