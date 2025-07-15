@@ -4,8 +4,6 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 
-import { useAuth } from "../../../context/AuthContext";
-
 type FormData = {
   email: string;
   password: string;
@@ -20,8 +18,6 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const { login } = useAuth();
-
   const onSubmit = async (data: FormData) => {
     try {
       const response = await fetch(
@@ -35,12 +31,7 @@ function Login() {
 
       if (!response.ok) throw new Error("Identifiants incorrects");
 
-      const responseData = await response.json();
-
-      if (responseData.token && responseData.user) {
-        login(responseData.token, responseData.user);
-        toast.success("Connexion réussie !");
-      }
+      toast.success("Connexion réussie !");
 
       setTimeout(() => {
         navigate("/maps");
