@@ -26,6 +26,8 @@ import userActions from "./modules/user/userActions";
 
 router.get("/api/users", userActions.browse);
 router.post("/api/login", authActions.login);
+router.get("/api/me", authActions.verifyToken, authActions.connected);
+router.post("/api/logout", authActions.logout);
 router.post("/api/users", authActions.hashPassword, userActions.add);
 
 import terminalAction from "./modules/terminal/terminalAction";

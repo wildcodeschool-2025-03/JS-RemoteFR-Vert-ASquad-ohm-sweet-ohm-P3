@@ -1,7 +1,6 @@
 import "./login.css";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 
 import { useAuth } from "../../../context/AuthContext";
@@ -30,6 +29,7 @@ function Login() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 
@@ -37,14 +37,13 @@ function Login() {
 
       const responseData = await response.json();
 
-      if (responseData.token && responseData.user) {
-        login(responseData.token, responseData.user);
+      if (responseData.user) {
+        login(responseData.user);
         toast.success("Connexion réussie !");
+        setTimeout(() => {
+          navigate("/maps");
+        }, 2000);
       }
-
-      setTimeout(() => {
-        navigate("/maps");
-      }, 2000);
     } catch (err: unknown) {
       const error = err as Error;
       toast.error(error.message || "Erreur serveur");
