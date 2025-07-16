@@ -42,6 +42,6 @@ router.post("/api/bookings", validateBooking, bookingActions.add);
 
 import formAction from "./modules/form/formAction";
 
-router.post("/api/form", formAction.sendMail);
+router.post("/api/contactForm", formAction.sendMail);
 
 export default router;

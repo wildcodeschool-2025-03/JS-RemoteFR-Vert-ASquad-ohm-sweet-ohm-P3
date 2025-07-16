@@ -2,7 +2,7 @@ import "../Contact/Form.css";
 import { useState } from "react";
 import type { FormEvent } from "react";
 
-function Form() {
+function ContactForm() {
   const [objet, setObjet] = useState("");
   const [email, setMail] = useState("");
   const [nom, setNom] = useState("");
@@ -62,7 +62,7 @@ function Form() {
     try {
       const API_URL = import.meta.env.VITE_API_URL;
 
-      const response = await fetch(`${API_URL}/api/form`, {
+      const response = await fetch(`${API_URL}/api/contactForm`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -153,4 +153,4 @@ function Form() {
   );
 }
 
-export default Form;
+export default ContactForm;

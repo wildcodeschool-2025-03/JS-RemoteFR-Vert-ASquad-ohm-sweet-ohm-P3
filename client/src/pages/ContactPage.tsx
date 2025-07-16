@@ -1,4 +1,4 @@
-import Form from "../components/Contact/Form";
+import ContactForm from "../components/Contact/Form";
 
 function Contact() {
   return (
@@ -9,7 +9,7 @@ function Contact() {
         de partenariat ou une autre demande,veuillez renseigner les champs
         ci-dessous.
       </p>
-      <Form />
+      <ContactForm />
     </>
   );
 }
