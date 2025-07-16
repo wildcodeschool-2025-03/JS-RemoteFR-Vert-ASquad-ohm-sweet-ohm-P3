@@ -21,30 +21,19 @@ function Login() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-          credentials: "include",
-        },
-      );
+      const success = await login(data.email, data.password);
 
-      if (!response.ok) throw new Error("Identifiants incorrects");
-
-      const responseData = await response.json();
-
-      if (responseData.user) {
-        login(responseData.user);
+      if (success) {
         toast.success("Connexion réussie !");
         setTimeout(() => {
           navigate("/maps");
         }, 2000);
+      } else {
+        toast.error("Identifiaants incorrects");
       }
-    } catch (err: unknown) {
+    } catch (err) {
       const error = err as Error;
-      toast.error(error.message || "Erreur serveur");
+      toast.error(error.message);
     }
   };
 

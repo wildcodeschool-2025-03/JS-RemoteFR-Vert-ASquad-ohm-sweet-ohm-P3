@@ -17,7 +17,7 @@ type UserContext = {
 type AuthContext = {
   user: UserContext | null;
   isAuthenticated: boolean;
-  login: (userData: UserContext) => void;
+  login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   isLoading: boolean;
 };
@@ -64,9 +64,36 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkSession();
   }, []);
 
-  const login = (userData: UserContext) => {
-    setUser(userData);
-    setIsAuthenticated(true);
+  const login = async (email: string, password: string): Promise<boolean> => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+          credentials: "include",
+        },
+      );
+
+      if (!response.ok) {
+        return false;
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.user) {
+        setUser(responseData.user);
+        setIsAuthenticated(true);
+        return true;
+      }
+
+      console.error("Login: Données utilisateur manquantes dans la réponse");
+      return false;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
   };
 
   const logout = async () => {

@@ -46,7 +46,7 @@ const login: RequestHandler = async (req, res, next) => {
         maxAge: 60 * 60 * 1000,
       });
 
-      res.json({ user: userWithoutHashedPassword });
+      res.status(200).json({ user: userWithoutHashedPassword });
     }
   } catch (err) {
     next(err);
@@ -74,50 +74,9 @@ const hashPassword: RequestHandler = async (req, res, next) => {
   }
 };
 
-const verifyToken: RequestHandler = (req, res, next) => {
-  try {
-    const token = req.cookies.token;
-    if (!token) {
-      res.sendStatus(401);
-      return;
-    }
-
-    req.auth = jwt.verify(
-      token,
-      process.env.APP_SECRET as string,
-    ) as JwtPayload;
-    next();
-  } catch (err) {
-    console.error("Token invalide :", err);
-    res.sendStatus(401);
-  }
-};
-
-const connected: RequestHandler = async (req, res) => {
-  if (!req.auth || typeof req.auth.sub !== "string") {
-    res.sendStatus(401);
-    return;
-  }
-  try {
-    const userId = Number.parseInt(req.auth.sub, 10);
-    const user = await userRepository.read(userId);
-
-    if (!user) {
-      res.sendStatus(404);
-      return;
-    }
-
-    const { hashed_password, ...userWithoutHashedPassword } = user;
-    res.json({ user: userWithoutHashedPassword });
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
-  }
-};
-
 const logout: RequestHandler = (req, res) => {
   res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
   res.sendStatus(200);
 };
 
-export default { login, hashPassword, verifyToken, connected, logout };
+export default { login, hashPassword, logout };
