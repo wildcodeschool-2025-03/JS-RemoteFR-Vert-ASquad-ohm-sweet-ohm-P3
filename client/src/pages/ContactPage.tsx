@@ -3,7 +3,7 @@ import Form from "../components/Contact/Form";
 function Contact() {
   return (
     <>
-      <h1>Contact</h1>
+      <h1 className="h1contact">Contact</h1>
       <p>
         Pour contacter le service client et pour toute demande d'Informations,
         de partenariat ou une autre demande,veuillez renseigner les champs

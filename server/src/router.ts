@@ -40,4 +40,8 @@ import bookingActions from "./modules/booking/bookingActions";
 router.get("/api/bookings", bookingActions.browse);
 router.post("/api/bookings", validateBooking, bookingActions.add);
 
+import formAction from "./modules/form/formAction";
+
+router.post("/api/form", formAction.sendMail);
+
 export default router;
