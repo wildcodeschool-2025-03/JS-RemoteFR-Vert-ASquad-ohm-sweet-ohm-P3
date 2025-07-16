@@ -11,6 +11,7 @@ import Bookings from "./pages/Bookings";
 import Contact from "./pages/ContactPage";
 import HomePage from "./pages/HomePage";
 import MapPage from "./pages/MapPage";
+import NewsPage from "./pages/NewsPage";
 import Login from "./pages/User/Login/Login";
 import Register from "./pages/User/Registrer/Registrer";
 
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/news",
+        element: <NewsPage />,
       },
     ],
   },

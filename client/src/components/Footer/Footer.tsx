@@ -11,7 +11,9 @@ function Footer() {
           <li>
             <NavLink to="/contact">Contact</NavLink>
           </li>
-          <li>Actualités / Informations</li>
+          <li>
+            <NavLink to="/news">Actualités / Informations</NavLink>
+          </li>
           <li>Qui sommes nous ?</li>
           <li>Mention legales</li>
         </ul>
