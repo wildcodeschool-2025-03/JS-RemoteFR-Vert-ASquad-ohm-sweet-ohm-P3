@@ -1,23 +1,18 @@
 // Import necessary modules from React and React Router
-import { type JSX, StrictMode } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import {
-  Navigate,
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 /* ************************************************************************* */
 
 // Import the main app component
 import App from "./App";
 import Bookings from "./pages/Bookings";
+import Contact from "./pages/ContactPage";
 import HomePage from "./pages/HomePage";
 import MapPage from "./pages/MapPage";
 import Login from "./pages/User/Login/Login";
 import Register from "./pages/User/Registrer/Registrer";
-
-import { AuthProvider, useAuth } from "./context/AuthContext";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -29,10 +24,6 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 
 // Create router configuration with routes
 // You can add more routes as you build out your app!
-const PrivateRoute = ({ children }: { children: JSX.Element }) => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
-};
 
 const router = createBrowserRouter([
   {
@@ -44,11 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/maps",
-        element: (
-          <PrivateRoute>
-            <MapPage />
-          </PrivateRoute>
-        ),
+        element: <MapPage />,
       },
       {
         path: "/inscription",
@@ -60,15 +47,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/bookings",
-        element: (
-          <PrivateRoute>
-            <Bookings />
-          </PrivateRoute>
-        ),
+        element: <Bookings />,
       },
       {
         path: "bookings/:id",
         element: <Bookings />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },
@@ -85,9 +72,7 @@ if (rootElement == null) {
 // Render the app inside the root element
 createRoot(rootElement).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <RouterProvider router={router} />
   </StrictMode>,
 );
 

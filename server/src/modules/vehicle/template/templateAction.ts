@@ -6,7 +6,7 @@ const browse: RequestHandler = async (req, res, next) => {
     const brandId = Number.parseInt(req.params.brandId as string, 10);
     const template = await templateRepository.readByBrandId(brandId);
 
-    res.json(template);
+    res.status(200).json(template);
   } catch (err) {
     next(err);
   }
