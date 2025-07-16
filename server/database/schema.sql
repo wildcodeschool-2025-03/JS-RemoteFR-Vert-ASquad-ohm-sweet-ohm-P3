@@ -158,6 +158,21 @@ CREATE TABLE dealer (
     URL_website VARCHAR(100) NOT NULL
 );
 
+CREATE TABLE news (
+id INT NOT NULL AUTO_INCREMENT,
+date DATE NOT NULL,
+title VARCHAR(250) NOT NULL,
+article TEXT DEFAULT NULL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE information (
+id INT NOT NULL AUTO_INCREMENT,
+question VARCHAR(250) NOT NULL,
+answer TEXT NOT NULL,
+PRIMARY KEY (id)
+);
+
 INSERT INTO role(id, role_name)
 VALUES 
 (1, "admin"),
