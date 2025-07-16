@@ -2,7 +2,6 @@ import "./login.css";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
-
 import { useAuth } from "../../../context/AuthContext";
 
 type FormData = {
@@ -18,7 +17,6 @@ function Login() {
   } = useForm<FormData>();
 
   const navigate = useNavigate();
-
   const { login } = useAuth();
 
   const onSubmit = async (data: FormData) => {
