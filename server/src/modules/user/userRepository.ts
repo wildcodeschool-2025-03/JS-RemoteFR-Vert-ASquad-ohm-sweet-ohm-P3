@@ -11,10 +11,11 @@ type User = {
   car_brand: string;
   car_template: string;
   car_socket: string;
+  role_id: number;
 };
 
 class UserRepository {
-  async create(user: Omit<User, "id">) {
+  async create(user: Omit<User, "id" | "role_id">) {
     const [result] = await databaseClient.query<Result>(
       "INSERT INTO user (firstname, lastname, email, password, car_brand, car_template, car_socket) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
@@ -28,6 +29,15 @@ class UserRepository {
       ],
     );
     return result.insertId;
+  }
+
+  async read(id: number): Promise<User | null> {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT id, firstname, lastname, email, role_id, car_brand, car_template, car_socket FROM user WHERE id = ?",
+      [id],
+    );
+    const user = rows[0] as User | undefined;
+    return user ?? null;
   }
 
   async readAll() {

@@ -22,11 +22,19 @@ router.get("/api/review/:id", reviewActions.read);
 /* ************************************************************************* */
 
 import authActions from "./modules/auth/authAction";
+import authMiddleware from "./modules/middleware/authMiddleware";
+import connectedMiddleware from "./modules/middleware/connectedMiddleware";
 import userActions from "./modules/user/userActions";
 
 router.get("/api/users", userActions.browse);
 router.get("/api/users/:id", userActions.read);
 router.post("/api/login", authActions.login);
+router.get(
+  "/api/me",
+  authMiddleware.verifyToken,
+  connectedMiddleware.connected,
+);
+router.post("/api/logout", authActions.logout);
 router.post("/api/users", authActions.hashPassword, userActions.add);
 router.put("/api/users/:id", userActions.update);
 
@@ -49,5 +57,9 @@ import bookingActions from "./modules/booking/bookingActions";
 
 router.get("/api/bookings", bookingActions.browse);
 router.post("/api/bookings", validateBooking, bookingActions.add);
+
+import formAction from "./modules/form/formAction";
+
+router.post("/api/contactForm", formAction.sendMail);
 
 export default router;
