@@ -34,9 +34,9 @@ function TerminalUserInfos() {
   if (!terminal || !user) return <div>Chargement des données...</div>;
 
   const fullName = `${user.firstname} ${user.lastname}`;
-  const defaultAvatar =
-    "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
-  const avatar = user.profile_pic ? `${user.profile_pic}` : defaultAvatar;
+  const avatar = user.profile_pic
+    ? `${user.profile_pic}`
+    : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
 
   return (
     <div className="terminal-container">
@@ -45,9 +45,7 @@ function TerminalUserInfos() {
       <div className="terminal-content">
         <div className="user-infos">
           <img src={avatar} alt={fullName} className="user-avatar" />
-          <h2 className="user-name">
-            {user.firstname} {user.lastname}
-          </h2>
+          <h2 className="user-name">{fullName}</h2>
           <p className="user-car">
             {user.car_brand} {user.car_template}
           </p>
