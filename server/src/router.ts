@@ -18,13 +18,16 @@ router.post("/api/items", itemActions.add);
 
 router.get("/api/review", reviewActions.browse);
 router.get("/api/review/:id", reviewActions.read);
-
+router.post("/api/review/:id", reviewActions.add);
+router.put("/api/review/:id", reviewActions.edit);
+router.delete("/api/review/:id", reviewActions.destroy);
 /* ************************************************************************* */
 
 import authActions from "./modules/auth/authAction";
 import userActions from "./modules/user/userActions";
 
 router.get("/api/users", userActions.browse);
+
 router.post("/api/login", authActions.login);
 router.post("/api/users", authActions.hashPassword, userActions.add);
 
