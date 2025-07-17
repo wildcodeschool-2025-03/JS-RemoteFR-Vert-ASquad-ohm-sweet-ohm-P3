@@ -52,4 +52,11 @@ import formAction from "./modules/form/formAction";
 
 router.post("/api/contactForm", formAction.sendMail);
 
+import informationAction from "./modules/information/informationAction";
+router.get("/api/information/:id", informationAction.read);
+router.get("/api/information/", informationAction.browse);
+router.put("/api/information/:id", informationAction.edit);
+router.post("/api/information", informationAction.add);
+router.delete("/api/information/:id", informationAction.destroy);
+
 export default router;
