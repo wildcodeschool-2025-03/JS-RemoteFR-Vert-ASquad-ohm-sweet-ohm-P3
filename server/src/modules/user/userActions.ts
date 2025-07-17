@@ -35,7 +35,7 @@ const read: RequestHandler = async (req, res, next) => {
 
     const user = await userRepository.readById(id);
 
-    res.json(user);
+    res.status(200).json(user);
   } catch (err) {
     next(err);
   }

@@ -27,7 +27,7 @@ function Profile() {
   useEffect(() => {
     axios
       // On envoie une requête GET à notre serveur pour récupérer les infos de l’utilisateur avec l’ID 1
-      .get("http://localhost:3310/api/users/1")
+      .get(`${import.meta.env.VITE_API_URL}/api/users/1`)
       .then((res) => {
         const data = res.data;
 
@@ -73,7 +73,7 @@ function Profile() {
       });
 
       // On affiche un message pour confirmer que tout s’est bien passé
-      alert("Profil mis à jour avec succès !");
+      alert("Profil mis à jour avec succès ! ✅");
     } catch (err) {
       // Si erreur (ex: problème serveur), on affiche un message
       alert("Erreur lors de la mise à jour.");
@@ -140,7 +140,7 @@ function Profile() {
           </label>
 
           <button className="btn-entrer" type="submit">
-            envoyer
+            Envoyer
           </button>
         </form>
       </div>

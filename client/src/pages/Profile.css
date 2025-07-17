@@ -52,6 +52,7 @@
 
 .label-profil p {
   font-size: 1.3rem;
+  display: flex;
 }
 
 .label-profil input {
@@ -60,6 +61,7 @@
   border: 1px solid #d1d1d1;
   margin-top: 15px;
   font-size: 1.1rem;
+  width: 260px;
 }
 
 .profil2 {
@@ -118,5 +120,12 @@
 }
 
 .btn-entrer {
-  display: none;
+  padding: 1rem;
+  background: linear-gradient(270deg, #7cd858 1.35%, #21a89a 101.35%);
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-size: 1.2rem;
+  width: 150px;
+  font-weight: bold;
 }
