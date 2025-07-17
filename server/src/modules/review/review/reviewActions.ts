@@ -25,7 +25,7 @@ const edit: RequestHandler = async (req, res, next) => {
   try {
     const id = Number(req.params.id);
 
-    if (isNaN(id)) {
+    if (Number.isNaN(id)) {
       res.status(400).send("ID invalide");
       return;
     }
