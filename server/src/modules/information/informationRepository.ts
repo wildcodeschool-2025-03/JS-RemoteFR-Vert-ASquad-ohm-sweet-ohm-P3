@@ -9,12 +9,10 @@ type information = {
 
 class InformationRepository {
   async readAll() {
-    // Execute the SQL SELECT query to retrieve all items from the "item" table
     const [rows] = await databaseClient.query<Rows>(
       "select * from information",
     );
 
-    // Return the array of items
     return rows as information[];
   }
 
@@ -33,7 +31,6 @@ class InformationRepository {
       [information.question, information.answer, information.id],
     );
 
-    // Return how many rows were affected
     return result.affectedRows;
   }
 
