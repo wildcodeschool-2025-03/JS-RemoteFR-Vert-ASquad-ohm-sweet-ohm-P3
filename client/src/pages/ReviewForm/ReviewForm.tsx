@@ -2,17 +2,23 @@ import { Rating } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import "./ReviewForm.css";
+import { useNavigate } from "react-router";
 import { Bounce, ToastContainer, toast } from "react-toastify";
-export default function ReviewForm() {
+
+type ReviewFormFields = {
+  onClose: () => void;
+  user_id: number;
+  review: string;
+  grade: number;
+};
+type ReviewFormProps = {
+  onClose?: () => void;
+};
+
+export default function ReviewForm({ onClose }: ReviewFormProps) {
   const [userId, setUserId] = useState<number | null>(null);
   const [firstname, setFirstname] = useState<string>("");
   const [profilePic, setProfilePic] = useState<string>("");
-
-  type ReviewFormFields = {
-    user_id: number;
-    review: string;
-    grade: number;
-  };
 
   const {
     register,
@@ -26,6 +32,7 @@ export default function ReviewForm() {
       grade: 0,
     },
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3310/api/users/1")
@@ -45,7 +52,7 @@ export default function ReviewForm() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/review`,
+        `${import.meta.env.VITE_API_URL}/api/review/1`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -59,6 +66,10 @@ export default function ReviewForm() {
 
       if (response.ok) {
         toast.success("Avis envoyé !");
+        if (onClose) onClose();
+        setTimeout(() => {
+          navigate("/maps");
+        }, 1000);
       } else {
         toast.error("Erreur lors de l’envoi");
       }

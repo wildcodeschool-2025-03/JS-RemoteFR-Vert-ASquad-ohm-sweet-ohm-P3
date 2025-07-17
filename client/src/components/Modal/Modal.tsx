@@ -24,7 +24,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
         className="modalContent"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
-        tabIndex={-1}
+        tabIndex={-1} // ✅ OK pour éviter le focus
       >
         <button className="modalClose" onClick={onClose} type="button">
           ×

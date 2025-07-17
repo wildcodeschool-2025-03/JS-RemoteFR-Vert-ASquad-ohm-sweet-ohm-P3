@@ -8,6 +8,16 @@ const browse: RequestHandler = async (req, res) => {
   res.json(users);
 };
 
+const read: RequestHandler = async (req, res, next) => {
+  const parseId = Number.parseInt(req.params.id);
+  const user = await userRepository.read(parseId);
+  if (user != null) {
+    res.json(user);
+  } else {
+    res.send(404);
+  }
+};
+
 const add: RequestHandler = async (req, res, next) => {
   try {
     const newUser = {
@@ -18,6 +28,7 @@ const add: RequestHandler = async (req, res, next) => {
       car_brand: req.body.car_brand,
       car_template: req.body.car_template,
       car_socket: req.body.car_socket,
+      profile_pic: req.body.profile_pic,
     };
 
     const insertId = await userRepository.create(newUser);
@@ -28,4 +39,4 @@ const add: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, add };
+export default { browse, read, add };
