@@ -4,6 +4,7 @@ export type {};
 declare global {
   namespace Express {
     export interface Request {
+      auth?: JwtPayload;
       /* ************************************************************************* */
       // Add your custom properties here, for example:
       //

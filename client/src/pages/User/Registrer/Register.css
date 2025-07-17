@@ -1,0 +1,67 @@
+.register-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.register-form-container {
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #fff;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #21a89a 0%, #7cd858 100%);
+
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.userRegister {
+  margin-bottom: 1em;
+}
+
+.carRegister {
+  margin: 1em 0 1em 0;
+}
+.already-account {
+  margin: 1em 0 3em 0;
+  text-align: center;
+}

@@ -1,77 +1,94 @@
-import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import avatar from "../assets/images/avatar.png";
 import voiture from "../assets/images/voiture.png";
 import "./Profile.css";
-import FormProfil from "../components/FormProfile/FormProfile";
+
+interface User {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  car_brand: string;
+  car_template: string;
+  car_socket: string;
+  birthdate: string;
+}
 
 function Profile() {
-  const [isEdit, setIsEdit] = useState(false);
-  const [imageProfil, setImageProfil] = useState<string | null>(null);
-  const [imageProfil2, setImageProfil2] = useState<string | null>(null);
-  const inputFichier = useRef<HTMLInputElement | null>(null);
-  const btnFichier = useRef<HTMLInputElement | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const [nom, setNom] = useState("Kaneb");
-  const [prenom, setPrenom] = useState("Florentin");
-  const [email, setEmail] = useState("flo@gmail.com");
-  const [telephone, setTelephone] = useState("07.00.00.00.00");
-  const [adresse, setAdresse] = useState("7 rue du boulanger");
-  const [motdepasse, setMotdepasse] = useState("mot de passe");
-  const [marque, setMarque] = useState("tesla");
-  const [modele, setModele] = useState("y");
-  const [prise, setPrise] = useState("tesla");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthdate, setBirthdate] = useState("");
 
   useEffect(() => {
-    const imageSauvegardee = localStorage.getItem("imageProfil");
-    if (imageSauvegardee) {
-      setImageProfil(imageSauvegardee);
-    }
+    axios
+      // On envoie une requête GET à notre serveur pour récupérer les infos de l’utilisateur avec l’ID 1
+      .get("http://localhost:3310/api/users/1")
+      .then((res) => {
+        const data = res.data;
+
+        // On formate le birthdate pour qu'il soit compatible abev le input de type "date"
+        const birthdate = data.birthdate
+          ? new Date(data.birthdate).toISOString().split("T")[0]
+          : "";
+
+        setUser(data);
+        setFirstname(data.firstname);
+        setLastname(data.lastname);
+        setEmail(data.email);
+        setBirthdate(birthdate);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }, []);
 
-  useEffect(() => {
-    const imageSauvegardee = localStorage.getItem("imageProfil2");
-    if (imageSauvegardee) {
-      setImageProfil2(imageSauvegardee);
+  // Cette fonction est déclenchée quand on valide le formulaire en appuyant sur entrer
+  const handleUpdate = async (e: React.FormEvent) => {
+    // On empêche le rechargement de la page par défaut
+    e.preventDefault();
+    if (!user) return;
+
+    try {
+      // On envoie une requête PUT au backend pour modifier les infos utilisateur
+      await axios.put(`http://localhost:3310/api/users/${user.id}`, {
+        firstname,
+        lastname,
+        email,
+        birthdate,
+      });
+
+      // On met aussi à jour l’état local user avec les nouvelles infos
+      setUser({
+        ...user,
+        firstname,
+        lastname,
+        email,
+        birthdate,
+      });
+
+      // On affiche un message pour confirmer que tout s’est bien passé
+      alert("Profil mis à jour avec succès !");
+    } catch (err) {
+      // Si erreur (ex: problème serveur), on affiche un message
+      alert("Erreur lors de la mise à jour.");
     }
-  }, []);
-
-  const selectFichier = () => {
-    inputFichier.current?.click();
   };
 
-  const selectFichier2 = () => {
-    btnFichier.current?.click();
-  };
+  // Si les données sont encore en train de se charger, on affiche un message temporaire
+  if (loading) {
+    return <p>Chargement...</p>;
+  }
 
-  const profilChanger = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const fichiers = event.target.files;
-    if (!fichiers || fichiers.length === 0) return;
-
-    const fichier = fichiers[0];
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      const imageBase64 = reader.result as string;
-      setImageProfil(imageBase64);
-      localStorage.setItem("imageProfil", reader.result as string);
-    };
-    reader.readAsDataURL(fichier);
-  };
-
-  const profilChanger2 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const fichiers = event.target.files;
-    if (!fichiers || fichiers.length === 0) return;
-
-    const fichier = fichiers[0];
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      const imageBase64 = reader.result as string;
-      setImageProfil2(imageBase64);
-      localStorage.setItem("imageProfil2", reader.result as string);
-    };
-    reader.readAsDataURL(fichier);
-  };
+  // Si on n’a pas réussi à récupérer l'utilisateur, on affiche un message d’erreur
+  if (!user) {
+    return <p>Utilisateur introuvable.</p>;
+  }
 
   return (
     <main>
@@ -79,127 +96,84 @@ function Profile() {
 
       <div className="section1">
         <div className="profil">
-          <h1>Profile</h1>
+          <h1>Profil</h1>
           <div className="img-profil">
-            <img src={imageProfil || avatar} alt="Mon avatar" />
-            <button
-              className="edit-profil"
-              type="button"
-              onClick={selectFichier}
-            >
-              ✏️
-            </button>
-
-            <input
-              type="file"
-              accept="image/*"
-              ref={inputFichier}
-              style={{ display: "none" }}
-              onChange={profilChanger}
-            />
+            <img src={avatar} alt="Avatar" />
           </div>
         </div>
 
-        <div className="form">
-          <FormProfil
-            name={nom}
-            lastname={prenom}
-            mail={email}
-            phone={Number(telephone.replace(/\D/g, ""))}
-            address={adresse}
-            password={motdepasse}
-            isEdit={isEdit}
-            setName={setNom}
-            setLastname={setPrenom}
-            setMail={setEmail}
-            setPhone={(val) => setTelephone(val.toString())}
-            setAddress={setAdresse}
-            setPassword={setMotdepasse}
-          />
-        </div>
-        <div className="btn-profil1">
-          <button
-            type="button"
-            className="btn-profil"
-            onClick={() => setIsEdit(!isEdit)}
-          >
-            {isEdit ? "Enregistrer" : "Modifier"}
+        <form className="form" onSubmit={handleUpdate}>
+          <label className="label-profil">
+            <p>Prenom</p>
+            <input
+              type="text"
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
+            />
+          </label>
+
+          <label className="label-profil">
+            <p>Nom</p>
+            <input
+              type="text"
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
+            />
+          </label>
+
+          <label className="label-profil">
+            <p>Email</p>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+
+          <label className="label-profil">
+            <p>Date de naissance</p>
+            <input
+              type="date"
+              value={birthdate}
+              onChange={(e) => setBirthdate(e.target.value)}
+            />
+          </label>
+
+          <button className="btn-entrer" type="submit">
+            envoyer
           </button>
-        </div>
+        </form>
       </div>
 
       <div className="section2">
         <div className="profil2">
           <div className="img-profil2">
-            <img src={imageProfil2 || voiture} alt="Mon avatar" />
-            <button
-              className="edit-profil"
-              type="button"
-              onClick={selectFichier2}
-            >
-              ✏️
-            </button>
-            <input
-              type="file"
-              accept="image/*"
-              ref={btnFichier}
-              style={{ display: "none" }}
-              onChange={profilChanger2}
-            />
+            <img src={voiture} alt="Voiture" />
           </div>
         </div>
 
         <div className="form">
-          <form className="form-profil">
-            <label>
-              Marque
-              <input
-                type="text"
-                name="marque"
-                value={marque}
-                onChange={(event) => setModele(event.target.value)}
-                readOnly={!isEdit}
-              />
-            </label>
-            <label>
-              Marque
-              <input
-                type="text"
-                name="marque"
-                value={modele}
-                onChange={(event) => setMarque(event.target.value)}
-                readOnly={!isEdit}
-              />
-            </label>
-            <label>
-              Marque
-              <input
-                type="text"
-                name="prise"
-                value={prise}
-                onChange={(event) => setPrise(event.target.value)}
-                readOnly={!isEdit}
-              />
-            </label>
-          </form>
-        </div>
+          <label className="label-profil">
+            <p>Marque</p>
+            <input type="text" value={user.car_brand} readOnly />
+          </label>
 
-        <div className="btn-profil2">
-          <button
-            type="button"
-            className="btn-profil"
-            onClick={() => setIsEdit(!isEdit)}
-          >
-            {isEdit ? "Enregistrer" : "Modifier"}
-          </button>
+          <label className="label-profil">
+            <p>Modele</p>
+            <input type="text" value={user.car_template} readOnly />
+          </label>
+
+          <label className="label-profil">
+            <p>Type de prise</p>
+            <input type="text" value={user.car_socket} readOnly />
+          </label>
         </div>
       </div>
+
       <div className="historique">
-        <h2>Historique de reservation</h2>
+        <h2>Historique de réservation</h2>
         <ul className="historique-list">
           <li>📅 26 juin 2025 📍 67000 Strasbourg ⏱️ 45 min</li>
-          <li>📅 20 juin 2025 📍 68000 Mulhous ⏱️ 30 min</li>
-          <li>📅 16 juin 2025 📍 75000 Paris ⏱️ 15 min</li>
         </ul>
       </div>
     </main>
