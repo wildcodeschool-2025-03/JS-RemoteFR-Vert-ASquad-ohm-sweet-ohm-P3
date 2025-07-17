@@ -1,7 +1,9 @@
+import TerminalUserInfos from "../components/Bookings/TerminalUserInfos";
+
 function Bookings() {
   return (
     <>
-      <h1>Booking page</h1>
+      <TerminalUserInfos />
     </>
   );
 }
