@@ -21,7 +21,7 @@ const login: RequestHandler = async (req, res, next) => {
     const user = await userRepository.readByEmailWithPassword(req.body.email);
 
     if (!user) {
-      res.sendStatus(422);
+      res.sendStatus(401);
       return;
     }
 
@@ -40,12 +40,13 @@ const login: RequestHandler = async (req, res, next) => {
         expiresIn: "1h",
       });
 
-      res.json({
-        token,
-        user: userWithoutHashedPassword,
+      res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 1000,
       });
-    } else {
-      res.sendStatus(422);
+
+      res.status(200).json({ user: userWithoutHashedPassword });
     }
   } catch (err) {
     next(err);
@@ -73,30 +74,9 @@ const hashPassword: RequestHandler = async (req, res, next) => {
   }
 };
 
-const verifyToken: RequestHandler = (req, res, next) => {
-  try {
-    const authorizationHeader = req.get("Authorization");
-
-    if (authorizationHeader == null) {
-      throw new Error("Authorization header is missing");
-    }
-
-    const [type, token] = authorizationHeader.split(" ");
-
-    if (type !== "Bearer") {
-      throw new Error("Authorization header has not the 'Bearer' type");
-    }
-
-    req.auth = jwt.verify(
-      token,
-      process.env.APP_SECRET as string,
-    ) as JwtPayload;
-
-    next();
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(401);
-  }
+const logout: RequestHandler = (req, res) => {
+  res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
+  res.sendStatus(200);
 };
 
-export default { login, hashPassword };
+export default { login, hashPassword, logout };
