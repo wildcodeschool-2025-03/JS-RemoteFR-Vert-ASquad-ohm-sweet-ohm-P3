@@ -59,4 +59,11 @@ router.put("/api/information/:id", informationAction.edit);
 router.post("/api/information", informationAction.add);
 router.delete("/api/information/:id", informationAction.destroy);
 
+import newsAction from "./modules/news/newsAction";
+
+router.get("/api/news/", newsAction.browse);
+router.get("/api/news/:id", newsAction.read);
+router.put("/api/news/:id", newsAction.edit);
+router.post("/api/news/", newsAction.add);
+router.delete("/api/news/:id", newsAction.destroy);
 export default router;
