@@ -1,8 +1,8 @@
 import "./login.css";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import { useAuth } from "../../../context/AuthContext";
 
 type FormData = {
   email: string;
@@ -17,28 +17,23 @@ function Login() {
   } = useForm<FormData>();
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        },
-      );
+      const success = await login(data.email, data.password);
 
-      if (!response.ok) throw new Error("Identifiants incorrects");
-
-      toast.success("Connexion réussie !");
-
-      setTimeout(() => {
-        navigate("/maps");
-      }, 2000);
-    } catch (err: unknown) {
+      if (success) {
+        toast.success("Connexion réussie !");
+        setTimeout(() => {
+          navigate("/maps");
+        }, 2000);
+      } else {
+        toast.error("Identifiaants incorrects");
+      }
+    } catch (err) {
       const error = err as Error;
-      toast.error(error.message || "Erreur serveur");
+      toast.error(error.message);
     }
   };
 

@@ -1,17 +1,39 @@
 // Import necessary modules from React and React Router
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
 /* ************************************************************************* */
 
 // Import the main app component
 import App from "./App";
 import Bookings from "./pages/Bookings";
+import Contact from "./pages/ContactPage";
 import HomePage from "./pages/HomePage";
 import MapPage from "./pages/MapPage";
 import Login from "./pages/User/Login/Login";
 import Register from "./pages/User/Registrer/Registrer";
+
+import { AuthProvider, useAuth } from "./context/AuthContext";
+
+const ProtectedRoute: React.FC = () => {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Vérification de la session...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
+};
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -33,10 +55,6 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/maps",
-        element: <MapPage />,
-      },
-      {
         path: "/inscription",
         element: <Register />,
       },
@@ -45,12 +63,26 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/bookings",
-        element: <Bookings />,
+        path: "/contact",
+        element: <Contact />,
       },
       {
-        path: "bookings/:id",
-        element: <Bookings />,
+        path: "",
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "maps",
+            element: <MapPage />,
+          },
+          {
+            path: "bookings",
+            element: <Bookings />,
+          },
+          {
+            path: "bookings/:id",
+            element: <Bookings />,
+          },
+        ],
       },
     ],
   },
@@ -67,7 +99,9 @@ if (rootElement == null) {
 // Render the app inside the root element
 createRoot(rootElement).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 );
 

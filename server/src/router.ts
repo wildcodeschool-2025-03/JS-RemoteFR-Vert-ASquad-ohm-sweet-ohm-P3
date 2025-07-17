@@ -24,11 +24,19 @@ router.delete("/api/review/:id", reviewActions.destroy);
 /* ************************************************************************* */
 
 import authActions from "./modules/auth/authAction";
+import authMiddleware from "./modules/middleware/authMiddleware";
+import connectedMiddleware from "./modules/middleware/connectedMiddleware";
 import userActions from "./modules/user/userActions";
 
 router.get("/api/users", userActions.browse);
 
 router.post("/api/login", authActions.login);
+router.get(
+  "/api/me",
+  authMiddleware.verifyToken,
+  connectedMiddleware.connected,
+);
+router.post("/api/logout", authActions.logout);
 router.post("/api/users", authActions.hashPassword, userActions.add);
 
 import terminalAction from "./modules/terminal/terminalAction";
@@ -50,5 +58,9 @@ import bookingActions from "./modules/booking/bookingActions";
 
 router.get("/api/bookings", bookingActions.browse);
 router.post("/api/bookings", validateBooking, bookingActions.add);
+
+import formAction from "./modules/form/formAction";
+
+router.post("/api/contactForm", formAction.sendMail);
 
 export default router;
