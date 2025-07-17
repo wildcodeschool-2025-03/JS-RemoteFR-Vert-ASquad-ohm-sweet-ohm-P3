@@ -1,14 +1,18 @@
 // Import necessary modules from React and React Router
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 /* ************************************************************************* */
 
 // Import the main app component
 import App from "./App";
+import Bookings from "./pages/Bookings";
 import HomePage from "./pages/HomePage";
+import MapPage from "./pages/MapPage";
 import Profile from "./pages/Profile";
+import Login from "./pages/User/Login/Login";
+import Register from "./pages/User/Registrer/Registrer";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -20,6 +24,7 @@ import Profile from "./pages/Profile";
 
 // Create router configuration with routes
 // You can add more routes as you build out your app!
+
 const router = createBrowserRouter([
   {
     element: <App />,
@@ -29,14 +34,33 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "Profil",
+        path: "/maps",
+        element: <MapPage />,
+      },
+      {
+        path: "/inscription",
+        element: <Register />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/bookings",
+        element: <Bookings />,
+      },
+      {
+        path: "bookings/:id",
+        element: <Bookings />,
+      },
+      {
+        path: "profil",
         element: <Profile />,
       },
     ],
   },
   // Try adding a new route! For example, "/about" with an About component
 ]);
-
 /* ************************************************************************* */
 
 // Find the root element in the HTML document
