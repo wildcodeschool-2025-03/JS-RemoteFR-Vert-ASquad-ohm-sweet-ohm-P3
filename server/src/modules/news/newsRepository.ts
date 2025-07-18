@@ -10,7 +10,9 @@ type news = {
 
 class NewsRepository {
   async readAll() {
-    const [rows] = await databaseClient.query<Rows>("select * from news");
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT * FROM news ORDER BY date DESC LIMIT 3",
+    );
 
     return rows as news[];
   }
