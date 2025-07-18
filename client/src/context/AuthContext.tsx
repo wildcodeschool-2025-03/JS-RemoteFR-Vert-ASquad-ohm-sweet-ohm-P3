@@ -10,6 +10,9 @@ type UserContext = {
   id: number;
   firstname: string;
   lastname: string;
+  profile_pic: string;
+  car_brand: string;
+  car_template: string;
   email: string;
   role_id: number;
 };

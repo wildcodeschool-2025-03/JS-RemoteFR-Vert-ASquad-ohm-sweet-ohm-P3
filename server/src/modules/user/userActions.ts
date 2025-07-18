@@ -47,14 +47,12 @@ const update: RequestHandler = async (req, res, next) => {
     const idFromAuth = Number(req.auth.sub);
 
     if (!idFromAuth) {
-      res.status(401).json({ message: "Non autorisé." });
+      res.status(401);
       return;
     }
 
     if (idFromAuth !== idFromParams) {
-      res
-        .status(403)
-        .json({ message: "Vous ne pouvez pas modifier ce profil." });
+      res.status(403);
       return;
     }
 
@@ -67,7 +65,7 @@ const update: RequestHandler = async (req, res, next) => {
       birthdate,
     });
 
-    res.status(200).json({ message: "Profil mis à jour avec succès" });
+    res.status(204);
   } catch (err) {
     next(err);
   }

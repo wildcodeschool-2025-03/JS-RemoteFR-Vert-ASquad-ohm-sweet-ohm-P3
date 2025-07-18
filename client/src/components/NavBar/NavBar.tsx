@@ -1,7 +1,6 @@
 import { NavLink } from "react-router";
 
 import "./NavBar.css";
-import { Link } from "react-router";
 import logo from "../../assets/images/Logo-principal.png";
 
 function NavBar() {
@@ -19,9 +18,9 @@ function NavBar() {
         <img className="logo" src={logo} alt="logo de geocode" />
       </NavLink>
       <ul>
-        <Link to="profil">
+        <NavLink to="/profil">
           <li>PROFIL</li>
-        </Link>
+        </NavLink>
         <li>
           <NavLink to="/bookings">RESERVATION</NavLink>
         </li>
