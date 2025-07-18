@@ -38,6 +38,12 @@ router.get(
 );
 router.post("/api/logout", authActions.logout);
 router.post("/api/users", authActions.hashPassword, userActions.add);
+router.put(
+  "/api/users/:id",
+  authMiddleware.verifyToken,
+  validateUserUpdate,
+  userActions.update,
+);
 /* ************************************************************************* */
 import terminalAction from "./modules/terminal/terminalAction";
 
@@ -65,6 +71,7 @@ import bookingActions from "./modules/booking/bookingActions";
 router.get("/api/bookings", bookingActions.browse);
 router.post("/api/bookings", validateBooking, bookingActions.add);
 
+import { validateUserUpdate } from "./middleware/userValidation";
 /* ************************************************************************* */
 import formAction from "./modules/form/formAction";
 
