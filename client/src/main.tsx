@@ -16,6 +16,7 @@ import Bookings from "./pages/Booking/Bookings";
 import Contact from "./pages/ContactPage";
 import HomePage from "./pages/HomePage";
 import MapPage from "./pages/MapPage";
+import Profile from "./pages/Profile";
 import Login from "./pages/User/Login/Login";
 import Register from "./pages/User/Registrer/Registrer";
 
@@ -35,6 +36,9 @@ const ProtectedRoute: React.FC = () => {
   return <Outlet />;
 };
 
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
 
@@ -81,6 +85,10 @@ const router = createBrowserRouter([
           {
             path: "bookings/:id",
             element: <Bookings />,
+          },
+          {
+            path: "profil",
+            element: <Profile />,
           },
         ],
       },
