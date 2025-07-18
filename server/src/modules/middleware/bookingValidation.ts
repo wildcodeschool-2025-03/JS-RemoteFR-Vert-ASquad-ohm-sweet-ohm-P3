@@ -5,17 +5,12 @@ export const rowSchema = z.object({
   terminal_id: z.number({
     required_error: "Le terminal doit être choisi.",
   }),
-  start_time: z
-    .string({
-      required_error: "L'heure de début de réservation doit être renseignée",
-    })
-    .regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
-  end_time: z
-    .string({
-      required_error:
-        "L'heure de fin de votre réservation doit être renseignée.",
-    })
-    .regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/),
+  start_time: z.string().datetime({
+    message: "Le format de l'heure de début est invalide.",
+  }),
+  end_time: z.string().datetime({
+    message: "Le format de l'heure de fin est invalide.",
+  }),
   user_id: z.number({
     required_error: "Vous devez être connecté pour faire une réservation.",
   }),

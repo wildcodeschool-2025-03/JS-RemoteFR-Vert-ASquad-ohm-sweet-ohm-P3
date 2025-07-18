@@ -12,7 +12,7 @@ import {
 
 // Import the main app component
 import App from "./App";
-import Bookings from "./pages/Bookings";
+import Bookings from "./pages/Booking/Bookings";
 import Contact from "./pages/ContactPage";
 import HomePage from "./pages/HomePage";
 import MapPage from "./pages/MapPage";

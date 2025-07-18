@@ -10,9 +10,11 @@ type UserContext = {
   id: number;
   firstname: string;
   lastname: string;
+  profile_pic: string;
+  car_brand: string;
+  car_template: string;
   email: string;
   role_id: number;
-  profile_pic: string;
 };
 
 type AuthContext = {
@@ -53,7 +55,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       } catch (error) {
         console.error(
           "Erreur lors de la récupération de l'utilisateur:",
-          error,
+          error
         );
         setUser(null);
         setIsAuthenticated(false);
@@ -74,7 +76,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
           credentials: "include",
-        },
+        }
       );
 
       if (!response.ok) {
