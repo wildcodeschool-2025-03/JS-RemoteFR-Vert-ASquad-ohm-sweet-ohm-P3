@@ -39,7 +39,7 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/review/:id`,
+        `${import.meta.env.VITE_API_URL}/api/review/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -88,8 +88,6 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
           LAISSER UN AVIS
         </label>
         <input id="user_id" type="hidden" {...register("user_id")} />
-
-        <input type="hidden" {...register("user_id")} />
 
         <label htmlFor="grade">Note :</label>
         <Controller

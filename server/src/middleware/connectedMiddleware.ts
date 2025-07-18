@@ -1,5 +1,5 @@
 import type { RequestHandler } from "express";
-import userRepository from "../user/userRepository";
+import userRepository from "../modules/user/userRepository";
 
 const connected: RequestHandler = async (req, res) => {
   if (!req.auth || typeof req.auth.sub !== "string") {

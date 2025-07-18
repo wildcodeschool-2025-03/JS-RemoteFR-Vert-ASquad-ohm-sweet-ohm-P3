@@ -14,7 +14,7 @@ const read: RequestHandler = async (req, res, next) => {
   if (user != null) {
     res.json(user);
   } else {
-    res.send(404);
+    res.status(404).json;
   }
 };
 
@@ -33,7 +33,7 @@ const add: RequestHandler = async (req, res, next) => {
 
     const insertId = await userRepository.create(newUser);
 
-    res.status(201).json({ insertId });
+    res.status(200).json({ insertId });
   } catch (err) {
     next(err);
   }

@@ -22,7 +22,7 @@ class ReviewRepository {
     const [rows] = await databaseClient.query(`
             SELECT r.id, r.review, r.grade, r.user_id, u.firstname, u.lastname, u.profile_pic
             FROM review AS r
-            JOIN user AS u ON r.user_id = u.id
+            INNER JOIN user AS u ON r.user_id = u.id
         `);
     return rows as Review[];
   }
@@ -38,25 +38,6 @@ class ReviewRepository {
       [id],
     );
     return (rows as Review[])[0] ?? null;
-  }
-
-  async update(review: Review) {
-    // Exécute la requête UPDATE sur la table "review"
-    const [result] = await databaseClient.query<Result>(
-      "UPDATE review SET review = ?, grade = ?, user_id = ? WHERE id = ?",
-      [review.review, review.grade, review.user_id, review.id],
-    );
-
-    // Retourne le nombre de lignes modifiées
-    return result.affectedRows;
-  }
-
-  async delete(id: number) {
-    const [result] = await databaseClient.query<Result>(
-      "DELETE FROM review WHERE id = ?",
-      [id],
-    );
-    return result.affectedRows;
   }
 }
 

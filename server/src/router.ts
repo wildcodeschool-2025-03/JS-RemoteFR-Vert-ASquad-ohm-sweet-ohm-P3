@@ -15,17 +15,17 @@ router.get("/api/items/:id", itemActions.read);
 router.post("/api/items", itemActions.add);
 
 /* ************************************************************************* */
+import { validateReview } from "./middleware/reviewValidation";
 
 router.get("/api/review", reviewActions.browse);
 router.get("/api/review/:id", reviewActions.read);
-router.post("/api/review/:id", validateReview, reviewActions.add);
-router.put("/api/review/:id", reviewActions.edit);
-router.delete("/api/review/:id", reviewActions.destroy);
+router.post("/api/review/", validateReview, reviewActions.add);
+
 /* ************************************************************************* */
 
+import authMiddleware from "./middleware/authMiddleware";
+import connectedMiddleware from "./middleware/connectedMiddleware";
 import authActions from "./modules/auth/authAction";
-import authMiddleware from "./modules/middleware/authMiddleware";
-import connectedMiddleware from "./modules/middleware/connectedMiddleware";
 import userActions from "./modules/user/userActions";
 
 router.get("/api/users", userActions.browse);
@@ -58,7 +58,7 @@ router.get("/api/brands/:brandId/templates", templateAction.browse);
 
 /* ************************************************************************* */
 
-import { validateBooking } from "./modules/middleware/bookingValidation";
+import { validateBooking } from "./middleware/bookingValidation";
 
 import bookingActions from "./modules/booking/bookingActions";
 
@@ -67,7 +67,6 @@ router.post("/api/bookings", validateBooking, bookingActions.add);
 
 /* ************************************************************************* */
 import formAction from "./modules/form/formAction";
-import { validateReview } from "./modules/middleware/reviewValidation";
 
 router.post("/api/contactForm", formAction.sendMail);
 

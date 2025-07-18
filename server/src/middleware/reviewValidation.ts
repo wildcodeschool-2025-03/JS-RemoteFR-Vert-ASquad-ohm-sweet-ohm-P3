@@ -10,7 +10,6 @@ export const reviewSchema = z.object({
     .min(1, "Le champ 'review' est requis.")
     .max(100, "Dépassement du nombre de caractères autorisé"),
   grade: z.number().min(1).max(5),
-  profile_pic: z.string(),
 });
 
 export const validateReview: RequestHandler = async (req, res, next) => {
