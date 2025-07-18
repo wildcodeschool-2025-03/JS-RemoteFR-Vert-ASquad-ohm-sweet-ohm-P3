@@ -35,7 +35,7 @@ router.post("/api/login", authActions.login);
 router.get(
   "/api/me",
   authMiddleware.verifyToken,
-  connectedMiddleware.connected
+  connectedMiddleware.connected,
 );
 router.post("/api/logout", authActions.logout);
 router.post("/api/users", authActions.hashPassword, userActions.add);
@@ -43,7 +43,7 @@ router.put(
   "/api/users/:id",
   authMiddleware.verifyToken,
   validateUserUpdate,
-  userActions.update
+  userActions.update,
 );
 /* ************************************************************************* */
 import terminalAction from "./modules/terminal/terminalAction";

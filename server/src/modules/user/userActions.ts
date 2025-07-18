@@ -40,18 +40,6 @@ const add: RequestHandler = async (req, res, next) => {
   }
 };
 
-const read: RequestHandler = async (req, res, next) => {
-  try {
-    const id = Number(req.params.id);
-
-    const user = await userRepository.readById(id);
-
-    res.status(200).json(user);
-  } catch (err) {
-    next(err);
-  }
-};
-
 const update: RequestHandler = async (req, res, next) => {
   try {
     const idFromParams = Number(req.params.id);
@@ -82,4 +70,4 @@ const update: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read, add, read, update };
+export default { browse, add, read, update };
