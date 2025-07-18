@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import { useAuth } from "../../context/AuthContext";
 
@@ -6,6 +7,16 @@ import logo from "../../assets/images/Logo-principal.png";
 
 function NavBar() {
   const { user, logout } = useAuth();
+  const [showUserInfo, setShowUserInfo] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      const timer = setTimeout(() => {
+        setShowUserInfo(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [user]);
 
   return (
     <nav className="navbar">
@@ -28,7 +39,7 @@ function NavBar() {
       </ul>
 
       <div className="navbar-right">
-        {user && (
+        {user && showUserInfo && (
           <div className="user-info">
             <img
               src={
