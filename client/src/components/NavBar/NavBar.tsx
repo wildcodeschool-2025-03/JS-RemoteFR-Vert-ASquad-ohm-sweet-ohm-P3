@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 import "./NavBar.css";
@@ -8,9 +8,11 @@ import logo from "../../assets/images/Logo-principal.png";
 function NavBar() {
   const { user, logout } = useAuth();
   const [showUserInfo, setShowUserInfo] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
+      setShowUserInfo(false);
       const timer = setTimeout(() => {
         setShowUserInfo(true);
       }, 2000);
@@ -52,10 +54,15 @@ function NavBar() {
             <span className="user-name-navBar">
               {user.firstname} {user.lastname}
               <br />
-              <button type="button" className="logout-button" onClick={logout}>
-                <NavLink to="/" className="logout-link">
-                  Déconnexion
-                </NavLink>
+              <button
+                type="button"
+                className="logout-button"
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+              >
+                Déconnexion
               </button>
             </span>
           </div>
