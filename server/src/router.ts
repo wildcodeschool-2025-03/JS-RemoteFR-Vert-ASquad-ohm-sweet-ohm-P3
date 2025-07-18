@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";
-import reviewActions from "./modules/review/review/reviewActions";
+import reviewActions from "./modules/review/reviewActions";
 
 router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
@@ -18,7 +18,7 @@ router.post("/api/items", itemActions.add);
 
 router.get("/api/review", reviewActions.browse);
 router.get("/api/review/:id", reviewActions.read);
-router.post("/api/review/:id", reviewActions.add);
+router.post("/api/review/:id", validateReview, reviewActions.add);
 router.put("/api/review/:id", reviewActions.edit);
 router.delete("/api/review/:id", reviewActions.destroy);
 /* ************************************************************************* */
@@ -67,6 +67,7 @@ router.post("/api/bookings", validateBooking, bookingActions.add);
 
 /* ************************************************************************* */
 import formAction from "./modules/form/formAction";
+import { validateReview } from "./modules/middleware/reviewValidation";
 
 router.post("/api/contactForm", formAction.sendMail);
 

@@ -36,14 +36,13 @@ function Review() {
       ? reviews.reduce((acc, r) => acc + r.grade, 0) / reviews.length
       : 0;
 
-  function stars(note: number) {
+  const stars = (note: number) => {
     const full = Math.floor(note);
-
     return "⭐️".repeat(full);
-  }
+  };
 
   useEffect(() => {
-    fetch("http://localhost:3310/api/review")
+    fetch(`${import.meta.env.VITE_API_URL}/api/review`)
       .then((response) => response.json())
       .then((data) => setReviews(data))
       .catch((error) => console.error("Erreur API :", error));
@@ -51,7 +50,7 @@ function Review() {
 
   return (
     <>
-      <div className="reviewBloc">
+      <section className="reviewBloc">
         <h1 className="reviewstitle">NOS AVIS CLIENTS</h1>
         <div className="reviewStar">
           {stars(average)} ({average.toFixed(1)} / 5) — {reviews.length} avis
@@ -100,7 +99,7 @@ function Review() {
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <ReviewForm />
         </Modal>
-      </div>
+      </section>
     </>
   );
 }

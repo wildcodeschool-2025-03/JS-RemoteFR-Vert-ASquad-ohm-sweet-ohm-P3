@@ -1,9 +1,9 @@
 import { Rating } from "@mui/material";
-import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import "./ReviewForm.css";
 import { useNavigate } from "react-router";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import { useAuth } from "../../context/AuthContext";
 
 type ReviewFormFields = {
   onClose: () => void;
@@ -16,10 +16,7 @@ type ReviewFormProps = {
 };
 
 export default function ReviewForm({ onClose }: ReviewFormProps) {
-  const [userId, setUserId] = useState<number | null>(null);
-  const [firstname, setFirstname] = useState<string>("");
-  const [profilePic, setProfilePic] = useState<string>("");
-
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -34,30 +31,20 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
   });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("http://localhost:3310/api/users/1")
-      .then((res) => res.json())
-      .then((data) => {
-        setUserId(data.id);
-        setFirstname(data.firstname);
-        setProfilePic(data.profile_pic);
-      });
-  }, []);
-
   const onSubmitForm = async (data: ReviewFormFields) => {
-    if (userId === null) {
+    if (!user || user.id === null || user.id === undefined) {
       toast.error("Utilisateur non chargé !");
       return;
     }
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/review/1`,
+        `${import.meta.env.VITE_API_URL}/api/review/:id`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            user_id: userId,
+            user_id: user.id,
             review: data.review,
             grade: data.grade,
           }),
@@ -79,7 +66,7 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
   };
 
   return (
-    <div className="ReviewFormBloc">
+    <section className="ReviewFormBloc">
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -88,8 +75,12 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <div className="swiperContent">
           <div className="idReview">
-            <img className="reviewAvatar" src={profilePic} alt="avatar" />
-            <p className="reviewUser">{firstname}</p>
+            <img
+              className="reviewAvatar"
+              src={user?.profile_pic}
+              alt="avatar"
+            />
+            <p className="reviewUser">{user?.firstname}</p>
           </div>
         </div>
 
@@ -123,6 +114,6 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
 
         <input className="submitBtnReview" type="submit" value="Envoyer" />
       </form>
-    </div>
+    </section>
   );
 }

@@ -23,7 +23,7 @@ const read: RequestHandler = async (req, res, next) => {
 
 const edit: RequestHandler = async (req, res, next) => {
   try {
-    const id = Number(req.params.id);
+    const id = Number(req.cookies.token.id);
 
     if (Number.isNaN(id)) {
       res.status(400).send("ID invalide");

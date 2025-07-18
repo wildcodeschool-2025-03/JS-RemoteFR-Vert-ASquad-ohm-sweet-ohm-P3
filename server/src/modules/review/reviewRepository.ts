@@ -1,4 +1,4 @@
-import databaseClient, { type Result } from "../../../../database/client";
+import databaseClient, { type Result } from "../../../database/client";
 
 type Review = {
   id: number;

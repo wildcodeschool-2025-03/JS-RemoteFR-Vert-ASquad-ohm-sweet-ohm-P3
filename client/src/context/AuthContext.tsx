@@ -12,6 +12,7 @@ type UserContext = {
   lastname: string;
   email: string;
   role_id: number;
+  profile_pic: string;
 };
 
 type AuthContext = {

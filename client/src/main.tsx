@@ -84,7 +84,7 @@ const router = createBrowserRouter([
             element: <Bookings />,
           },
           {
-            path: "review-form/:id",
+            path: "review/:id",
             element: <ReviewForm />,
           },
         ],

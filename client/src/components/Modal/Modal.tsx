@@ -26,7 +26,12 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
         onKeyDown={(e) => e.stopPropagation()}
         tabIndex={-1} // ✅ OK pour éviter le focus
       >
-        <button className="modalClose" onClick={onClose} type="button">
+        <button
+          className="modalClose"
+          onClick={onClose}
+          type="button"
+          aria-label="Fermer la fenêtre"
+        >
           ×
         </button>
         {children}
