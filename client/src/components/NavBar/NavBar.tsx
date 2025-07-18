@@ -18,7 +18,9 @@ function NavBar() {
         <img className="logo" src={logo} alt="logo de geocode" />
       </NavLink>
       <ul>
-        <li>PROFIL</li>
+        <NavLink to="/profil">
+          <li>PROFIL</li>
+        </NavLink>
         <li>
           <NavLink to="/bookings">RESERVATION</NavLink>
         </li>

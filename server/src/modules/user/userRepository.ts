@@ -6,11 +6,19 @@ type User = {
   firstname: string;
   lastname: string;
   email: string;
+  birthday: string;
   hashed_password: string;
   car_brand: string;
   car_template: string;
   car_socket: string;
   role_id: number;
+};
+
+type UserUpdate = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  birthdate: string;
 };
 
 class UserRepository {
@@ -44,6 +52,17 @@ class UserRepository {
     return rows as User[];
   }
 
+  // Recupere un utilisateur apr son ID
+  async readById(id: number): Promise<User | null> {
+    const [rows] = await databaseClient.query<Rows>(
+      "SELECT id, firstname, lastname, email, birthdate, car_brand, car_template, car_socket FROM user WHERE id = ?",
+      [id],
+    );
+
+    const user = rows[0] as User | undefined;
+    return user ?? null;
+  }
+
   async readByEmailWithPassword(email: string): Promise<User | null> {
     const [rows] = await databaseClient.query<Rows>(
       "SELECT id, firstname, lastname, email, role_id, password AS hashed_password FROM user WHERE email = ?",
@@ -52,6 +71,16 @@ class UserRepository {
 
     const user = rows[0] as User | undefined;
     return user ?? null;
+  }
+
+  // Met a jour les information de l'utilisateur
+  async update(id: number, data: UserUpdate) {
+    const { firstname, lastname, email, birthdate } = data;
+
+    await databaseClient.query(
+      "UPDATE user SET firstname = ?, lastname = ?, email = ?, birthdate = ? WHERE id = ?",
+      [firstname, lastname, email, birthdate, id],
+    );
   }
 }
 
