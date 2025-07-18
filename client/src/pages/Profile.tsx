@@ -24,6 +24,11 @@ function Profile() {
   const [email, setEmail] = useState("");
   const [birthdate, setBirthdate] = useState("");
 
+  const [firstnameError, setFirstnameError] = useState("");
+  const [lastnameError, setLastnameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [birthdateError, setBirthdateError] = useState("");
+
   useEffect(() => {
     axios
       // On envoie une requête GET à notre serveur pour récupérer les infos de l’utilisateur avec l’ID 1
@@ -52,15 +57,22 @@ function Profile() {
   const handleUpdate = async (e: React.FormEvent) => {
     // On empêche le rechargement de la page par défaut
     e.preventDefault();
+
+    if (firstnameError || lastnameError || emailError || birthdateError) {
+      alert("Veuillez corriger les erreurs avant de soumettre.");
+      return;
+    }
+
     if (!user) return;
 
     try {
       // On envoie une requête PUT au backend pour modifier les infos utilisateur
-      await axios.put(`http://localhost:3310/api/users/${user.id}`, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/1`, {
         firstname,
         lastname,
         email,
         birthdate,
+        withCredentials: true,
       });
 
       // On met aussi à jour l’état local user avec les nouvelles infos
@@ -78,6 +90,47 @@ function Profile() {
       // Si erreur (ex: problème serveur), on affiche un message
       alert("Erreur lors de la mise à jour.");
     }
+  };
+
+  const handleFirstnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length > 15) {
+      setFirstnameError("Le prénom ne doit pas dépasser 15 caractères.");
+    } else {
+      setFirstnameError("");
+    }
+    setFirstname(value);
+  };
+
+  const handleLastnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length > 15) {
+      setLastnameError("Le nom ne doit pas dépasser 15 caractères.");
+    } else {
+      setLastnameError("");
+    }
+    setLastname(value);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Exemple simple, tu peux ajouter regex email si tu veux
+    if (value.length > 50) {
+      setEmailError("L'email ne doit pas dépasser 50 caractères.");
+    } else {
+      setEmailError("");
+    }
+    setEmail(value);
+  };
+
+  const handleBirthdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (new Date(value) >= new Date("2025-01-01")) {
+      setBirthdateError("La date de naissance doit être avant 2025.");
+    } else {
+      setBirthdateError("");
+    }
+    setBirthdate(value);
   };
 
   // Si les données sont encore en train de se charger, on affiche un message temporaire
@@ -108,8 +161,9 @@ function Profile() {
             <input
               type="text"
               value={firstname}
-              onChange={(e) => setFirstname(e.target.value)}
+              onChange={handleFirstnameChange}
             />
+            {firstnameError && <p className="error">{firstnameError}</p>}
           </label>
 
           <label className="label-profil">
@@ -117,17 +171,15 @@ function Profile() {
             <input
               type="text"
               value={lastname}
-              onChange={(e) => setLastname(e.target.value)}
+              onChange={handleLastnameChange}
             />
+            {lastnameError && <p className="error">{lastnameError}</p>}
           </label>
 
           <label className="label-profil">
             <p>Email</p>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <input type="email" value={email} onChange={handleEmailChange} />
+            {emailError && <p className="error">{emailError}</p>}
           </label>
 
           <label className="label-profil">
@@ -135,8 +187,9 @@ function Profile() {
             <input
               type="date"
               value={birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
+              onChange={handleBirthdateChange}
             />
+            {birthdateError && <p className="error">{birthdateError}</p>}
           </label>
 
           <button className="btn-entrer" type="submit">

@@ -36,6 +36,9 @@ const ProtectedRoute: React.FC = () => {
   return <Outlet />;
 };
 
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
 
@@ -83,11 +86,11 @@ const router = createBrowserRouter([
             path: "bookings/:id",
             element: <Bookings />,
           },
+          {
+            path: "profil",
+            element: <Profile />,
+          },
         ],
-      },
-      {
-        path: "profil",
-        element: <Profile />,
       },
     ],
   },

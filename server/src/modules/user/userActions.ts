@@ -43,14 +43,24 @@ const read: RequestHandler = async (req, res, next) => {
 
 const update: RequestHandler = async (req, res, next) => {
   try {
-    // Recupere l'ID de l'utilisateur depuis l'url
-    const id = Number(req.params.id);
+    const idFromParams = Number(req.params.id);
+    const idFromAuth = Number(req.auth.sub);
 
-    // Recupere les donner envoyer par le client
+    if (!idFromAuth) {
+      res.status(401).json({ message: "Non autorisé." });
+      return;
+    }
+
+    if (idFromAuth !== idFromParams) {
+      res
+        .status(403)
+        .json({ message: "Vous ne pouvez pas modifier ce profil." });
+      return;
+    }
+
     const { firstname, lastname, email, birthdate } = req.body;
 
-    //Met a jour l'utilisateur en base de donner
-    await userRepository.update(id, {
+    await userRepository.update(idFromParams, {
       firstname,
       lastname,
       email,

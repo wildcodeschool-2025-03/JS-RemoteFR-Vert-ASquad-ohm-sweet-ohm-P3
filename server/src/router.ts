@@ -24,6 +24,7 @@ router.get("/api/review/:id", reviewActions.read);
 import authActions from "./modules/auth/authAction";
 import authMiddleware from "./modules/middleware/authMiddleware";
 import connectedMiddleware from "./modules/middleware/connectedMiddleware";
+import { validateUserUpdate } from "./modules/middleware/userValidation";
 import userActions from "./modules/user/userActions";
 
 router.get("/api/users", userActions.browse);
@@ -36,7 +37,12 @@ router.get(
 );
 router.post("/api/logout", authActions.logout);
 router.post("/api/users", authActions.hashPassword, userActions.add);
-router.put("/api/users/:id", userActions.update);
+router.put(
+  "/api/users/:id",
+  authMiddleware.verifyToken,
+  validateUserUpdate,
+  userActions.update,
+);
 
 import terminalAction from "./modules/terminal/terminalAction";
 
