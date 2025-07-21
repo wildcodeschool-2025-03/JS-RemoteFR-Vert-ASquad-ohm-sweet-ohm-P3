@@ -8,6 +8,21 @@ const browse: RequestHandler = async (req, res) => {
   res.json(users);
 };
 
+const read: RequestHandler = async (req, res, next) => {
+  try {
+    const parseId = Number.parseInt(req.params.id);
+    const user = await userRepository.read(parseId);
+
+    if (user != null) {
+      res.json(user);
+    } else {
+      res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
 const add: RequestHandler = async (req, res, next) => {
   try {
     const newUser = {
@@ -19,23 +34,12 @@ const add: RequestHandler = async (req, res, next) => {
       car_brand: req.body.car_brand,
       car_template: req.body.car_template,
       car_socket: req.body.car_socket,
+      profile_pic: req.body.profile_pic,
     };
 
     const insertId = await userRepository.create(newUser);
 
-    res.status(201).json({ insertId });
-  } catch (err) {
-    next(err);
-  }
-};
-
-const read: RequestHandler = async (req, res, next) => {
-  try {
-    const id = Number(req.params.id);
-
-    const user = await userRepository.readById(id);
-
-    res.status(200).json(user);
+    res.status(200).json({ insertId });
   } catch (err) {
     next(err);
   }
