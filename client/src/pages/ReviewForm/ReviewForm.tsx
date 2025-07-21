@@ -43,10 +43,12 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({
-            user_id: user.id,
-            review: data.review,
-            grade: data.grade,
+            user_id: user?.id,
+            profile_pic: user?.profile_pic,
+            review: data.review.trim(),
+            grade: Number(data.grade),
           }),
         },
       );
@@ -80,7 +82,9 @@ export default function ReviewForm({ onClose }: ReviewFormProps) {
               src={user?.profile_pic}
               alt="avatar"
             />
-            <p className="reviewUser">{user?.firstname}</p>
+            <p className="reviewUser">
+              {user ? user.firstname : "Utilisateur non connecté"}
+            </p>
           </div>
         </div>
 

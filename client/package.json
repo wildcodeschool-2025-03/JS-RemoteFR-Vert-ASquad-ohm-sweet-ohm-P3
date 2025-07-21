@@ -8,14 +8,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
+    "@babel/runtime": "^7.27.6",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^7.2.0",
     "@mui/styled-engine": "^7.2.0",
-=======
     "axios": "^1.10.0",
->>>>>>> dev
     "leaflet": "^1.9.4",
     "leaflet-routing-machine": "^3.2.12",
     "react": "^19.1.0",

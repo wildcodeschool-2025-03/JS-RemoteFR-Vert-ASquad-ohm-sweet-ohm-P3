@@ -23,8 +23,15 @@ const read: RequestHandler = async (req, res, next) => {
 
 const add: RequestHandler = async (req, res, next) => {
   try {
+    const userIdFromToken = req.auth?.sub;
+    if (!userIdFromToken) {
+      res.sendStatus(401);
+      return;
+    }
+
     const newReview = {
-      user_id: req.body.user_id,
+      user_id: +userIdFromToken,
+      profile_pic: req.body.profile_pic,
       review: req.body.review,
       grade: req.body.grade,
     };
@@ -33,7 +40,8 @@ const add: RequestHandler = async (req, res, next) => {
 
     res.status(201).json({ id: insertId });
   } catch (err) {
-    next(err);
+    console.error("Erreur création review :", err);
+    res.sendStatus(500);
   }
 };
 

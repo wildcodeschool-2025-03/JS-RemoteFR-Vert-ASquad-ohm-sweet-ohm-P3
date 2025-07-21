@@ -19,7 +19,7 @@ import { validateReview } from "./middleware/reviewValidation";
 
 router.get("/api/review", reviewActions.browse);
 router.get("/api/review/:id", reviewActions.read);
-router.post("/api/review/", validateReview, reviewActions.add);
+router.post("/api/review/", authMiddleware, validateReview, reviewActions.add);
 
 /* ************************************************************************* */
 
@@ -31,16 +31,12 @@ import userActions from "./modules/user/userActions";
 router.get("/api/users", userActions.browse);
 router.get("/api/users/:id", userActions.read);
 router.post("/api/login", authActions.login);
-router.get(
-  "/api/me",
-  authMiddleware.verifyToken,
-  connectedMiddleware.connected,
-);
+router.get("/api/me", authMiddleware, connectedMiddleware.connected);
 router.post("/api/logout", authActions.logout);
 router.post("/api/users", authActions.hashPassword, userActions.add);
 router.put(
   "/api/users/:id",
-  authMiddleware.verifyToken,
+  authMiddleware,
   validateUserUpdate,
   userActions.update,
 );
@@ -71,6 +67,7 @@ import bookingActions from "./modules/booking/bookingActions";
 router.get("/api/bookings", bookingActions.browse);
 router.post("/api/bookings", validateBooking, bookingActions.add);
 
+import verifyToken from "./middleware/authMiddleware";
 import { validateUserUpdate } from "./middleware/userValidation";
 /* ************************************************************************* */
 import formAction from "./modules/form/formAction";

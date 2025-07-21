@@ -9,12 +9,17 @@ const browse: RequestHandler = async (req, res) => {
 };
 
 const read: RequestHandler = async (req, res, next) => {
-  const parseId = Number.parseInt(req.params.id);
-  const user = await userRepository.read(parseId);
-  if (user != null) {
-    res.json(user);
-  } else {
-    res.status(404).json;
+  try {
+    const parseId = Number.parseInt(req.params.id);
+    const user = await userRepository.read(parseId);
+
+    if (user != null) {
+      res.json(user);
+    } else {
+      res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+  } catch (err) {
+    next(err);
   }
 };
 

@@ -2,9 +2,6 @@ import type { RequestHandler } from "express";
 import { z } from "zod";
 
 export const reviewSchema = z.object({
-  user_id: z.number({
-    required_error: "Vous devez être connecté pour laisser un avis.",
-  }),
   review: z
     .string()
     .min(1, "Le champ 'review' est requis.")
