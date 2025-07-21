@@ -17,7 +17,7 @@ const read: RequestHandler = async (req, res, next) => {
   if (review != null) {
     res.json(review);
   } else {
-    res.send(404);
+    res.status(404);
   }
 };
 
@@ -41,7 +41,7 @@ const add: RequestHandler = async (req, res, next) => {
     res.status(201).json({ id: insertId });
   } catch (err) {
     console.error("Erreur création review :", err);
-    res.sendStatus(500);
+    res.status(500);
   }
 };
 
