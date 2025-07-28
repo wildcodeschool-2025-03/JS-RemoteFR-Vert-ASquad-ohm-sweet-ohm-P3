@@ -51,6 +51,7 @@ const ProtectedRoute: React.FC<ProtectedRoute> = ({
 
 import axios from "axios";
 import AdminPage from "./pages/Admin/Admin";
+import NewsPage from "./pages/NewsPage";
 
 axios.defaults.withCredentials = true;
 // Import additional components for new routes
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/news",
+        element: <NewsPage />,
       },
       {
         path: "",

@@ -31,6 +31,10 @@ footer {
     height: 60px;
     width: auto;
   }
+  .ListFooter li a {
+    color: white;
+    text-decoration: none;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -60,5 +64,10 @@ footer {
   .ListFooter a {
     text-decoration-color: transparent;
     color: white;
+  }
+
+  .ListFooter li a {
+    color: white;
+    text-decoration: none;
   }
 }
