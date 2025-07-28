@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import avatar from "../assets/images/avatar.jpg";
 import voiture from "../assets/images/voiture.jpg";
 import "./Profile.css";
+import BookingHistory from "../components/DeleteBooking/BookingHistory";
 
 type User = {
   id: number;
@@ -236,123 +237,126 @@ function Profile() {
   }
 
   return (
-    <main>
-      <div className="header1" />
+    <>
+      <main>
+        <div className="header1" />
 
-      <div className="section1">
-        <div className="profil">
-          <h1>Profil</h1>
-          <div className="img-profil">
-            <img src={avatar} alt="Avatar" />
+        <div className="section1">
+          <div className="profil">
+            <h1>Profil</h1>
+            <div className="img-profil">
+              <img src={avatar} alt="Avatar" />
+            </div>
           </div>
+
+          <form className="form" onSubmit={handleUpdate}>
+            <label className="label-profil">
+              <p>Prenom</p>
+              <input
+                type="text"
+                value={firstname}
+                onChange={handleFirstnameChange}
+              />
+              {firstnameError && <p className="error">{firstnameError}</p>}
+            </label>
+
+            <label className="label-profil">
+              <p>Nom</p>
+              <input
+                type="text"
+                value={lastname}
+                onChange={handleLastnameChange}
+              />
+              {lastnameError && <p className="error">{lastnameError}</p>}
+            </label>
+
+            <label className="label-profil">
+              <p>Email</p>
+              <input type="email" value={email} onChange={handleEmailChange} />
+              {emailError && <p className="error">{emailError}</p>}
+            </label>
+
+            <label className="label-profil">
+              <p>Date de naissance</p>
+              <input
+                type="date"
+                value={birthdate}
+                onChange={handleBirthdateChange}
+              />
+              {birthdateError && <p className="error">{birthdateError}</p>}
+            </label>
+
+            <button className="btn-entrer" type="submit">
+              Sauvegarder
+            </button>
+          </form>
         </div>
 
-        <form className="form" onSubmit={handleUpdate}>
-          <label className="label-profil">
-            <p>Prenom</p>
-            <input
-              type="text"
-              value={firstname}
-              onChange={handleFirstnameChange}
-            />
-            {firstnameError && <p className="error">{firstnameError}</p>}
-          </label>
-
-          <label className="label-profil">
-            <p>Nom</p>
-            <input
-              type="text"
-              value={lastname}
-              onChange={handleLastnameChange}
-            />
-            {lastnameError && <p className="error">{lastnameError}</p>}
-          </label>
-
-          <label className="label-profil">
-            <p>Email</p>
-            <input type="email" value={email} onChange={handleEmailChange} />
-            {emailError && <p className="error">{emailError}</p>}
-          </label>
-
-          <label className="label-profil">
-            <p>Date de naissance</p>
-            <input
-              type="date"
-              value={birthdate}
-              onChange={handleBirthdateChange}
-            />
-            {birthdateError && <p className="error">{birthdateError}</p>}
-          </label>
-
-          <button className="btn-entrer" type="submit">
-            Sauvegarder
-          </button>
-        </form>
-      </div>
-
-      <div className="section2">
-        <div className="profil2">
-          <div className="img-profil2">
-            <img src={voiture} alt="Voiture" />
+        <div className="section2">
+          <div className="profil2">
+            <div className="img-profil2">
+              <img src={voiture} alt="Voiture" />
+            </div>
           </div>
+
+          <form className="form" onSubmit={handleUpdateVehicle}>
+            <div className="form-car">
+              <p>Marque</p>
+              <select
+                value={carBrand}
+                onChange={(e) => {
+                  const brandName = e.target.value;
+                  setCarBrand(brandName);
+                  const brand = brands.find((b) => b.name === brandName);
+                  setSelectedBrand(brand?.id ?? null);
+                }}
+              >
+                <option value="">--Sélectionnez une marque--</option>
+                {brands.map((brand) => (
+                  <option key={brand.id} value={brand.name}>
+                    {brand.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-car">
+              <p>Model</p>
+              <select
+                value={carTemplate}
+                onChange={(e) => setCarTemplate(e.target.value)}
+              >
+                <option value="">--Sélectionnez un modèle--</option>
+                {models.map((model) => (
+                  <option key={model.id} value={model.name}>
+                    {model.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-car">
+              <p>Type de prise</p>
+              <select
+                value={carSocket}
+                onChange={(e) => setCarSocket(e.target.value)}
+              >
+                <option value="">--Sélectionnez un type de prise--</option>
+                <option value="Type 1">Type 1</option>
+                <option value="Type 2">Type 2</option>
+                <option value="CCS">CCS</option>
+                <option value="CHAdeMO">CHAdeMO</option>
+              </select>
+            </div>
+
+            <button className="btn-entrer" type="submit">
+              Sauvegarder
+            </button>
+          </form>
         </div>
-
-        <form className="form" onSubmit={handleUpdateVehicle}>
-          <div className="form-car">
-            <p>Marque</p>
-            <select
-              value={carBrand}
-              onChange={(e) => {
-                const brandName = e.target.value;
-                setCarBrand(brandName);
-                const brand = brands.find((b) => b.name === brandName);
-                setSelectedBrand(brand?.id ?? null);
-              }}
-            >
-              <option value="">--Sélectionnez une marque--</option>
-              {brands.map((brand) => (
-                <option key={brand.id} value={brand.name}>
-                  {brand.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-car">
-            <p>Model</p>
-            <select
-              value={carTemplate}
-              onChange={(e) => setCarTemplate(e.target.value)}
-            >
-              <option value="">--Sélectionnez un modèle--</option>
-              {models.map((model) => (
-                <option key={model.id} value={model.name}>
-                  {model.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-car">
-            <p>Type de prise</p>
-            <select
-              value={carSocket}
-              onChange={(e) => setCarSocket(e.target.value)}
-            >
-              <option value="">--Sélectionnez un type de prise--</option>
-              <option value="Type 1">Type 1</option>
-              <option value="Type 2">Type 2</option>
-              <option value="CCS">CCS</option>
-              <option value="CHAdeMO">CHAdeMO</option>
-            </select>
-          </div>
-
-          <button className="btn-entrer" type="submit">
-            Sauvegarder
-          </button>
-        </form>
-      </div>
-    </main>
+      </main>
+      <BookingHistory />
+    </>
   );
 }
 
