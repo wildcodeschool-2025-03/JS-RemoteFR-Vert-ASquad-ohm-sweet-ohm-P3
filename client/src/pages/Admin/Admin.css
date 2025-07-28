@@ -1,0 +1,131 @@
+/* Conteneur principal */
+form {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre principal */
+form > h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Header */
+.header1 {
+  height: 1px;
+  background-color: #ccc;
+  margin-bottom: 2rem;
+}
+
+/* Section profil */
+.section1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.section1 h1 {
+  margin-bottom: 1rem;
+}
+
+/* Image de profil */
+.img-profil img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #21a89a;
+}
+
+/* Section formulaire */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userInfo {
+  margin: 0.4rem 0;
+  text-align: center;
+}
+
+/* Titre admin (placeholder) */
+.TitleAdmin {
+  margin-top: 2rem;
+}
+
+/* Erreur */
+.error {
+  color: red;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+/* Bouton : sélectionner un fichier */
+.selectFileBtn {
+  background: linear-gradient(270deg, #7cd858 1.35%, #21a89a 101.35%);
+  color: #fff;
+  padding: 0.7rem 1.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  transition: opacity 0.3s ease;
+}
+
+.selectFileBtn:hover,
+.selectFileBtn:focus {
+  opacity: 0.9;
+}
+
+/* Bouton envoyer */
+.submitBtnClass {
+  background: linear-gradient(#7cd858, #21a89a);
+  color: #fff;
+  padding: 0.7rem 1.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  transition: opacity 0.3s ease;
+}
+
+.submitBtnClass:hover,
+.submitBtnClass:focus {
+  opacity: 0.9;
+}
+/* Titre */
+.dropCardTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #000;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Carte contenant le Dropcsv */
+.dropCardStyled {
+  background-color: #fefefe;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  max-width: 550px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+/* Conteneur du composant Dropcsv */
+.dropzoneBox {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 2rem;
+  background-color: #fafafa;
+}

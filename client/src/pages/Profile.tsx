@@ -30,13 +30,22 @@ function Profile() {
   const [birthdateError, setBirthdateError] = useState("");
 
   useEffect(() => {
-    axios
-      // On envoie une requête GET à notre serveur pour récupérer les infos de l’utilisateur avec l’ID 1
-      .get(`${import.meta.env.VITE_API_URL}/api/users/1`)
-      .then((res) => {
-        const data = res.data;
+    const token = localStorage.getItem("token");
 
-        // On formate le birthdate pour qu'il soit compatible abev le input de type "date"
+    fetch(`${import.meta.env.VITE_API_URL}/api/users/1`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Erreur lors de la récupération de l'utilisateur");
+        }
+        return res.json();
+      })
+      .then((data) => {
         const birthdate = data.birthdate
           ? new Date(data.birthdate).toISOString().split("T")[0]
           : "";
@@ -48,7 +57,8 @@ function Profile() {
         setBirthdate(birthdate);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error("Erreur dans fetch:", error);
         setLoading(false);
       });
   }, []);
@@ -125,8 +135,8 @@ function Profile() {
 
   const handleBirthdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (new Date(value) >= new Date("2025-01-01")) {
-      setBirthdateError("La date de naissance doit être avant 2025.");
+    if (new Date(value) >= new Date("2005-01-01")) {
+      setBirthdateError("La date de naissance doit être avant 2005.");
     } else {
       setBirthdateError("");
     }

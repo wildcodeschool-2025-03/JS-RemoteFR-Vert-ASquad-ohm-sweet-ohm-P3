@@ -6,7 +6,7 @@ type User = {
   firstname: string;
   lastname: string;
   email: string;
-  birthday: string;
+  birthdate: string;
   hashed_password: string;
   car_brand: string;
   car_template: string;
@@ -20,6 +20,11 @@ type UserUpdate = {
   lastname: string;
   email: string;
   birthdate: string;
+  hashed_password: string;
+  car_brand: string;
+  car_template: string;
+  car_socket: string;
+  role_id: number;
 };
 
 class UserRepository {
@@ -73,16 +78,6 @@ class UserRepository {
 
     const user = rows[0] as User | undefined;
     return user ?? null;
-  }
-
-  // Met a jour les information de l'utilisateur
-  async update(id: number, data: UserUpdate) {
-    const { firstname, lastname, email, birthdate } = data;
-
-    await databaseClient.query(
-      "UPDATE user SET firstname = ?, lastname = ?, email = ?, birthdate = ? WHERE id = ?",
-      [firstname, lastname, email, birthdate, id],
-    );
   }
 }
 
