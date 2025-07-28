@@ -4,8 +4,10 @@ import { useAuth } from "../../context/AuthContext";
 import "./Admin.css";
 import { useForm } from "react-hook-form";
 
-import UserList from "../../components/AdminComponent/UserList";
 import Dropcsv from "../../components/Drop/Dropcsv";
+import UserList from "../../components/AdminComponent/UserList/UserList";
+import CarList from "../../components/AdminComponent/CarList/CarList";
+import TerminalList from "../../components/AdminComponent/TerminalList/TerminalList";
 
 interface User {
   id: number;
@@ -104,6 +106,8 @@ function AdminPage() {
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <h1>Bienvenue sur la page d'administration !</h1>
         <UserList />
+        <CarList />
+        <TerminalList />
         <input
           type="hidden"
           {...register("user_id")}

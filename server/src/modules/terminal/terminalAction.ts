@@ -15,7 +15,7 @@ const browse: RequestHandler = async (req, res, next) => {
 
     if (
       [southWestLng, southWestLat, northEastLng, northEastLat].some(
-        Number.isNaN,
+        Number.isNaN
       )
     ) {
       res.status(404).json();
@@ -26,7 +26,7 @@ const browse: RequestHandler = async (req, res, next) => {
       southWestLat,
       southWestLng,
       northEastLat,
-      northEastLng,
+      northEastLng
     );
 
     res.json(terminals);
