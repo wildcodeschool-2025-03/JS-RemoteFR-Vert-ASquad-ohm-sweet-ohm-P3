@@ -60,13 +60,24 @@ const update: RequestHandler = async (req, res, next) => {
       return;
     }
 
-    const { firstname, lastname, email, birthdate } = req.body;
+    const {
+      firstname,
+      lastname,
+      email,
+      birthdate,
+      car_brand,
+      car_template,
+      car_socket,
+    } = req.body;
 
     await userRepository.update(idFromParams, {
       firstname,
       lastname,
       email,
       birthdate,
+      car_brand,
+      car_template,
+      car_socket,
     });
 
     res.status(204);

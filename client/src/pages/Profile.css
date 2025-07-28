@@ -42,7 +42,7 @@
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-  margin: 0 auto;
+  margin: 0 auto 30px;
 }
 
 .label-profil {
@@ -128,4 +128,23 @@
   font-size: 1.2rem;
   width: 150px;
   font-weight: bold;
+}
+
+.form-car {
+  font-weight: bold;
+  padding: 1rem;
+}
+
+.form-car p {
+  font-size: 1.3rem;
+  display: flex;
+}
+
+.form-car select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d1d1;
+  margin-top: 15px;
+  font-size: 16px;
+  width: 260px;
 }

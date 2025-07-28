@@ -56,4 +56,9 @@ footer {
     gap: 0.5rem;
     order: -1;
   }
+
+  .ListFooter a {
+    text-decoration-color: transparent;
+    color: white;
+  }
 }
