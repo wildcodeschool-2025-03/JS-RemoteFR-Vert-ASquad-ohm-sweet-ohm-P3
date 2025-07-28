@@ -14,6 +14,7 @@ type User = {
   email: string;
   hashed_password: string;
   role_id: number;
+  profile_pic: string;
 };
 
 const login: RequestHandler = async (req, res, next) => {

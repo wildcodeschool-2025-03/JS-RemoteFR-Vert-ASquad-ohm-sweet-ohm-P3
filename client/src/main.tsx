@@ -21,6 +21,7 @@ import Login from "./pages/User/Login/Login";
 import Register from "./pages/User/Registrer/Registrer";
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import ReviewForm from "./pages/ReviewForm/ReviewForm";
 
 type ProtectedRoute = {
   children?: React.ReactNode;
@@ -102,6 +103,14 @@ const router = createBrowserRouter([
           {
             path: "profil",
             element: <Profile />,
+          },
+          {
+            path: "profil",
+            element: <Profile />,
+          },
+          {
+            path: "review/",
+            element: <ReviewForm />,
           },
         ],
       },
