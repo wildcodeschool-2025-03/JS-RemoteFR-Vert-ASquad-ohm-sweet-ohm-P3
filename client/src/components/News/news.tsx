@@ -13,7 +13,7 @@ function News() {
 
   useEffect(() => {
     const getNews = () => {
-      fetch("http://localhost:3310/api/news/")
+      fetch(`${import.meta.env.VITE_API_URL}/api/news/`)
         .then((res) => {
           if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
