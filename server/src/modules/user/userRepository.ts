@@ -14,12 +14,15 @@ type User = {
   role_id: number;
 };
 
-type UserUpdate = {
+type UserUpdate = Partial<{
   firstname: string;
   lastname: string;
   email: string;
   birthdate: string;
-};
+  car_brand: string;
+  car_template: string;
+  car_socket: string;
+}>;
 
 class UserRepository {
   async create(user: Omit<User, "id" | "role_id">) {
@@ -75,11 +78,28 @@ class UserRepository {
 
   // Met a jour les information de l'utilisateur
   async update(id: number, data: UserUpdate) {
-    const { firstname, lastname, email, birthdate } = data;
+    const {
+      firstname,
+      lastname,
+      email,
+      birthdate,
+      car_brand,
+      car_template,
+      car_socket,
+    } = data;
 
     await databaseClient.query(
-      "UPDATE user SET firstname = ?, lastname = ?, email = ?, birthdate = ? WHERE id = ?",
-      [firstname, lastname, email, birthdate, id],
+      "UPDATE user SET firstname = ?, lastname = ?, email = ?, birthdate = ?, car_brand = ?, car_template = ?, car_socket = ? WHERE id = ?",
+      [
+        firstname,
+        lastname,
+        email,
+        birthdate,
+        car_brand,
+        car_template,
+        car_socket,
+        id,
+      ],
     );
   }
 }
