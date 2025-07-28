@@ -25,6 +25,8 @@ class InformationRepository {
     return rows[0] as information;
   }
 
+  /* Le code n'est pas encore implémenté. 
+  
   async update(information: information) {
     const [result] = await databaseClient.query<Result>(
       "update information set question = ? , answer = ? where id = ?",
@@ -32,8 +34,10 @@ class InformationRepository {
     );
 
     return result.affectedRows;
-  }
+  } */
 
+  /* Le code n'est pas encore implémenté.
+  
   async create(information: Omit<information, "id">) {
     const [result] = await databaseClient.query<Result>(
       "INSERT INTO information (question, answer) VALUES (?, ?)",
@@ -41,7 +45,9 @@ class InformationRepository {
     );
     return result.insertId;
   }
-
+ */
+  /* Le code n'est pas encore implémenté.  
+  
   async delete(id: number) {
     const [result] = await databaseClient.query<Result>(
       "DELETE FROM information WHERE id = ?",
@@ -49,7 +55,7 @@ class InformationRepository {
     );
 
     return result.affectedRows;
-  }
+  } */
 }
 
 export default new InformationRepository();

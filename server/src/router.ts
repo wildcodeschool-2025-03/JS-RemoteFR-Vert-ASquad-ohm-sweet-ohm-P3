@@ -75,22 +75,12 @@ import formAction from "./modules/form/formAction";
 router.post("/api/contactForm", formAction.sendMail);
 
 import informationAction from "./modules/information/informationAction";
-router.get("/api/information/:id", informationAction.read);
-router.get("/api/information/", informationAction.browse);
-
-/* A activer lors de la mise en place de la page Admin
- router.put("/api/information/:id", informationAction.edit);
-router.post("/api/information", informationAction.add);
-router.delete("/api/information/:id", informationAction.destroy); */
+router.get("/api/informations/:id", informationAction.read);
+router.get("/api/informations/", informationAction.browse);
 
 import newsAction from "./modules/news/newsAction";
 
 router.get("/api/news/", newsAction.browse);
 router.get("/api/news/:id", newsAction.read);
-
-/*A activer lors de la mise en place de la page Admin
-router.put("/api/news/:id", newsAction.edit);
-router.post("/api/news/", newsAction.add);
-router.delete("/api/news/:id", newsAction.destroy); */
 
 export default router;

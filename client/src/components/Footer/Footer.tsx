@@ -12,7 +12,7 @@ function Footer() {
             <NavLink to="/contact">Contact</NavLink>
           </li>
           <li>
-            <NavLink to="/news">Actualités / Informations</NavLink>
+            <NavLink to="/actualités">Actualités / Informations</NavLink>
           </li>
           <li>Qui sommes nous ?</li>
           <li>Mention legales</li>

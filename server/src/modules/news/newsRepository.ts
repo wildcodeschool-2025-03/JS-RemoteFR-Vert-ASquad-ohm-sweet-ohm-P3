@@ -26,6 +26,8 @@ class NewsRepository {
     return rows[0] as news;
   }
 
+  /* Le code n'est pas encore implémenté.
+  
   async update(news: news) {
     const [result] = await databaseClient.query<Result>(
       "UPDATE news SET title = ?, article = ?, date = ? WHERE id = ?",
@@ -33,23 +35,27 @@ class NewsRepository {
     );
 
     return result.affectedRows;
-  }
+  } */
 
-  async create(news: Omit<news, "id">) {
+  /* Le code n'est pas encore implémenté. 
+ 
+ async create(news: Omit<news, "id">) {
     const [result] = await databaseClient.query<Result>(
       "INSERT INTO news (title, article, date) VALUES (?, ?, ? )",
       [news.article, news.title, news.date],
     );
     return result.insertId;
-  }
+  } */
 
-  async delete(id: number) {
+  /* Le code n'est pas encore implémenté. 
+
+async delete(id: number) {
     const [result] = await databaseClient.query<Result>(
       "DELETE FROM news WHERE id = ?",
       [id],
     );
 
     return result.affectedRows;
-  }
+  } */
 }
 export default new NewsRepository();

@@ -6,7 +6,7 @@ const browse: RequestHandler = async (req, res, next) => {
   try {
     const news = await newsRepository.readAll();
 
-    res.json(news);
+    res.status(200).json(news);
   } catch (err) {
     next(err);
   }
@@ -20,12 +20,14 @@ const read: RequestHandler = async (req, res, next) => {
     if (news == null) {
       res.sendStatus(404);
     } else {
-      res.json(news);
+      res.status(200).json(news);
     }
   } catch (err) {
     next(err);
   }
 };
+
+/* Le code n'est pas encore implémenté. 
 
 const edit: RequestHandler = async (req, res, next) => {
   try {
@@ -46,7 +48,9 @@ const edit: RequestHandler = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
+}; */
+
+/* Le code n'est pas encore implémenté. 
 
 const add: RequestHandler = async (req, res, next) => {
   try {
@@ -62,7 +66,9 @@ const add: RequestHandler = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
+}; */
+
+/* Le code n'est pas encore implémenté.
 
 const destroy: RequestHandler = async (req, res, next) => {
   try {
@@ -77,6 +83,6 @@ const destroy: RequestHandler = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
+}; */
 
-export default { browse, read, edit, add, destroy };
+export default { browse, read };

@@ -15,7 +15,7 @@ function Information() {
 
   useEffect(() => {
     const getInformation = () => {
-      fetch(`${import.meta.env.VITE_API_URL}/api/information/`)
+      fetch(`${import.meta.env.VITE_API_URL}/api/informations/`)
         .then((res) => {
           if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
