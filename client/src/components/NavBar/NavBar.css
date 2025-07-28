@@ -28,6 +28,45 @@
   margin-top: 10px;
 }
 
+.navbar-right {
+  font-size: 1em;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-avatar-navBar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.navBar-button {
+  text-align: center;
+}
+
+.logout-button {
+  border-radius: 5px;
+  padding: 2px;
+  color: black;
+  text-decoration-color: transparent;
+}
+
+.logout-link {
+  color: black;
+  text-decoration-color: transparent;
+}
+
+@media screen and (max-width: 767px) {
+  .user-name-navBar {
+    font-size: 0.75rem;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .navbar ul {
     display: flex;

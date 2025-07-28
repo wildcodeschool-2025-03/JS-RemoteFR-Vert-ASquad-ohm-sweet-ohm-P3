@@ -8,7 +8,6 @@ const router = express.Router();
 
 // Define item-related routes
 import itemActions from "./modules/item/itemActions";
-import reviewActions from "./modules/review/review/reviewActions";
 
 router.get("/api/items", itemActions.browse);
 router.get("/api/items/:id", itemActions.read);
@@ -16,17 +15,30 @@ router.post("/api/items", itemActions.add);
 
 /* ************************************************************************* */
 
-router.get("/api/review", reviewActions.browse);
-router.get("/api/review/:id", reviewActions.read);
-
 /* ************************************************************************* */
 
 import authActions from "./modules/auth/authAction";
+import authMiddleware from "./modules/middleware/authMiddleware";
+import connectedMiddleware from "./modules/middleware/connectedMiddleware";
+import { validateUserUpdate } from "./modules/middleware/userValidation";
 import userActions from "./modules/user/userActions";
 
 router.get("/api/users", userActions.browse);
+router.get("/api/users/:id", userActions.read);
 router.post("/api/login", authActions.login);
+router.get(
+  "/api/me",
+  authMiddleware.verifyToken,
+  connectedMiddleware.connected,
+);
+router.post("/api/logout", authActions.logout);
 router.post("/api/users", authActions.hashPassword, userActions.add);
+router.put(
+  "/api/users/:id",
+  authMiddleware.verifyToken,
+  validateUserUpdate,
+  userActions.update,
+);
 
 import terminalAction from "./modules/terminal/terminalAction";
 

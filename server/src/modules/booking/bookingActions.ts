@@ -2,8 +2,6 @@ import bookingRepository from "./bookingRepository";
 
 import type { RequestHandler } from "express";
 
-import { addMinutes } from "date-fns";
-
 const browse: RequestHandler = async (req, res) => {
   const bookings = await bookingRepository.readAll();
 
@@ -12,16 +10,13 @@ const browse: RequestHandler = async (req, res) => {
 
 const add: RequestHandler = async (req, res, next) => {
   try {
-    const { terminal_id, start_time, user_id } = req.body;
-
-    const parsedStartTime = new Date(start_time);
-    const endTime = addMinutes(parsedStartTime, 60);
+    const { terminal_id, start_time, end_time, user_id } = req.body;
 
     const newBooking = {
-      start_time: parsedStartTime,
-      end_time: endTime,
-      user_id: user_id,
-      terminal_id: terminal_id,
+      start_time: new Date(start_time),
+      end_time: new Date(end_time),
+      user_id,
+      terminal_id,
     };
 
     const insertId = await bookingRepository.create(newBooking);
