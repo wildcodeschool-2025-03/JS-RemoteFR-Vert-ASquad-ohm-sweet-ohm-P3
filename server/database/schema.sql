@@ -127,7 +127,7 @@ CREATE TABLE terminal (
 
 CREATE TABLE type_of_socket (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(10)
+    name VARCHAR(20)
 );
 
 CREATE TABLE terminal_type_of_socket (
@@ -162,3 +162,7 @@ INSERT INTO role(id, role_name)
 VALUES 
 (1, "admin"),
 (2, "user");
+
+INSERT INTO user(id, firstname, lastname, email, password, car_brand, car_template, car_socket, role_id)
+VALUES
+(1, "Kevin", "Smagghe", "kevin.snair@gmail.com", "$argon2i$v=19$m=19,t=2,p=1$cHgzNjN0RzlyOUd0Mzg5Ng$s2Y5fJP0CggpJA", "Peugeot", "e-208", "Type 2", 1)

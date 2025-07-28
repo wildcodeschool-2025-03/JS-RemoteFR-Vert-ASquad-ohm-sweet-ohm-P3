@@ -17,7 +17,7 @@ function Login() {
   } = useForm<FormData>();
 
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, user } = useAuth();
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -26,7 +26,11 @@ function Login() {
       if (success) {
         toast.success("Connexion réussie !");
         setTimeout(() => {
-          navigate("/maps");
+          if (user?.role_id === 1) {
+            navigate("/maps");
+          } else {
+            navigate("/");
+          }
         }, 2000);
       } else {
         toast.error("Identifiaants incorrects");

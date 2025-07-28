@@ -11,7 +11,6 @@ type User = {
   car_brand: string;
   car_template: string;
   car_socket: string;
-  role_id: number;
 };
 
 type UserUpdate = {

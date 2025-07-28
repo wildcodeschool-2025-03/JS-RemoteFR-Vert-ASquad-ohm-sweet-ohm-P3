@@ -22,8 +22,16 @@ import Register from "./pages/User/Registrer/Registrer";
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
-const ProtectedRoute: React.FC = () => {
-  const { isAuthenticated, isLoading } = useAuth();
+type ProtectedRoute = {
+  children?: React.ReactNode;
+  requiredRole: number;
+};
+
+const ProtectedRoute: React.FC<ProtectedRoute> = ({
+  children,
+  requiredRole,
+}) => {
+  const { isAuthenticated, user, isLoading } = useAuth();
 
   if (isLoading) {
     return <div>Vérification de la session...</div>;
@@ -33,10 +41,15 @@ const ProtectedRoute: React.FC = () => {
     return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />;
+  if (requiredRole !== undefined && user?.role_id !== requiredRole) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children ? <>{children}</> : <Outlet />;
 };
 
 import axios from "axios";
+import AdminPage from "./pages/Admin/Admin";
 
 axios.defaults.withCredentials = true;
 // Import additional components for new routes
@@ -72,7 +85,7 @@ const router = createBrowserRouter([
       },
       {
         path: "",
-        element: <ProtectedRoute />,
+        element: <ProtectedRoute requiredRole={2} />,
         children: [
           {
             path: "maps",
@@ -91,6 +104,14 @@ const router = createBrowserRouter([
             element: <Profile />,
           },
         ],
+      },
+      {
+        path: "/admin",
+        element: (
+          <ProtectedRoute requiredRole={1}>
+            <AdminPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
