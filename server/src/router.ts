@@ -66,6 +66,8 @@ import bookingActions from "./modules/booking/bookingActions";
 
 router.get("/api/bookings", bookingActions.browse);
 router.post("/api/bookings", validateBooking, bookingActions.add);
+router.get("/api/bookings/user/:userId", bookingActions.readByUserId);
+router.delete("/api/bookings/:id", bookingActions.destroy);
 
 import verifyToken from "./middleware/authMiddleware";
 import { validateUserUpdate } from "./middleware/userValidation";
