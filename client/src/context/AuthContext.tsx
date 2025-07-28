@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       } catch (error) {
         console.error(
           "Erreur lors de la récupération de l'utilisateur:",
-          error
+          error,
         );
         setUser(null);
         setIsAuthenticated(false);
@@ -77,7 +77,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
           credentials: "include",
-        }
+        },
       );
 
       if (!response.ok) {
