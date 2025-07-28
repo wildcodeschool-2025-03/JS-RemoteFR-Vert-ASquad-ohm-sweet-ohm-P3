@@ -74,4 +74,13 @@ import formAction from "./modules/form/formAction";
 
 router.post("/api/contactForm", formAction.sendMail);
 
+import informationAction from "./modules/information/informationAction";
+router.get("/api/informations/:id", informationAction.read);
+router.get("/api/informations/", informationAction.browse);
+
+import newsAction from "./modules/news/newsAction";
+
+router.get("/api/news/", newsAction.browse);
+router.get("/api/news/:id", newsAction.read);
+
 export default router;
