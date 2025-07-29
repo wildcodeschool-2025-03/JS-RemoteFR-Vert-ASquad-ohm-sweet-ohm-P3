@@ -4,10 +4,9 @@ import { useAuth } from "../../context/AuthContext";
 import "./Admin.css";
 import { useForm } from "react-hook-form";
 
-import Dropcsv from "../../components/Drop/Dropcsv";
+import { toast } from "react-toastify";
 import UserList from "../../components/AdminComponent/UserList/UserList";
-import CarList from "../../components/AdminComponent/CarList/CarList";
-import TerminalList from "../../components/AdminComponent/TerminalList/TerminalList";
+import Dropcsv from "../../components/Drop/Dropcsv";
 
 interface User {
   id: number;
@@ -69,7 +68,7 @@ function AdminPage() {
 
   const onSubmitForm = (data: ClassFormFields) => {
     if (!selectedFile) {
-      alert("Veuillez sélectionner un fichier.");
+      toast.error("Veuillez sélectionner un fichier.");
       return;
     }
 
@@ -91,10 +90,10 @@ function AdminPage() {
         if (!res.ok) throw new Error("Erreur lors de l'envoi");
         return res.json();
       })
-      .then(() => alert("Fichier envoyé avec succès !"))
+      .then(() => toast("Fichier envoyé avec succès !"))
       .catch((error) => {
         console.error("Erreur:", error);
-        alert("Erreur lors de l'envoi");
+        toast.error("Erreur lors de l'envoi");
       });
   };
 
@@ -106,8 +105,7 @@ function AdminPage() {
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <h1>Bienvenue sur la page d'administration !</h1>
         <UserList />
-        <CarList />
-        <TerminalList />
+
         <input
           type="hidden"
           {...register("user_id")}

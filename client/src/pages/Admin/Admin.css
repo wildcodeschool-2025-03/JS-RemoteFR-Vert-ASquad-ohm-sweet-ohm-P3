@@ -1,6 +1,6 @@
 /* Conteneur principal */
 form {
-  max-width: 700px;
+  max-width: fit-content;
   margin: 0 auto;
   padding: 2rem;
   background-color: #f9f9f9;
@@ -100,32 +100,4 @@ form > h1 {
 .submitBtnClass:hover,
 .submitBtnClass:focus {
   opacity: 0.9;
-}
-/* Titre */
-.dropCardTitle {
-  font-size: 1.6rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #000;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Carte contenant le Dropcsv */
-.dropCardStyled {
-  background-color: #fefefe;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  max-width: 550px;
-  margin: 2rem auto;
-  text-align: center;
-}
-
-/* Conteneur du composant Dropcsv */
-.dropzoneBox {
-  border: 2px dashed #ccc;
-  border-radius: 10px;
-  padding: 2rem;
-  background-color: #fafafa;
 }

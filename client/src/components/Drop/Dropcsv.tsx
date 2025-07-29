@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-
+import "./Dropcsv.css";
 type DropPicsProps = {
   onFileSelect: (file: File) => void;
 };

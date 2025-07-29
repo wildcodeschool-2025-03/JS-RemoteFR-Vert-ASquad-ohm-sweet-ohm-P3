@@ -16,6 +16,7 @@ type User = {
 };
 
 type UserUpdate = {
+  id: number;
   firstname: string;
   lastname: string;
   email: string;
@@ -25,6 +26,7 @@ type UserUpdate = {
   car_template: string;
   car_socket: string;
   role_id: number;
+  profile_pic: string;
 };
 
 class UserRepository {
@@ -78,6 +80,47 @@ class UserRepository {
 
     const user = rows[0] as User | undefined;
     return user ?? null;
+  }
+
+  // Met a jour les information de l'utilisateur
+  async update(id: number, data: UserUpdate) {
+    const {
+      firstname,
+      lastname,
+      email,
+      birthdate,
+      profile_pic,
+      car_brand,
+      car_template,
+      car_socket,
+      role_id,
+    } = data;
+
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE user SET firstname = ?, lastname = ?, email = ?, birthdate = ?, profile_pic = ?, car_brand = ?, car_template = ?, car_socket = ?, role_id = ? WHERE id = ?",
+      [
+        firstname,
+        lastname,
+        email,
+        birthdate,
+        profile_pic,
+        car_brand,
+        car_template,
+        car_socket,
+        role_id,
+        id,
+      ],
+    );
+
+    return result.affectedRows;
+  }
+
+  async delete(id: number) {
+    const [result] = await databaseClient.query<Result>(
+      "delete FROM user WHERE id = ?",
+      [id],
+    );
+    return result.affectedRows;
   }
 }
 

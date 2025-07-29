@@ -19,14 +19,14 @@ class TerminalRepository {
   async read(id: number): Promise<Terminal | undefined> {
     const [rows] = await await databaseClient.query<Rows>(
       "SELECT id, nom_station, adresse_station, consolidated_latitude, consolidated_longitude FROM terminal WHERE id = ?",
-      [id]
+      [id],
     );
     return rows[0] as Terminal;
   }
 
   async readAll(): Promise<Terminal[]> {
     const [rows] = await databaseClient.query<Rows>(
-      "SELECT id, nom_station, adresse_station, consolidated_latitude, consolidated_longitude FROM terminal"
+      "SELECT id, nom_station, adresse_station, consolidated_latitude, consolidated_longitude FROM terminal",
     );
     return rows as Terminal[];
   }
@@ -35,7 +35,7 @@ class TerminalRepository {
     southLat: number,
     westLng: number,
     northLat: number,
-    eastLng: number
+    eastLng: number,
   ): Promise<Terminal[]> {
     const [rows] = await databaseClient.query<Rows>(
       `SELECT DISTINCT id, nom_station, adresse_station,  consolidated_latitude, consolidated_longitude,  prise_type_ef, prise_type_2, prise_type_combo_ccs,  prise_type_chademo , prise_type_autre
@@ -44,7 +44,7 @@ class TerminalRepository {
        AND consolidated_longitude BETWEEN ? AND ?
        ORDER BY RAND()
        LIMIT 100`,
-      [southLat, northLat, westLng, eastLng]
+      [southLat, northLat, westLng, eastLng],
     );
     return rows as Terminal[];
   }

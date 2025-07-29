@@ -45,4 +45,72 @@ const add: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, add, read };
+const edit: RequestHandler = async (req, res, next) => {
+  try {
+    const idFromParams = +req.params.id; // Id de la route donnée par l'uri /api/users/33 => Libre
+    const idFromAuth = +req.auth.sub; // Id de la connexion, id user en BDD => Admin 1
+
+    // 🛡️ Authentification manquante
+    if (!idFromAuth) {
+      res.status(401).json({ message: "Non authentifié" });
+      return;
+    }
+
+    // ❌ Accès interdit à un autre utilisateur, si en dehors de l'admin
+    if (idFromAuth !== idFromParams && idFromAuth !== 1) {
+      res.status(403).json({ message: "Accès refusé" });
+      return;
+    }
+
+    const {
+      firstname,
+      lastname,
+      email,
+      birthdate,
+      profile_pic,
+      car_brand,
+      car_template,
+      car_socket,
+      role_id,
+    } = req.body;
+
+    const affectedRows = await userRepository.update(idFromParams, {
+      firstname,
+      lastname,
+      email,
+      birthdate,
+      profile_pic,
+      car_brand,
+      car_template,
+      car_socket,
+      role_id,
+      id: 0,
+      hashed_password: "",
+    });
+
+    if (affectedRows === 0) {
+      res.status(404).json({ message: "Utilisateur introuvable" });
+      return;
+    }
+
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+const destroy: RequestHandler = async (req, res, next) => {
+  try {
+    // Delete a specific category based on the provided ID
+    const userId = Number(req.params.id);
+
+    await userRepository.delete(userId);
+
+    // Respond with HTTP 204 (No Content) anyway
+    res.sendStatus(204);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
+export default { browse, add, read, edit, destroy };

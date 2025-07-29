@@ -16,6 +16,19 @@ type User = {
   role_id: number;
   profile_pic: string;
 };
+type UserUpdate = {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  birthdate: string;
+  hashed_password: string;
+  car_brand: string;
+  car_template: string;
+  car_socket: string;
+  role_id: number;
+  profile_pic: string;
+};
 
 const login: RequestHandler = async (req, res, next) => {
   try {
