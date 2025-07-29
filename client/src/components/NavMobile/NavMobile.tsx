@@ -1,4 +1,5 @@
 import "./NavMobile.css";
+import { NavLink } from "react-router-dom";
 import caddie from "../../assets/images/icone-caddie.png";
 import carte from "../../assets/images/icone-carte.png";
 import home from "../../assets/images/icone-home.png";
@@ -9,16 +10,24 @@ function NavMobile() {
     <nav className="navmobile">
       <ul>
         <li>
-          <img className="nav-icone" src={profil} alt="icone de profil" />
+          <NavLink to="/profil">
+            <img className="nav-icone" src={profil} alt="icone de profil" />
+          </NavLink>
         </li>
         <li>
-          <img className="nav-icone" src={carte} alt="icone de carte" />
+          <NavLink to="/maps">
+            <img className="nav-icone" src={carte} alt="icone de carte" />
+          </NavLink>
         </li>
         <li>
-          <img className="nav-icone" src={home} alt="icone de home" />
+          <NavLink to="/">
+            <img className="nav-icone" src={home} alt="icone de home" />
+          </NavLink>
         </li>
         <li>
-          <img className="nav-icone" src={caddie} alt="icone de caddie" />
+          <NavLink to="/bookings">
+            <img className="nav-icone" src={caddie} alt="icone de caddie" />
+          </NavLink>
         </li>
       </ul>
     </nav>

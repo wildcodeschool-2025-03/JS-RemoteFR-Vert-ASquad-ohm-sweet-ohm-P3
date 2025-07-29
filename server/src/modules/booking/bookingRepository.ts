@@ -28,6 +28,32 @@ class BookingRepository {
     const [rows] = await databaseClient.query<Rows>("select * from booking");
     return rows as Booking[];
   }
+
+  async readByUserId(userId: number) {
+    const [rows] = await databaseClient.query<Rows>(
+      `SELECT 
+        b.id, 
+        b.start_time, 
+        b.end_time, 
+        t.nom_station, 
+        t.adresse_station
+     FROM booking AS b
+     JOIN terminal AS t ON b.terminal_id = t.id
+     WHERE b.user_id = ?
+     ORDER BY b.start_time DESC`,
+      [userId],
+    );
+
+    return rows;
+  }
+
+  async delete(id: number) {
+    const [result] = await databaseClient.query<Result>(
+      "delete from booking where id = ?",
+      [id],
+    );
+    return result.affectedRows;
+  }
 }
 
 export default new BookingRepository();

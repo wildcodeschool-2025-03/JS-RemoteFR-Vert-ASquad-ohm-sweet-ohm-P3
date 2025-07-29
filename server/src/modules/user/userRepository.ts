@@ -42,7 +42,7 @@ class UserRepository {
         user.car_template,
         user.car_socket,
         user.profile_pic,
-      ],
+      ]
     );
     return result.insertId;
   }
@@ -50,7 +50,7 @@ class UserRepository {
   async read(id: number): Promise<User | null> {
     const [rows] = await databaseClient.query<Rows>(
       "SELECT id, firstname, lastname, email, role_id, car_brand, car_template, car_socket, profile_pic FROM user WHERE id = ?",
-      [id],
+      [id]
     );
     const user = rows[0] as User | undefined;
     return user ?? null;
@@ -65,7 +65,7 @@ class UserRepository {
   async readById(id: number): Promise<User | null> {
     const [rows] = await databaseClient.query<Rows>(
       "SELECT id, firstname, lastname, email, birthdate, car_brand, car_template, car_socket FROM user WHERE id = ?",
-      [id],
+      [id]
     );
 
     const user = rows[0] as User | undefined;
@@ -75,7 +75,7 @@ class UserRepository {
   async readByEmailWithPassword(email: string): Promise<User | null> {
     const [rows] = await databaseClient.query<Rows>(
       "SELECT id, firstname, lastname, email, role_id, password AS hashed_password FROM user WHERE email = ?",
-      [email],
+      [email]
     );
 
     const user = rows[0] as User | undefined;
@@ -109,7 +109,7 @@ class UserRepository {
         car_socket,
         role_id,
         id,
-      ],
+      ]
     );
 
     return result.affectedRows;
@@ -118,7 +118,7 @@ class UserRepository {
   async delete(id: number) {
     const [result] = await databaseClient.query<Result>(
       "delete FROM user WHERE id = ?",
-      [id],
+      [id]
     );
     return result.affectedRows;
   }

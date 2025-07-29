@@ -1,0 +1,40 @@
+.booking-history {
+  margin: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.booking-history h2 {
+  margin-bottom: 1rem;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.booking-history table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.booking-history th,
+.booking-history td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.booking-history th {
+  background-color: #f8f8f8;
+}
+
+.btn-delete {
+  padding: 6px 12px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}

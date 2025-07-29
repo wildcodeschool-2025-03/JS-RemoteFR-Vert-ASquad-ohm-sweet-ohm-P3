@@ -8,6 +8,16 @@ const browse: RequestHandler = async (req, res) => {
   res.json(bookings);
 };
 
+const readByUserId: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = Number(req.params.userId);
+    const bookings = await bookingRepository.readByUserId(userId);
+    res.json(bookings);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const add: RequestHandler = async (req, res, next) => {
   try {
     const { terminal_id, start_time, end_time, user_id } = req.body;
@@ -29,4 +39,16 @@ const add: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, add };
+const destroy: RequestHandler = async (req, res, next) => {
+  try {
+    const bookingId = Number(req.params.id);
+
+    await bookingRepository.delete(bookingId);
+
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export default { browse, readByUserId, add, destroy };

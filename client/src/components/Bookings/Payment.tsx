@@ -161,7 +161,7 @@ function Payment() {
       <div className="summary-box">
         <div className="summary-header">
           <span>Montant Total :</span>
-          <strong>2 €</strong>
+          <strong>25 €</strong>
         </div>
         <div className="summary-info">
           <div>
