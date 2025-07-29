@@ -1,6 +1,14 @@
 import type { RequestHandler } from "express";
 import terminalRepository from "./terminalRepository";
 
+const browseAll: RequestHandler = async (req, res, next) => {
+  try {
+    const terminals = await terminalRepository.readAll();
+    res.json(terminals);
+  } catch (err) {
+    next(err);
+  }
+};
 const browse: RequestHandler = async (req, res, next) => {
   try {
     const bbox = req.query.bbox as string;
@@ -49,5 +57,19 @@ const read: RequestHandler = async (req, res, next) => {
     next(err);
   }
 };
+const destroy: RequestHandler = async (req, res, next) => {
+  try {
+    // Delete a specific category based on the provided ID
+    const terminalId = Number(req.params.id);
 
-export default { browse, read };
+    await terminalRepository.delete(terminalId);
+
+    // Respond with HTTP 204 (No Content) anyway
+    res.sendStatus(204);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
+export default { browseAll, browse, read, destroy };

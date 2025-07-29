@@ -1,0 +1,109 @@
+/* Conteneur principal */
+.TerminalTable {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Titre */
+.TerminalTable h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #222;
+  text-align: center;
+}
+
+/* Tableau des bornes */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* En-tête */
+.user-table thead {
+  background: linear-gradient(to right, #7cd858, #21a89a);
+  color: white;
+}
+
+.user-table th {
+  padding: 14px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* Cellules */
+.user-table td {
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+/* Hover */
+.user-table tbody tr:hover {
+  background-color: #f0faf9;
+  transition: background-color 0.3s ease;
+}
+
+/* Conteneur scrollable */
+.user-table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 12px;
+}
+
+.user-table-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.user-table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 6px;
+}
+
+/* Boutons (éditer/supprimer) */
+.user-table button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-right: 0.4rem;
+  transition: transform 0.2s ease;
+}
+
+.user-table button:hover {
+  transform: scale(1.2);
+}
+
+/* Inputs en édition */
+.user-table input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+.load-more-button {
+  background: linear-gradient(to right, #7cd858, #21a89a);
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.load-more-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}

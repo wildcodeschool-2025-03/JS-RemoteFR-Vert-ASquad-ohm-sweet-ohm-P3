@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import UserList from "../../components/AdminComponent/UserList/UserList";
 import Dropcsv from "../../components/Drop/Dropcsv";
+import TerminalList from "../../components/TerminalList/TerminalList";
 
 interface User {
   id: number;
@@ -105,7 +106,7 @@ function AdminPage() {
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <h1>Bienvenue sur la page d'administration !</h1>
         <UserList />
-
+        <TerminalList />
         <input
           type="hidden"
           {...register("user_id")}

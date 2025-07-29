@@ -35,13 +35,13 @@ router.get("/api/me", authMiddleware, connectedMiddleware.connected);
 router.post("/api/logout", authActions.logout);
 router.post("/api/users", authActions.hashPassword, userActions.add);
 router.put("/api/users/:id", verifyToken, userActions.edit);
-router.delete("/api/users/:id", verifyToken, userActions.destroy);
+router.delete("/api/users/:id", userActions.destroy);
 /* ************************************************************************* */
 import terminalAction from "./modules/terminal/terminalAction";
 
-router.get("/api/terminals", terminalAction.browse);
+router.get("/api/terminals", terminalAction.browseAll, terminalAction.browse);
 router.get("/api/terminals/:id", terminalAction.read);
-
+router.delete("/api/terminals/:id", verifyToken, terminalAction.destroy);
 /* ************************************************************************* */
 
 import brandAction from "./modules/vehicle/brand/brandAction";
