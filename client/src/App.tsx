@@ -18,12 +18,14 @@ type Auth = {
 function App() {
   const [auth, setAuth] = useState<Auth | null>(null);
   return (
-    <>
+    <div className="app-container">
       <NavBar />
-      <Outlet context={{ auth, setAuth }} />
+      <main className="main-content">
+        <Outlet context={{ auth, setAuth }} />
+      </main>
       <NavMobile />
       <Footer />
-    </>
+    </div>
   );
 }
 

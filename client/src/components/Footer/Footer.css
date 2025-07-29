@@ -11,6 +11,16 @@ footer {
   font-weight: 700;
 }
 
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
 @media screen and (max-width: 768px) {
   .ListFooter {
     padding: 1rem 0;
@@ -30,10 +40,6 @@ footer {
   .StoreBadge {
     height: 60px;
     width: auto;
-  }
-  .ListFooter li a {
-    color: white;
-    text-decoration: none;
   }
 }
 
@@ -64,10 +70,5 @@ footer {
   .ListFooter a {
     text-decoration-color: transparent;
     color: white;
-  }
-
-  .ListFooter li a {
-    color: white;
-    text-decoration: none;
   }
 }
