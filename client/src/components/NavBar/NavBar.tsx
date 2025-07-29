@@ -23,56 +23,59 @@ function NavBar() {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <NavLink to="/">
+        <NavLink to="/" className="logo-link">
           <img className="logo" src={logo} alt="logo de geocode" />
         </NavLink>
       </div>
 
-      <ul className="navbar-center">
-        <li>
-          <NavLink to="/">ACCUEIL</NavLink>
-        </li>
-        <li>
-          <NavLink to="/maps">CARTE</NavLink>
-        </li>
-      </ul>
+      <div className="navbar-links-split">
+        <ul className="navbar-center">
+          <li>
+            <NavLink to="/">ACCUEIL</NavLink>
+          </li>
+          <li>
+            <NavLink to="/maps">CARTE</NavLink>
+          </li>
+        </ul>
 
-      <ul className="navbar-profil">
-        <NavLink to="/profil">
-          <li>PROFIL</li>
-        </NavLink>
-        <li>
-          <NavLink to="/bookings">RESERVATION</NavLink>
-        </li>
-      </ul>
+        <ul className="navbar-profil">
+          <li>
+            <NavLink to="/profil">PROFIL</NavLink>
+          </li>
+          <li>
+            <NavLink to="/bookings">RESERVATION</NavLink>
+          </li>
+        </ul>
+      </div>
 
       <div className="navbar-right">
-        {user && showUserInfo && (
-          <div className="user-info">
-            <img
-              src={
-                user.profile_pic ||
-                "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-              }
-              alt="avatar"
-              className="user-avatar-navBar"
-            />
-            <span className="user-name-navBar">
-              {user.firstname} {user.lastname}
-              <br />
-              <button
-                type="button"
-                className="logout-button"
-                onClick={() => {
-                  logout();
-                  navigate("/");
-                }}
-              >
-                Déconnexion
-              </button>
-            </span>
-          </div>
-        )}
+        <div
+          className="user-info"
+          style={{ visibility: user && showUserInfo ? "visible" : "hidden" }}
+        >
+          <img
+            src={
+              user?.profile_pic ||
+              "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+            }
+            alt="avatar"
+            className="user-avatar-navBar"
+          />
+          <span className="user-name-navBar">
+            {user?.firstname} {user?.lastname}
+            <br />
+            <button
+              type="button"
+              className="logout-button"
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
+            >
+              Déconnexion
+            </button>
+          </span>
+        </div>
       </div>
     </nav>
   );
