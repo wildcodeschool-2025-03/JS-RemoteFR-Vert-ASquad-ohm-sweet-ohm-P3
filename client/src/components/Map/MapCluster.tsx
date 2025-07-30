@@ -45,7 +45,7 @@ function Cluster({ terminals }: { terminals: Terminal[] }) {
                 terminal.prise_type_combo_ccs === 0 &&
                 terminal.prise_type_chademo === 0 &&
                 terminal.prise_type_autre === 0 && (
-                  <li>Aucun type de prise spécifié</li>
+                  <li className="sockets">Aucun type de prise spécifié</li>
                 )}
             </ul>
             <NavLink className="bookingsButton" to={`/bookings/${terminal.id}`}>

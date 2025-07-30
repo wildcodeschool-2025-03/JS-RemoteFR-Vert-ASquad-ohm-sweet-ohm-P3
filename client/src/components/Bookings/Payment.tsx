@@ -154,7 +154,9 @@ function Payment() {
           {errors.expiry && <p className="error">{errors.expiry.message}</p>}
           {errors.cvc && <p className="error">{errors.cvc.message}</p>}
 
-          <button type="submit">Payer</button>
+          <button type="submit" className="payment-button">
+            Payer
+          </button>
         </form>
       </div>
 
