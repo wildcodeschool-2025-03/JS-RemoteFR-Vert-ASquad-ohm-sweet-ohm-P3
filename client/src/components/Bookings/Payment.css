@@ -1,9 +1,16 @@
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/inter/Inter_24pt-Bold.ttf") format("ttf");
+}
+
 .payment-wrapper {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  padding: 2rem;
+  gap: 4rem;
+  padding: 5rem 0;
   flex-wrap: wrap;
+  background-color: #e9e9e9;
+  font-family: "Inter", sans-serif;
 }
 
 .payment-box,
@@ -12,12 +19,11 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 1.5rem;
-  width: 300px;
+  width: 500px;
   min-height: 250px;
 }
 
 .payment-box h3 {
-  font-size: 1rem;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -42,6 +48,7 @@
   margin-bottom: 0.8rem;
   border-radius: 8px;
   border: 1px solid #ccc;
+  font-family: "Inter", sans-serif;
 }
 
 .card-details {
@@ -52,24 +59,34 @@
 .payment-box button {
   width: 100%;
   padding: 0.8rem;
-  background: linear-gradient(to right, #00c853, #64dd17);
+  background: linear-gradient(270deg, #7cd858 1.35%, #21a89a 101.35%);
   color: white;
   border: none;
   border-radius: 8px;
-  font-weight: bold;
   cursor: pointer;
+  font-family: "Inter", sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.payment-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .error {
   color: #e53935;
   font-size: 0.8rem;
   margin: -0.5rem 0 0.5rem;
+  font-family: "Inter", sans-serif;
 }
 
 select {
   padding: 0.5rem;
   border-radius: 4px;
   border: 1px solid #ccc;
+  width: 100%;
+  font-family: "Inter", sans-serif;
 }
 select:invalid {
   color: gray;
@@ -88,6 +105,13 @@ select:invalid {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.summary-info > div {
+  flex: 1;
+  min-width: 120px;
 }
 
 .summary-info span {
@@ -100,6 +124,79 @@ select:invalid {
 }
 
 .summary-address p {
+  padding-top: 2rem;
+  text-align: center;
   margin: 0.3rem 0;
   font-size: 0.9rem;
+}
+
+@media (max-width: 1024px) {
+  .payment-wrapper {
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    gap: 2rem;
+  }
+
+  .payment-box,
+  .summary-box {
+    width: 90%;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .payment-wrapper {
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+  }
+
+  .payment-box,
+  .summary-box {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .payment-box h3 {
+    font-size: 0.9rem;
+  }
+
+  .payment-box input,
+  .payment-box button,
+  select {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .card-details {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .card-details input {
+    margin-bottom: 0;
+  }
+
+  .summary-box .summary-header {
+    font-size: 1rem;
+    padding-bottom: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .summary-info {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-wrapper {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .payment-box,
+  .summary-box {
+    width: 98%;
+    padding: 0.8rem;
+  }
 }

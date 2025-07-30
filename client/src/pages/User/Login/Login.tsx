@@ -33,7 +33,7 @@ function Login() {
           }
         }, 2000);
       } else {
-        toast.error("Identifiaants incorrects");
+        toast.error("Identifiants incorrects");
       }
     } catch (err) {
       const error = err as Error;

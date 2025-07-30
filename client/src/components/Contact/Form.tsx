@@ -88,67 +88,75 @@ function ContactForm() {
   };
   return (
     <>
-      <form className="form-container" onSubmit={handleSubmit}>
-        <div className="form-box">
-          <label className="form-group">
-            Objet :
-            <input
-              type="text"
-              name="objet"
-              value={objet}
-              onChange={(e) => {
-                setObjet(e.target.value);
-              }}
-            />
-            {errors.objet && <p className="errorform">{errors.objet}</p>}
-          </label>
-          <label className="form-group">
-            Email :
-            <input
-              type="email"
-              autoComplete="on"
-              name="email"
-              value={email}
-              onChange={(e) => setMail(e.target.value)}
-            />
-            {errors.email && <p className="errorform">{errors.email}</p>}
-          </label>
-          <label className="form-group">
-            Nom :
-            <input
-              type="text"
-              autoComplete="on"
-              name="nom"
-              value={nom}
-              onChange={(e) => setNom(e.target.value)}
-            />
-            {errors.nom && <p className="errorform">{errors.nom}</p>}
-          </label>
-          <label className="form-group">
-            Prénom:
-            <input
-              type="text"
-              autoComplete="on"
-              name="prenom"
-              value={prenom}
-              onChange={(e) => setPrenom(e.target.value)}
-            />
-            {errors.prenom && <p className="errorform">{errors.prenom}</p>}
-          </label>
-          <label className="form-group">
-            Votre message:
-            <textarea
-              name="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            {errors.message && <p className="errorform">{errors.message}</p>}
-          </label>
-          <button type="submit" className="submit-btn">
-            Envoyer
-          </button>
-        </div>
-      </form>
+      <div className="contact-page-container">
+        <h1 className="h1contact">Contactez-nous</h1>
+        <form className="form-container" onSubmit={handleSubmit}>
+          <div className="form-box">
+            <div className="form-group">
+              <label htmlFor="objet">Objet :</label>
+              <input
+                id="objet"
+                type="text"
+                name="objet"
+                value={objet}
+                onChange={(e) => {
+                  setObjet(e.target.value);
+                }}
+              />
+              {errors.objet && <p className="error">{errors.objet}</p>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email :</label>
+              <input
+                id="email"
+                type="email"
+                autoComplete="on"
+                name="email"
+                value={email}
+                onChange={(e) => setMail(e.target.value)}
+              />
+              {errors.email && <p className="error">{errors.email}</p>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="nom">Nom :</label>
+              <input
+                id="nom"
+                type="text"
+                autoComplete="on"
+                name="nom"
+                value={nom}
+                onChange={(e) => setNom(e.target.value)}
+              />
+              {errors.nom && <p className="error">{errors.nom}</p>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="prenom">Prénom:</label>
+              <input
+                id="prenom"
+                type="text"
+                autoComplete="on"
+                name="prenom"
+                value={prenom}
+                onChange={(e) => setPrenom(e.target.value)}
+              />
+              {errors.prenom && <p className="error">{errors.prenom}</p>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="message">Votre message:</label>
+              <textarea
+                id="message"
+                name="message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              {errors.message && <p className="error">{errors.message}</p>}
+            </div>
+            <button type="submit" className="submit-btn">
+              Envoyer
+            </button>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

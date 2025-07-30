@@ -111,11 +111,15 @@ const BookingHistory = () => {
           <tbody>
             {bookings.map((booking) => (
               <tr key={booking.id}>
-                <td>{booking.nom_station}</td>
-                <td>{booking.adresse_station}</td>
-                <td>{new Date(booking.start_time).toLocaleString()}</td>
-                <td>{new Date(booking.end_time).toLocaleString()}</td>
-                <td>
+                <td data-label="Station">{booking.nom_station}</td>
+                <td data-label="Adresse">{booking.adresse_station}</td>
+                <td data-label="Début">
+                  {new Date(booking.start_time).toLocaleString()}
+                </td>
+                <td data-label="Fin">
+                  {new Date(booking.end_time).toLocaleString()}
+                </td>
+                <td data-label="Action">
                   <button
                     type="button"
                     onClick={() => handleDelete(booking.id)}
