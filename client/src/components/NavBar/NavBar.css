@@ -50,7 +50,6 @@
 .navbar a {
   color: white;
   text-decoration: none;
-  font-weight: 600;
   position: relative;
   transition: color 0.3s ease;
 }
@@ -103,7 +102,6 @@
 
 .user-name-navBar {
   font-size: 0.9rem;
-  font-weight: bold;
   color: white;
   display: flex;
   flex-direction: column;

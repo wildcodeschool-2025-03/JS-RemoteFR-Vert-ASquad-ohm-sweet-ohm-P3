@@ -7,8 +7,39 @@ footer {
   background-color: #1f2a2d;
   color: white;
   font-family: "Inter", sans-serif;
-  font-size: large;
-  font-weight: 700;
+}
+
+.ListFooter li a,
+.ListFooter li {
+  color: white;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.ListFooter li a::after,
+.ListFooter li::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.ListFooter li a:hover::after,
+.ListFooter li:hover::after {
+  width: 100%;
+}
+
+.ListFooter li {
+  transition: transform 0.3s ease;
+}
+
+.ListFooter li:hover {
+  transform: scale(1.05);
 }
 
 @media screen and (max-width: 768px) {
@@ -69,5 +100,22 @@ footer {
   .ListFooter li a {
     color: white;
     text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .ListFooter li a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -4px;
+    background-color: white;
+    transition: width 0.3s ease;
+  }
+
+  .ListFooter li a:hover::after {
+    width: 100%;
   }
 }
