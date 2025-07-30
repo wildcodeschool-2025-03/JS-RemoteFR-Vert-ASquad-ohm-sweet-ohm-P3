@@ -91,15 +91,17 @@ class UserRepository {
     } = data;
 
     await databaseClient.query(
-      "UPDATE user SET firstname = ?, lastname = ?, email = ?, birthdate = ?, car_brand = ?, car_template = ?, car_socket = ? WHERE id = ?",
+      `UPDATE user 
+     SET firstname = ?, lastname = ?, email = ?, birthdate = ?, car_brand = ?, car_template = ?, car_socket = ? 
+     WHERE id = ?`,
       [
-        firstname,
-        lastname,
-        email,
-        birthdate,
-        car_brand,
-        car_template,
-        car_socket,
+        firstname || null,
+        lastname || null,
+        email || null,
+        birthdate || null,
+        car_brand || null,
+        car_template || null,
+        car_socket || null,
         id,
       ],
     );

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import avatar from "../assets/images/avatar.jpg";
 import voiture from "../assets/images/voiture.jpg";
+import { useAuth } from "../context/AuthContext";
 import "./Profile.css";
 import BookingHistory from "../components/DeleteBooking/BookingHistory";
 
@@ -28,6 +29,7 @@ type Models = {
 };
 
 function Profile() {
+  const { user: authUser } = useAuth();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -48,15 +50,17 @@ function Profile() {
   const [emailError, setEmailError] = useState("");
   const [birthdateError, setBirthdateError] = useState("");
 
+  // Charger les infos de l'utilisateur
   useEffect(() => {
+    if (!authUser?.id) return;
+
     axios
-      // On envoie une requête GET à notre serveur pour récupérer les infos de l’utilisateur avec l’ID 1
-      .get(`${import.meta.env.VITE_API_URL}/api/users/1`)
+      .get(`${import.meta.env.VITE_API_URL}/api/users/${authUser.id}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         const data = res.data;
-
-        // On formate le birthdate pour qu'il soit compatible abev le input de type "date"
-        const birthdate = data.birthdate
+        const birthdateFormatted = data.birthdate
           ? new Date(data.birthdate).toISOString().split("T")[0]
           : "";
 
@@ -64,7 +68,7 @@ function Profile() {
         setFirstname(data.firstname);
         setLastname(data.lastname);
         setEmail(data.email);
-        setBirthdate(birthdate);
+        setBirthdate(birthdateFormatted);
         setCarBrand(data.car_brand);
         setCarTemplate(data.car_template);
         setCarSocket(data.car_socket);
@@ -73,7 +77,7 @@ function Profile() {
       .catch(() => {
         setLoading(false);
       });
-  }, []);
+  }, [authUser]);
 
   // Charger toutes les marques
   useEffect(() => {
@@ -107,66 +111,72 @@ function Profile() {
     }
   }, [selectedBrand]);
 
-  // Cette fonction est déclenchée quand on valide le formulaire en appuyant sur entrer
+  // Sauvegarde des informations personnelles
   const handleUpdate = async (e: React.FormEvent) => {
-    // On empêche le rechargement de la page par défaut
     e.preventDefault();
+    if (!authUser) return;
 
     if (firstnameError || lastnameError || emailError || birthdateError) {
       alert("Veuillez corriger les erreurs avant de soumettre.");
       return;
     }
 
-    if (!user) return;
-
     try {
-      // On envoie une requête PUT au backend pour modifier les infos utilisateur
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/1`, {
-        firstname,
-        lastname,
-        email,
-        birthdate,
-        car_brand: carBrand,
-        car_template: carTemplate,
-        car_socket: carSocket,
-        withCredentials: true,
-      });
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/api/users/${authUser.id}`,
+        {
+          firstname,
+          lastname,
+          email,
+          birthdate,
+          car_brand: carBrand,
+          car_template: carTemplate,
+          car_socket: carSocket,
+        },
+        { withCredentials: true },
+      );
 
-      // On met aussi à jour l’état local user avec les nouvelles infos
-      setUser({
-        ...user,
-        firstname,
-        lastname,
-        email,
-        birthdate,
-        car_brand: carBrand,
-        car_template: carTemplate,
-        car_socket: carSocket,
-      });
+      setUser((prev) =>
+        prev
+          ? {
+              ...prev,
+              firstname,
+              lastname,
+              email,
+              birthdate,
+              car_brand: carBrand,
+              car_template: carTemplate,
+              car_socket: carSocket,
+            }
+          : null,
+      );
 
-      // On affiche un message pour confirmer que tout s’est bien passé
       alert("Profil mis à jour avec succès ! ✅");
     } catch (err) {
-      // Si erreur (ex: problème serveur), on affiche un message
+      console.error("Erreur lors de la mise à jour :", err);
       alert("Erreur lors de la mise à jour.");
     }
   };
 
+  // Sauvegarde des infos véhicule
   const handleUpdateVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!user) return;
+    if (!authUser) return;
 
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/users/1`, {
-        firstname,
-        lastname,
-        email,
-        birthdate,
-        car_brand: carBrand,
-        car_template: carTemplate,
-        car_socket: carSocket,
-      });
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/api/users/${authUser.id}`,
+        {
+          firstname,
+          lastname,
+          email,
+          birthdate,
+          car_brand: carBrand,
+          car_template: carTemplate,
+          car_socket: carSocket,
+        },
+        { withCredentials: true },
+      );
 
       setUser((prev) =>
         prev
@@ -185,56 +195,43 @@ function Profile() {
     }
   };
 
+  // Handlers pour la validation
   const handleFirstnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (value.length > 35) {
-      setFirstnameError("Le prénom ne doit pas dépasser 35 caractères.");
-    } else {
-      setFirstnameError("");
-    }
+    setFirstnameError(
+      value.length > 35 ? "Le prénom ne doit pas dépasser 35 caractères." : "",
+    );
     setFirstname(value);
   };
 
   const handleLastnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (value.length > 15) {
-      setLastnameError("Le nom ne doit pas dépasser 15 caractères.");
-    } else {
-      setLastnameError("");
-    }
+    setLastnameError(
+      value.length > 15 ? "Le nom ne doit pas dépasser 15 caractères." : "",
+    );
     setLastname(value);
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Exemple simple, tu peux ajouter regex email si tu veux
-    if (value.length > 50) {
-      setEmailError("L'email ne doit pas dépasser 50 caractères.");
-    } else {
-      setEmailError("");
-    }
+    setEmailError(
+      value.length > 50 ? "L'email ne doit pas dépasser 50 caractères." : "",
+    );
     setEmail(value);
   };
 
   const handleBirthdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (new Date(value) >= new Date("2025-01-01")) {
-      setBirthdateError("La date de naissance doit être avant 2025.");
-    } else {
-      setBirthdateError("");
-    }
+    setBirthdateError(
+      new Date(value) >= new Date("2025-01-01")
+        ? "La date de naissance doit être avant 2025."
+        : "",
+    );
     setBirthdate(value);
   };
 
-  // Si les données sont encore en train de se charger, on affiche un message temporaire
-  if (loading) {
-    return <p>Chargement...</p>;
-  }
-
-  // Si on n’a pas réussi à récupérer l'utilisateur, on affiche un message d’erreur
-  if (!user) {
-    return <p>Utilisateur introuvable.</p>;
-  }
+  if (loading) return <p>Chargement...</p>;
+  if (!user) return <p>Utilisateur introuvable.</p>;
 
   return (
     <>
