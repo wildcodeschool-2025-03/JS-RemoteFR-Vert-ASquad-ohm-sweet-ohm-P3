@@ -61,6 +61,15 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+app.get("/me", (req, res) => {
+  const token = req.cookies.token; // <- ici on récupère le cookie "token"
+  if (token) {
+    // vérifier sa validité, etc.
+    res.send({ loggedIn: true });
+  } else {
+    res.send({ loggedIn: false });
+  }
+});
 // app.use(express.urlencoded());
 // app.use(express.text());
 //app.use(express.raw());

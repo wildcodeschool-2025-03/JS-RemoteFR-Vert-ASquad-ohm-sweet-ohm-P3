@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
@@ -6,7 +7,7 @@ type User = {
   firstname: string;
   lastname: string;
   email: string;
-  birthday: string;
+  birthdate: string;
   hashed_password: string;
   car_brand: string;
   car_template: string;
@@ -15,15 +16,19 @@ type User = {
   profile_pic: string;
 };
 
-type UserUpdate = Partial<{
+type UserUpdate = {
+  id: number;
   firstname: string;
   lastname: string;
   email: string;
   birthdate: string;
+  hashed_password: string;
   car_brand: string;
   car_template: string;
   car_socket: string;
-}>;
+  role_id: number;
+  profile_pic: string;
+};
 
 class UserRepository {
   async create(user: Omit<User, "id" | "role_id">) {
@@ -85,29 +90,39 @@ class UserRepository {
       lastname,
       email,
       birthdate,
+      profile_pic,
       car_brand,
       car_template,
       car_socket,
+      role_id,
     } = data;
 
-    const normalizedBirthdate =
-      birthdate && birthdate !== "" ? birthdate : null;
-
-    await databaseClient.query(
-      `UPDATE user
-     SET firstname = ?, lastname = ?, email = ?, birthdate = ?, car_brand = ?, car_template = ?, car_socket = ?
-     WHERE id = ?`,
+    const formattedDate = format(new Date(birthdate), "yyyy-MM-dd");
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE user SET firstname = ?, lastname = ?, email = ?, birthdate = ?, profile_pic = ?, car_brand = ?, car_template = ?, car_socket = ?, role_id = ? WHERE id = ?",
       [
-        firstname || null,
-        lastname || null,
-        email || null,
-        normalizedBirthdate,
-        car_brand || null,
-        car_template || null,
-        car_socket || null,
+        firstname,
+        lastname,
+        email,
+        formattedDate,
+        profile_pic,
+        car_brand,
+        car_template,
+        car_socket,
+        role_id,
         id,
       ],
     );
+
+    return result.affectedRows;
+  }
+
+  async delete(id: number) {
+    const [result] = await databaseClient.query<Result>(
+      "delete FROM user WHERE id = ?",
+      [id],
+    );
+    return result.affectedRows;
   }
 }
 

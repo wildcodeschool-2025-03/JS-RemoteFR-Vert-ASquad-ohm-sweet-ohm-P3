@@ -1,0 +1,128 @@
+.user-table-section {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.user-table-section h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  max-height: 70vh;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Scrollbar stylée (facultatif) */
+.table-container::-webkit-scrollbar {
+  height: 6px;
+}
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 6px;
+}
+
+.user-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.user-table thead {
+  background: linear-gradient(to right, #7cd858, #21a89a);
+  color: white;
+}
+
+.user-table th,
+.user-table td {
+  padding: 14px;
+  text-align: left;
+}
+
+.user-table tbody tr:hover {
+  background-color: #f0faf9;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #21a89a;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.action-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.action-icon:hover {
+  transform: scale(1.2);
+}
+
+/* 🎯 MOBILE ADAPTATION */
+@media (max-width: 768px) {
+  .user-table-section {
+    padding: 1rem;
+  }
+
+  .table-container {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .user-table {
+    font-size: 0.9rem;
+    min-width: 750px; /* Assure le scroll horizontal */
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 10px;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .action-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+.validate-btn {
+  background: linear-gradient(to right, #7cd858, #21a89a);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.validate-btn:hover {
+  background: linear-gradient(to right, #6cc248, #1b9489);
+  transform: scale(1.05);
+}

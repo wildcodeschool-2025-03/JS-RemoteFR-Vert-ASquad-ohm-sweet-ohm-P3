@@ -74,7 +74,8 @@ function Profile() {
         setCarSocket(data.car_socket);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error("Erreur dans fetch:", error);
         setLoading(false);
       });
   }, [authUser]);
@@ -101,7 +102,9 @@ function Profile() {
     if (selectedBrand) {
       axios
         .get(
-          `${import.meta.env.VITE_API_URL}/api/brands/${selectedBrand}/templates`,
+          `${
+            import.meta.env.VITE_API_URL
+          }/api/brands/${selectedBrand}/templates`,
         )
         .then((res) => setModels(res.data))
         .catch((err) => {
