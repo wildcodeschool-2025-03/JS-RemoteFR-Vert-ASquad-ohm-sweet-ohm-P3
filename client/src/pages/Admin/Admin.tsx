@@ -30,7 +30,6 @@ function AdminPage() {
     .then(() => toast("Fichier envoyé avec succès !"))
     .catch((error) => {
       console.error("Erreur:", error);
-      toast.error("Erreur lors de l'envoi");
     });
 
   return (

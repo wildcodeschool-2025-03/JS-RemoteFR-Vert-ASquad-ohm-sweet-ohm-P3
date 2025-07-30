@@ -88,11 +88,6 @@ const edit: RequestHandler = async (req, res, next) => {
       hashed_password: "",
     });
 
-    if (affectedRows === 0) {
-      res.status(404).json({ message: "Utilisateur introuvable" });
-      return;
-    }
-
     res.sendStatus(204);
   } catch (err) {
     next(err);
