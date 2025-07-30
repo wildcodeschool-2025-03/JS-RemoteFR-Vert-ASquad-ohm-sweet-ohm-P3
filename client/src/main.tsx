@@ -52,6 +52,7 @@ const ProtectedRoute: React.FC<ProtectedRoute> = ({
 import axios from "axios";
 import AdminPage from "./pages/Admin/Admin";
 import NewsPage from "./pages/NewsPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 axios.defaults.withCredentials = true;
 // Import additional components for new routes
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
       {
         path: "/actualités",
         element: <NewsPage />,
+      },
+      {
+        path: "/*",
+        element: <NotFoundPage />,
       },
       {
         path: "",
