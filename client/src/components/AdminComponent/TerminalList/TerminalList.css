@@ -1,0 +1,80 @@
+section {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #222;
+  text-align: center;
+}
+
+/* Conteneur scrollable pour la table */
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+/* Scroll stylisé */
+.table-container::-webkit-scrollbar {
+  width: 8px;
+}
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* Table générale */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+/* En-tête */
+thead {
+  background: linear-gradient(to right, #7cd858, #21a89a);
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+th,
+td {
+  padding: 14px 18px;
+  font-size: 1rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+/* Hover ligne */
+tbody tr:hover {
+  background-color: #f0faf9;
+}
+
+/* Centrage du bouton */
+.button-container {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  background-color: #21a89a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #188c82;
+}

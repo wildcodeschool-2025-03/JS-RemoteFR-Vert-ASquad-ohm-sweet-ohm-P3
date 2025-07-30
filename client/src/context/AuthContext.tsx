@@ -13,19 +13,33 @@ type UserContext = {
   profile_pic: string;
   car_brand: string;
   car_template: string;
+  car_socket: string;
   email: string;
   role_id: number;
 };
 
-type AuthContext = {
+type AuthContextType = {
   user: UserContext | null;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   isLoading: boolean;
+  userEdit: (
+    id: number,
+    firstname: string,
+    lastname: string,
+    birthdate: string,
+    car_brand: string,
+    car_template: string,
+    car_socket: string,
+    role_id: number,
+    profile_pic: string,
+    email: string,
+    password: string,
+  ) => Promise<boolean>;
 };
 
-const AuthContext = createContext<AuthContext | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 type AuthProviderProps = {
   children: ReactNode;
@@ -79,9 +93,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         },
       );
 
-      if (!response.ok) {
-        return false;
-      }
+      if (!response.ok) return false;
 
       const responseData = await response.json();
 
@@ -112,9 +124,67 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsAuthenticated(false);
   };
 
+  const userEdit = async (
+    id: number,
+    firstname: string,
+    lastname: string,
+    birthdate: string,
+    car_brand: string,
+    car_template: string,
+    car_socket: string,
+    role_id: number,
+    profile_pic: string,
+    email: string,
+    password: string,
+  ): Promise<boolean> => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            firstname,
+            lastname,
+            birthdate,
+            car_brand,
+            car_template,
+            car_socket,
+            role_id,
+            profile_pic,
+            email,
+            password,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        console.error("Échec de la mise à jour de l'utilisateur");
+        return false;
+      }
+
+      const responseData = await response.json();
+
+      if (responseData.user) {
+        setUser(responseData.user);
+        setIsAuthenticated(true);
+        return true;
+      }
+
+      console.error("Aucune donnée utilisateur dans la réponse");
+      return false;
+    } catch (err) {
+      console.error("Erreur dans userEdit:", err);
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, isAuthenticated, login, logout, isLoading }}
+      value={{ user, isAuthenticated, login, logout, isLoading, userEdit }}
     >
       {children}
     </AuthContext.Provider>
