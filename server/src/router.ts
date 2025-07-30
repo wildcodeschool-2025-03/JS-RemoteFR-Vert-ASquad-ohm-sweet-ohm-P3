@@ -41,7 +41,7 @@ import terminalAction from "./modules/terminal/terminalAction";
 
 router.get("/api/terminals", terminalAction.browseAll, terminalAction.browse);
 router.get("/api/terminals/:id", terminalAction.read);
-
+router.delete("/api/terminals/:id", verifyToken, terminalAction.destroy);
 /* ************************************************************************* */
 
 import brandAction from "./modules/vehicle/brand/brandAction";

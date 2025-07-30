@@ -1,6 +1,6 @@
 import databaseClient from "../../../database/client";
 
-import type { Rows } from "../../../database/client";
+import type { Result, Rows } from "../../../database/client";
 
 type Terminal = {
   id: number;
@@ -47,6 +47,14 @@ class TerminalRepository {
       [southLat, northLat, westLng, eastLng],
     );
     return rows as Terminal[];
+  }
+
+  async delete(id: number) {
+    const [result] = await databaseClient.query<Result>(
+      "delete FROM terminal WHERE id = ?",
+      [id],
+    );
+    return result.affectedRows;
   }
 }
 

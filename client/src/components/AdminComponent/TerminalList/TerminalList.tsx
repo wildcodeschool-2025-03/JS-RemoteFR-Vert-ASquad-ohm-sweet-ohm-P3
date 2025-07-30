@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAuth } from "../../../context/AuthContext";
 import "./TerminalList.css";
+import TerminalInfo from "../TerminalInfo/TerminalInfo";
 
 type Terminal = {
   id: number;
@@ -28,12 +30,13 @@ function TerminalList() {
 
     setIsFetching(true);
 
-    fetch(`${import.meta.env.VITE_API_URL}/api/terminals/`, {
-      headers: {
-        credentials: "include",
-      },
-    })
-      .then((res) => res.json())
+    fetch(`${import.meta.env.VITE_API_URL}/api/terminals/`, {})
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Erreur réseau");
+        }
+        return res.json();
+      })
       .then((data) => {
         setTerminals(data);
       })
@@ -41,7 +44,20 @@ function TerminalList() {
       .finally(() => setIsFetching(false));
   }, [isAuthenticated, isLoading]);
 
-  if (isLoading) return <p>Chargement utilisateur...</p>;
+  const handleDelete = (id: number) => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/terminals/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error();
+        setTerminals((prev) => prev.filter((u) => u.id !== id));
+        toast.success("Borne supprimé !");
+      })
+      .catch(() => toast.error("Erreur lors de la suppression"));
+  };
+
+  if (isLoading) return <p>Chargement de la borne...</p>;
   if (!isAuthenticated || user?.role_id !== 1) return null;
 
   return (
@@ -56,14 +72,16 @@ function TerminalList() {
             <tr>
               <th>Nom de la station</th>
               <th>Adresse</th>
+              <th>Actions</th>{" "}
             </tr>
           </thead>
           <tbody>
             {terminals.slice(0, visibleCount).map((t) => (
-              <tr key={t.id}>
-                <td>{t.nom_station}</td>
-                <td>{t.adresse_station}</td>
-              </tr>
+              <TerminalInfo
+                key={t.id}
+                nom_station={t}
+                onDelete={handleDelete}
+              />
             ))}
           </tbody>
         </table>
