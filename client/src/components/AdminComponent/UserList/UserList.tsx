@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../../../context/AuthContext";
@@ -18,27 +18,54 @@ export interface User {
   role_id: number;
 }
 
+export type Brand = {
+  id: number;
+  name: string;
+};
+
 function UserList() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>([]);
   const [editId, setEditId] = useState<number | null>(null);
   const [userEdit, setUserEdit] = useState<Partial<User> | null>(null);
+  const [brands, setBrands] = useState<Brand[]>([]);
+
+  const fetchBrands = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/brands`,
+      );
+      const data = await response.json();
+      setBrands(data);
+    } catch (error) {
+      console.error("Erreur lors du chargement des marques:", error);
+    }
+  }, []);
+
+  const fetchUsers = useCallback(async () => {
+    try {
+      fetch(`${import.meta.env.VITE_API_URL}/api/users/`, {
+        credentials: "include",
+      })
+        .then((res) => res.json())
+        .then((data) => setUsers(data))
+        .catch((error) => console.error("Erreur dans fetch:", error));
+    } catch (error) {
+      console.error("Erreur lors du chargement des marques:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchUsers();
+    fetchBrands();
+  }, [fetchBrands, fetchUsers]);
 
   useEffect(() => {
     if (!isLoading && (!isAuthenticated || user?.role_id !== 1)) {
       navigate("/");
     }
   }, [isLoading, isAuthenticated, user, navigate]);
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/users/`, {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error("Erreur dans fetch:", error));
-  }, []);
 
   const handleEdit = async () => {
     if (!userEdit || !userEdit.id) return;
@@ -63,7 +90,6 @@ function UserList() {
       const text = await response.text();
 
       if (!text) {
-        // Si le backend ne renvoie rien (204 No Content par exemple)
         toast.success("Utilisateur modifié !");
         setEditId(null);
         setUserEdit(null);
@@ -135,6 +161,7 @@ function UserList() {
                 setUserEdit={setUserEdit}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                brands={brands}
               />
             ))}
           </tbody>

@@ -1,7 +1,7 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 import "./UserInfo.css";
-import type { User } from "../UserList/UserList";
+import type { Brand, User } from "../UserList/UserList";
 
 interface Props {
   user: User;
@@ -11,18 +11,29 @@ interface Props {
   setUserEdit: (user: Partial<User> | null) => void;
   onEdit: () => void;
   onDelete: (id: number) => void;
+  brands: Brand[];
 }
-
-type Brand = {
-  id: number;
-  name: string;
-};
 
 type Model = {
   id: number;
   name: string;
   brand_id: number;
 };
+
+const MODELS_CACHE: { [key: number]: Model[] } = {};
+/**
+ * MODELS_CACHE = {
+ *  1: [{model}, {model}, {model}]
+ *  2: ....
+ *
+ * }
+ */
+
+function formatDate(dateString: string) {
+  if (!dateString) return "";
+  const parts = dateString.slice(0, 10).split("-");
+  return `${parts[2]}-${parts[1]}-${parts[0]}`;
+}
 
 const carSockets = ["Type 1", "Type 2", "Combo CCS", "CHAdeMO"];
 
@@ -34,49 +45,38 @@ const UsersInfo: React.FC<Props> = ({
   setUserEdit,
   onEdit,
   onDelete,
+  brands,
 }) => {
   const isEditing = editId === user.id;
-
-  const [brands, setBrands] = useState<Brand[]>([]);
   const [models, setModels] = useState<Model[]>([]);
-
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/brands`,
-        );
-        const data = await response.json();
-        setBrands(data);
-      } catch (error) {
-        console.error("Erreur lors du chargement des marques:", error);
-      }
-    };
-    fetchBrands();
-  }, []);
 
   useEffect(() => {
     const selectedBrand = brands.find((b) => b.name === userEdit?.car_brand);
     if (selectedBrand) {
-      const fetchModels = async () => {
-        try {
-          const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/api/brands/${
-              selectedBrand.id
-            }/templates`,
-          );
-          const data = await response.json();
-          setModels(data);
-        } catch (error) {
-          console.error("Erreur lors du chargement des modèles:", error);
-          setModels([]);
-        }
-      };
-      fetchModels();
+      if (MODELS_CACHE[selectedBrand.id]) {
+        setModels(MODELS_CACHE[selectedBrand.id]);
+      } else {
+        const fetchModels = async () => {
+          try {
+            const response = await fetch(
+              `${import.meta.env.VITE_API_URL}/api/brands/${
+                selectedBrand.id
+              }/templates`,
+            );
+            const data = await response.json();
+            MODELS_CACHE[selectedBrand.id] = data;
+            setModels(data);
+          } catch (error) {
+            console.error("Erreur lors du chargement des modèles:", error);
+            setModels([]);
+          }
+        };
+        fetchModels();
+      }
     } else {
       setModels([]);
     }
-  }, [userEdit?.car_brand, brands]);
+  }, [userEdit, brands]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -208,7 +208,7 @@ const UsersInfo: React.FC<Props> = ({
             onChange={handleChange}
           />
         ) : (
-          user.birthdate?.slice(0, 10)
+          formatDate(user.birthdate)
         )}
       </td>
 

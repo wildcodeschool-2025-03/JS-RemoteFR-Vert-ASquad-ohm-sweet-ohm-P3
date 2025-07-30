@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
@@ -96,13 +97,14 @@ class UserRepository {
       role_id,
     } = data;
 
+    const formattedDate = format(new Date(birthdate), "yyyy-MM-dd");
     const [result] = await databaseClient.query<Result>(
       "UPDATE user SET firstname = ?, lastname = ?, email = ?, birthdate = ?, profile_pic = ?, car_brand = ?, car_template = ?, car_socket = ?, role_id = ? WHERE id = ?",
       [
         firstname,
         lastname,
         email,
-        birthdate,
+        formattedDate,
         profile_pic,
         car_brand,
         car_template,

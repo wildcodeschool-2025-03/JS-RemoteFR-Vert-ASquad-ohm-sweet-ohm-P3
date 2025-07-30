@@ -29,13 +29,11 @@ function CarList() {
   }, [isLoading, isAuthenticated, user, navigate]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
     fetch(`${import.meta.env.VITE_API_URL}/api/brands/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        credentials: "include",
       },
     })
       .then((res) => res.json())
