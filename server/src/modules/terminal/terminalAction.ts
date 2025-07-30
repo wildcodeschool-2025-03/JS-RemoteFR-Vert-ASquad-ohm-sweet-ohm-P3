@@ -1,6 +1,14 @@
 import type { RequestHandler } from "express";
 import terminalRepository from "./terminalRepository";
 
+const browseAll: RequestHandler = async (req, res, next) => {
+  try {
+    const terminals = await terminalRepository.readAll();
+    res.json(terminals);
+  } catch (err) {
+    next(err);
+  }
+};
 const browse: RequestHandler = async (req, res, next) => {
   try {
     const bbox = req.query.bbox as string;
@@ -50,4 +58,4 @@ const read: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { browse, read };
+export default { browseAll, browse, read };

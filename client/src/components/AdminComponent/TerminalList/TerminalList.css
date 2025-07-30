@@ -1,72 +1,80 @@
-.UserTable {
+section {
   padding: 2rem;
   background-color: #f9f9f9;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Titre principal */
-.UserTable h2 {
+section h2 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
   color: #222;
   text-align: center;
 }
 
-/* Tableau des utilisateurs */
-.user-table {
+/* Conteneur scrollable pour la table */
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+/* Scroll stylisé */
+.table-container::-webkit-scrollbar {
+  width: 8px;
+}
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* Table générale */
+table {
   width: 100%;
   border-collapse: collapse;
-  border-radius: 12px;
-  overflow: hidden;
   background-color: #fff;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
 }
 
-/* En-tête du tableau */
-.user-table thead {
+/* En-tête */
+thead {
   background: linear-gradient(to right, #7cd858, #21a89a);
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
-.user-table th {
+th,
+td {
   padding: 14px 18px;
   font-size: 1rem;
-  font-weight: 600;
+  border-bottom: 1px solid #eee;
   text-align: left;
 }
 
-/* Cellules du tableau */
-.user-table td {
-  padding: 14px 18px;
-  font-size: 0.95rem;
-  color: #333;
-  border-bottom: 1px solid #eee;
-}
-
-/* Hover sur une ligne */
-.user-table tbody tr:hover {
+/* Hover ligne */
+tbody tr:hover {
   background-color: #f0faf9;
-  transition: background-color 0.3s ease;
 }
 
-/* Avatar */
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #21a89a;
-}
-.user-table-container {
-  max-height: 300px;
-  overflow-y: auto;
-  border-radius: 12px;
-}
-.user-table-container::-webkit-scrollbar {
-  width: 6px;
+/* Centrage du bouton */
+.button-container {
+  text-align: center;
+  margin-top: 1rem;
 }
 
-.user-table-container::-webkit-scrollbar-thumb {
-  background-color: #ccc;
+button {
+  padding: 0.6rem 1.2rem;
+  background-color: #21a89a;
+  color: white;
+  border: none;
   border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #188c82;
 }

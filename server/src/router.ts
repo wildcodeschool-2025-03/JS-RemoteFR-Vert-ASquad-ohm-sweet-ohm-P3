@@ -39,7 +39,7 @@ router.delete("/api/users/:id", verifyToken, userActions.destroy);
 /* ************************************************************************* */
 import terminalAction from "./modules/terminal/terminalAction";
 
-router.get("/api/terminals", terminalAction.browse);
+router.get("/api/terminals", terminalAction.browseAll, terminalAction.browse);
 router.get("/api/terminals/:id", terminalAction.read);
 
 /* ************************************************************************* */
