@@ -90,16 +90,21 @@ class UserRepository {
       car_socket,
     } = data;
 
+    const normalizedBirthdate =
+      birthdate && birthdate !== "" ? birthdate : null;
+
     await databaseClient.query(
-      "UPDATE user SET firstname = ?, lastname = ?, email = ?, birthdate = ?, car_brand = ?, car_template = ?, car_socket = ? WHERE id = ?",
+      `UPDATE user
+     SET firstname = ?, lastname = ?, email = ?, birthdate = ?, car_brand = ?, car_template = ?, car_socket = ?
+     WHERE id = ?`,
       [
-        firstname,
-        lastname,
-        email,
-        birthdate,
-        car_brand,
-        car_template,
-        car_socket,
+        firstname || null,
+        lastname || null,
+        email || null,
+        normalizedBirthdate,
+        car_brand || null,
+        car_template || null,
+        car_socket || null,
         id,
       ],
     );
