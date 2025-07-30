@@ -54,8 +54,6 @@ function Profile() {
       .get(`${import.meta.env.VITE_API_URL}/api/users/1`)
       .then((res) => {
         const data = res.data;
-
-        // On formate le birthdate pour qu'il soit compatible abev le input de type "date"
         const birthdate = data.birthdate
           ? new Date(data.birthdate).toISOString().split("T")[0]
           : "";
@@ -126,9 +124,6 @@ function Profile() {
         lastname,
         email,
         birthdate,
-        car_brand: carBrand,
-        car_template: carTemplate,
-        car_socket: carSocket,
         withCredentials: true,
       });
 
@@ -139,16 +134,15 @@ function Profile() {
         lastname,
         email,
         birthdate,
-        car_brand: carBrand,
-        car_template: carTemplate,
-        car_socket: carSocket,
       });
 
       // On affiche un message pour confirmer que tout s’est bien passé
-      alert("Profil mis à jour avec succès ! ✅");
+      alert(
+        "Vos informations personnelles ont été mises à jour avec succès ! ✅",
+      );
     } catch (err) {
       // Si erreur (ex: problème serveur), on affiche un message
-      alert("Erreur lors de la mise à jour.");
+      alert("Erreur lors de la mise à jour de vos informations personnelles.");
     }
   };
 
@@ -159,10 +153,6 @@ function Profile() {
 
     try {
       await axios.put(`${import.meta.env.VITE_API_URL}/api/users/1`, {
-        firstname,
-        lastname,
-        email,
-        birthdate,
         car_brand: carBrand,
         car_template: carTemplate,
         car_socket: carSocket,
@@ -179,7 +169,7 @@ function Profile() {
           : null,
       );
 
-      alert("Véhicule mis à jour avec succès !");
+      alert("Votre véhicule a été mis à jour avec succès ! ✅");
     } catch (err) {
       alert("Erreur lors de la mise à jour du véhicule.");
     }
@@ -226,136 +216,145 @@ function Profile() {
     setBirthdate(value);
   };
 
-  // Si les données sont encore en train de se charger, on affiche un message temporaire
   if (loading) {
     return <p>Chargement...</p>;
   }
 
-  // Si on n’a pas réussi à récupérer l'utilisateur, on affiche un message d’erreur
   if (!user) {
     return <p>Utilisateur introuvable.</p>;
   }
 
   return (
     <>
-      <main>
-        <div className="header1" />
+      <div className="profile-page">
+        <h1 className="titleProfile">Mon Profil</h1>
+        <div className="profile-form-container">
+          <div className="form-columns">
+            <div className="form-column">
+              <img
+                src={avatar}
+                alt="Avatar de l'utilisateur"
+                className="column-image"
+              />
+              <h2 className="userProfile">Mes informations personnelles</h2>
+              <form onSubmit={handleUpdate}>
+                {" "}
+                <div className="form-group">
+                  <label htmlFor="firstname">Prénom</label>
+                  <input
+                    id="firstname"
+                    type="text"
+                    value={firstname}
+                    onChange={handleFirstnameChange}
+                  />
+                  {firstnameError && (
+                    <span className="error">{firstnameError}</span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="lastname">Nom</label>
+                  <input
+                    id="lastname"
+                    type="text"
+                    value={lastname}
+                    onChange={handleLastnameChange}
+                  />
+                  {lastnameError && (
+                    <span className="error">{lastnameError}</span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                  />
+                  {emailError && <span className="error">{emailError}</span>}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="birthdate">Date de naissance</label>
+                  <input
+                    id="birthdate"
+                    type="date"
+                    value={birthdate}
+                    onChange={handleBirthdateChange}
+                  />
+                  {birthdateError && (
+                    <span className="error">{birthdateError}</span>
+                  )}
+                </div>
+                <button className="submit-btn" type="submit">
+                  Sauvegarder les informations
+                </button>
+              </form>
+            </div>
 
-        <div className="section1">
-          <div className="profil">
-            <h1>Profil</h1>
-            <div className="img-profil">
-              <img src={avatar} alt="Avatar" />
+            <div className="form-column">
+              <img src={voiture} alt="Voiture" className="column-image" />
+              <h2 className="carProfile">Mon véhicule</h2>
+              <form onSubmit={handleUpdateVehicle}>
+                {" "}
+                <div className="form-group">
+                  <label htmlFor="carBrand">Marque</label>
+                  <select
+                    id="carBrand"
+                    value={carBrand}
+                    onChange={(e) => {
+                      const brandName = e.target.value;
+                      setCarBrand(brandName);
+                      const brand = brands.find((b) => b.name === brandName);
+                      setSelectedBrand(brand?.id ?? null);
+                    }}
+                  >
+                    <option value="">--Sélectionnez une marque--</option>
+                    {brands.map((brand) => (
+                      <option key={brand.id} value={brand.name}>
+                        {brand.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="carTemplate">Modèle</label>
+                  <select
+                    id="carTemplate"
+                    value={carTemplate}
+                    onChange={(e) => setCarTemplate(e.target.value)}
+                  >
+                    <option value="">--Sélectionnez un modèle--</option>
+                    {models.map((model) => (
+                      <option key={model.id} value={model.name}>
+                        {model.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="carSocket">Type de prise</label>
+                  <select
+                    id="carSocket"
+                    value={carSocket}
+                    onChange={(e) => setCarSocket(e.target.value)}
+                  >
+                    <option value="">--Sélectionnez un type de prise--</option>
+                    <option value="Type 1">Type 1</option>
+                    <option value="Type 2">Type 2</option>
+                    <option value="CCS">CCS</option>
+                    <option value="CHAdeMO">CHAdeMO</option>
+                  </select>
+                </div>
+                <button className="submit-btn" type="submit">
+                  Sauvegarder le véhicule
+                </button>
+              </form>
             </div>
           </div>
-
-          <form className="form" onSubmit={handleUpdate}>
-            <label className="label-profil">
-              <p>Prenom</p>
-              <input
-                type="text"
-                value={firstname}
-                onChange={handleFirstnameChange}
-              />
-              {firstnameError && <p className="error">{firstnameError}</p>}
-            </label>
-
-            <label className="label-profil">
-              <p>Nom</p>
-              <input
-                type="text"
-                value={lastname}
-                onChange={handleLastnameChange}
-              />
-              {lastnameError && <p className="error">{lastnameError}</p>}
-            </label>
-
-            <label className="label-profil">
-              <p>Email</p>
-              <input type="email" value={email} onChange={handleEmailChange} />
-              {emailError && <p className="error">{emailError}</p>}
-            </label>
-
-            <label className="label-profil">
-              <p>Date de naissance</p>
-              <input
-                type="date"
-                value={birthdate}
-                onChange={handleBirthdateChange}
-              />
-              {birthdateError && <p className="error">{birthdateError}</p>}
-            </label>
-
-            <button className="btn-entrer" type="submit">
-              Sauvegarder
-            </button>
-          </form>
         </div>
 
-        <div className="section2">
-          <div className="profil2">
-            <div className="img-profil2">
-              <img src={voiture} alt="Voiture" />
-            </div>
-          </div>
-
-          <form className="form" onSubmit={handleUpdateVehicle}>
-            <div className="form-car">
-              <p>Marque</p>
-              <select
-                value={carBrand}
-                onChange={(e) => {
-                  const brandName = e.target.value;
-                  setCarBrand(brandName);
-                  const brand = brands.find((b) => b.name === brandName);
-                  setSelectedBrand(brand?.id ?? null);
-                }}
-              >
-                <option value="">--Sélectionnez une marque--</option>
-                {brands.map((brand) => (
-                  <option key={brand.id} value={brand.name}>
-                    {brand.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-car">
-              <p>Model</p>
-              <select
-                value={carTemplate}
-                onChange={(e) => setCarTemplate(e.target.value)}
-              >
-                <option value="">--Sélectionnez un modèle--</option>
-                {models.map((model) => (
-                  <option key={model.id} value={model.name}>
-                    {model.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-car">
-              <p>Type de prise</p>
-              <select
-                value={carSocket}
-                onChange={(e) => setCarSocket(e.target.value)}
-              >
-                <option value="">--Sélectionnez un type de prise--</option>
-                <option value="Type 1">Type 1</option>
-                <option value="Type 2">Type 2</option>
-                <option value="CCS">CCS</option>
-                <option value="CHAdeMO">CHAdeMO</option>
-              </select>
-            </div>
-
-            <button className="btn-entrer" type="submit">
-              Sauvegarder
-            </button>
-          </form>
-        </div>
-      </main>
-      <BookingHistory />
+        <BookingHistory />
+      </div>
     </>
   );
 }

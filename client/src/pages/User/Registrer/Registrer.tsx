@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "./register.css";
+import user from "../../../assets/images/avatar.jpg";
+import vehicle from "../../../assets/images/voiture.jpg";
 
 type FormData = {
   firstname: string;
@@ -133,109 +135,130 @@ function Register() {
         <h1 className="titleRegister">Formulaire d'inscription</h1>
         <div className="register-form-container">
           <form onSubmit={handleSubmit(handleForm)}>
-            <h2 className="userRegister">Utilisateur</h2>
-            <div className="formGroupContainer">
-              <div className="form-group">
-                <label htmlFor="firstname">Prénom</label>
-                <input
-                  {...register("firstname", {
-                    required: "Merci de remplir ce champ",
-                    minLength: {
-                      value: 4,
-                      message: "Le champ doit contenir au minimum 4 caractères",
-                    },
-                    maxLength: {
-                      value: 50,
-                      message:
-                        "Le champ doit contenir au maximum 50 caractères",
-                    },
-                  })}
-                  name="firstname"
-                  type="text"
-                  placeholder="John"
-                />
-                {errors.firstname && (
-                  <span className="error">{errors.firstname.message}</span>
-                )}
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="lastname">Nom</label>
-                <input
-                  {...register("lastname", {
-                    required: "Merci de remplir ce champ",
-                    minLength: {
-                      value: 4,
-                      message: "Le champ doit contenir au minimum 4 caractères",
-                    },
-                    maxLength: {
-                      value: 50,
-                      message:
-                        "Le champ doit contenir au maximum 50 caractères",
-                    },
-                  })}
-                  name="lastname"
-                  type="text"
-                  placeholder="Doe"
-                />
-                {errors.lastname && (
-                  <span className="error">{errors.lastname.message}</span>
-                )}
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-
-                <input
-                  {...register("email", {
-                    required: "Ce champ est requis",
-                    pattern: {
-                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: "Le format d'email n'est pas valide",
-                    },
-                  })}
-                  name="email"
-                  type="email"
-                  placeholder="john@doe.com"
-                />
-                {errors.email && (
-                  <span className="error">{errors.email.message}</span>
-                )}
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="password">Mot de passe</label>
-                <input
-                  {...register("password", {
-                    required: "Mot de passe requis",
-                  })}
-                  name="password"
-                  type="password"
-                  placeholder="Mot de passe"
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="password">Confirmez le mot de passe</label>
-                <input
-                  {...register("confirm_password", {
-                    validate: (value) =>
-                      value === password ||
-                      "Les mots de passe ne correspondent pas",
-                  })}
-                  name="confirm_password"
-                  type="password"
-                  placeholder="Confirmez le mot de passe"
-                />
-                {errors.confirm_password && (
-                  <span className="error">
-                    {errors.confirm_password.message}
-                  </span>
-                )}
-                <h2 className="carRegister">Votre véhicule</h2>
-
+            <div className="form-columns">
+              <div className="form-column">
+                <img
+                  src={user}
+                  alt="Icône utilisateur"
+                  className="column-image"
+                />{" "}
+                <h2 className="userRegister">Informations utilisateur</h2>
                 <div className="form-group">
-                  <label htmlFor="text">Marques</label>
+                  <label htmlFor="firstname">Prénom</label>
+                  <input
+                    {...register("firstname", {
+                      required: "Merci de remplir ce champ",
+                      minLength: {
+                        value: 4,
+                        message:
+                          "Le champ doit contenir au minimum 4 caractères",
+                      },
+                      maxLength: {
+                        value: 50,
+                        message:
+                          "Le champ doit contenir au maximum 50 caractères",
+                      },
+                    })}
+                    name="firstname"
+                    type="text"
+                    placeholder="John"
+                  />
+                  {errors.firstname && (
+                    <span className="error">{errors.firstname.message}</span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="lastname">Nom</label>
+                  <input
+                    {...register("lastname", {
+                      required: "Merci de remplir ce champ",
+                      minLength: {
+                        value: 4,
+                        message:
+                          "Le champ doit contenir au minimum 4 caractères",
+                      },
+                      maxLength: {
+                        value: 50,
+                        message:
+                          "Le champ doit contenir au maximum 50 caractères",
+                      },
+                    })}
+                    name="lastname"
+                    type="text"
+                    placeholder="Doe"
+                  />
+                  {errors.lastname && (
+                    <span className="error">{errors.lastname.message}</span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    {...register("email", {
+                      required: "Ce champ est requis",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Le format d'email n'est pas valide",
+                      },
+                    })}
+                    name="email"
+                    type="email"
+                    placeholder="john@doe.com"
+                  />
+                  {errors.email && (
+                    <span className="error">{errors.email.message}</span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password">Mot de passe</label>
+                  <input
+                    {...register("password", {
+                      required: "Mot de passe requis",
+                      pattern: {
+                        value: /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+                        message:
+                          "Le mot de passe doit contenir une majuscule, un chiffre, un caractère spécial et faire au moins 8 caractères",
+                      },
+                    })}
+                    name="password"
+                    type="password"
+                    placeholder="Mot de passe"
+                  />
+                  {errors.password && (
+                    <span className="error">{errors.password.message}</span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="confirm_password">
+                    Confirmez le mot de passe
+                  </label>
+                  <input
+                    {...register("confirm_password", {
+                      validate: (value) =>
+                        value === password ||
+                        "Les mots de passe ne correspondent pas",
+                    })}
+                    name="confirm_password"
+                    type="password"
+                    placeholder="Confirmez le mot de passe"
+                  />
+                  {errors.confirm_password && (
+                    <span className="error">
+                      {errors.confirm_password.message}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="form-column">
+                <img
+                  src={vehicle}
+                  alt="Icône véhicule"
+                  className="column-image"
+                />
+                <h2 className="carRegister">Informations véhicule</h2>
+                <div className="form-group">
+                  <label htmlFor="vehicle">Marque</label>
                   <select
                     {...register("vehicle", {
                       required: "Sélectionnez une marque",
@@ -253,10 +276,13 @@ function Register() {
                       </option>
                     ))}
                   </select>
+                  {errors.vehicle && (
+                    <span className="error">{errors.vehicle.message}</span>
+                  )}
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="text">Modèles</label>
+                  <label htmlFor="vehicle_user">Modèle</label>
                   <select
                     {...register("vehicle_user", {
                       required: "Sélectionnez un modèle",
@@ -269,25 +295,34 @@ function Register() {
                       </option>
                     ))}
                   </select>
+                  {errors.vehicle_user && (
+                    <span className="error">{errors.vehicle_user.message}</span>
+                  )}
                 </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="text">Type de prise</label>
-                <select
-                  {...register("vehicle_socket", {
-                    required: "Sélectionnez un type de prise",
-                  })}
-                >
-                  <option value="">--Sélectionnez un type de prise</option>
-                  <option value="Type 1">Type 1</option>
-                  <option value="Type 2">Type 2</option>
-                  <option value="CCS">CCS</option>
-                  <option value="CHAdeMO">CHAdeMO</option>
-                </select>
+
+                <div className="form-group">
+                  <label htmlFor="vehicle_socket">Type de prise</label>
+                  <select
+                    {...register("vehicle_socket", {
+                      required: "Sélectionnez un type de prise",
+                    })}
+                  >
+                    <option value="">--Sélectionnez un type de prise</option>
+                    <option value="Type 1">Type 1</option>
+                    <option value="Type 2">Type 2</option>
+                    <option value="CCS">CCS</option>
+                    <option value="CHAdeMO">CHAdeMO</option>
+                  </select>
+                  {errors.vehicle_socket && (
+                    <span className="error">
+                      {errors.vehicle_socket.message}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
             <button type="submit" className="submit-btn">
-              Create an account
+              Créer un compte
             </button>
           </form>
         </div>

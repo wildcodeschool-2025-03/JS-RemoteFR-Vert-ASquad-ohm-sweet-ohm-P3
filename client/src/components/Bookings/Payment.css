@@ -124,6 +124,8 @@ select:invalid {
 }
 
 .summary-address p {
+  padding-top: 2rem;
+  text-align: center;
   margin: 0.3rem 0;
   font-size: 0.9rem;
 }

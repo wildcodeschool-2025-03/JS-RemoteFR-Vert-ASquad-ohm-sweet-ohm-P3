@@ -1,40 +1,159 @@
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/inter/Inter_24pt-Bold.ttf") format("ttf");
+}
+
 .booking-history {
-  margin: 2rem;
-  font-family: Arial, sans-serif;
+  margin: 2rem auto;
+  font-family: "Inter", sans-serif;
+  max-width: 900px;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .booking-history h2 {
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #292929;
+  margin-bottom: 1.5rem;
   text-align: center;
-  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
 }
 
 .booking-history table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 1.5rem;
 }
 
 .booking-history th,
 .booking-history td {
-  border: 1px solid #ddd;
-  padding: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 12px 15px;
   text-align: left;
+  font-size: 1rem;
+  color: #333;
 }
 
 .booking-history th {
   background-color: #f8f8f8;
+  font-weight: bold;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.booking-history tr:nth-child(even) {
+  background-color: #fcfcfc;
+}
+
+.booking-history tr:hover {
+  background-color: #f0f0f0;
 }
 
 .btn-delete {
-  padding: 6px 12px;
+  padding: 8px 15px;
   background-color: #e74c3c;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s
+    ease;
+  font-weight: bold;
+  font-size: 0.95rem;
 }
 
 .btn-delete:hover {
   background-color: #c0392b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-delete:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.booking-history p {
+  text-align: center;
+  color: #555;
+  font-size: 1.1rem;
+  padding: 1rem;
+}
+
+.error-message {
+  color: #e53935;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .booking-history table,
+  .booking-history thead,
+  .booking-history tbody,
+  .booking-history th,
+  .booking-history td,
+  .booking-history tr {
+    display: block;
+  }
+
+  .booking-history thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .booking-history tr {
+    border: 1px solid #e0e0e0;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  }
+
+  .booking-history td {
+    border: none;
+    border-bottom: 1px solid #f0f0f0;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+    word-wrap: break-word;
+    font-size: 1rem;
+  }
+
+  .booking-history td:last-child {
+    border-bottom: 0;
+  }
+
+  .booking-history td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    padding-left: 0;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: #555;
+    box-sizing: border-box;
+    font-size: 1rem;
+  }
+
+  .booking-history td:last-of-type {
+    text-align: center;
+    padding-bottom: 15px;
+  }
+
+  .booking-history td .btn-delete {
+    width: auto;
+    max-width: 180px;
+    margin: 10px auto 0;
+    display: block;
+  }
 }
