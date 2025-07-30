@@ -28,11 +28,9 @@ function TerminalList() {
 
     setIsFetching(true);
 
-    const token = localStorage.getItem("token");
-
     fetch(`${import.meta.env.VITE_API_URL}/api/terminals/`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        credentials: "include",
       },
     })
       .then((res) => res.json())
