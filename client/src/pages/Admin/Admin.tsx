@@ -5,9 +5,9 @@ import "./Admin.css";
 import { useForm } from "react-hook-form";
 
 import { toast } from "react-toastify";
+import TerminalList from "../../components/AdminComponent/TerminalList/TerminalList";
 import UserList from "../../components/AdminComponent/UserList/UserList";
 import Dropcsv from "../../components/Drop/Dropcsv";
-import TerminalList from "../../components/TerminalList/TerminalList";
 
 type ClassFormFields = {
   csv: string;
