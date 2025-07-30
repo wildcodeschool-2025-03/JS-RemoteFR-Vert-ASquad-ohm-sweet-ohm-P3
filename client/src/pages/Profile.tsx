@@ -125,13 +125,13 @@ function Profile() {
       await axios.put(
         `${import.meta.env.VITE_API_URL}/api/users/${authUser.id}`,
         {
-          firstname,
-          lastname,
-          email,
-          birthdate,
-          car_brand: carBrand,
-          car_template: carTemplate,
-          car_socket: carSocket,
+          firstname: firstname || null,
+          lastname: lastname || null,
+          email: email || null,
+          birthdate: birthdate || null,
+          car_brand: carBrand || null,
+          car_template: carTemplate || null,
+          car_socket: carSocket || null,
         },
         { withCredentials: true },
       );
@@ -152,8 +152,7 @@ function Profile() {
       );
 
       alert("Profil mis à jour avec succès ! ✅");
-    } catch (err) {
-      console.error("Erreur lors de la mise à jour :", err);
+    } catch (err: unknown) {
       alert("Erreur lors de la mise à jour.");
     }
   };
@@ -207,7 +206,7 @@ function Profile() {
   const handleLastnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLastnameError(
-      value.length > 15 ? "Le nom ne doit pas dépasser 15 caractères." : "",
+      value.length > 35 ? "Le nom ne doit pas dépasser 35 caractères." : "",
     );
     setLastname(value);
   };
@@ -222,11 +221,24 @@ function Profile() {
 
   const handleBirthdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setBirthdateError(
-      new Date(value) >= new Date("2025-01-01")
-        ? "La date de naissance doit être avant 2025."
-        : "",
+    const birthDate = new Date(value);
+    const today = new Date();
+    const minDate = new Date(
+      today.getFullYear() - 18,
+      today.getMonth(),
+      today.getDate(),
     );
+
+    if (!value) {
+      setBirthdateError("");
+    } else if (birthDate > today) {
+      setBirthdateError("La date de naissance ne peut pas être dans le futur.");
+    } else if (birthDate > minDate) {
+      setBirthdateError("Vous devez avoir au moins 18 ans.");
+    } else {
+      setBirthdateError("");
+    }
+
     setBirthdate(value);
   };
 
