@@ -80,7 +80,7 @@ const update: RequestHandler = async (req, res, next) => {
       car_socket,
     });
 
-    res.sendStatus;
+    res.sendStatus(204);
   } catch (err) {
     next(err);
   }
