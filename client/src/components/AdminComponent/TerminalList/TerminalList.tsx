@@ -12,8 +12,10 @@ type Terminal = {
 function TerminalList() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
-  const [terminal, setTerminal] = useState<Terminal[]>([]);
-  const [loading, setLoading] = useState(true);
+
+  const [terminals, setTerminals] = useState<Terminal[]>([]);
+  const [visibleCount, setVisibleCount] = useState(10);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     if (!isLoading && (!isAuthenticated || user?.role_id !== 1)) {
@@ -22,32 +24,36 @@ function TerminalList() {
   }, [isLoading, isAuthenticated, user, navigate]);
 
   useEffect(() => {
+    if (!isAuthenticated || isLoading) return;
+
+    setIsFetching(true);
+
+    const token = localStorage.getItem("token");
+
     fetch(`${import.meta.env.VITE_API_URL}/api/terminals/`, {
-      method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        credential: "includes",
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
       .then((data) => {
-        setTerminal(data);
-        setLoading(false);
+        setTerminals(data);
       })
-      .catch((error) => {
-        console.error("Erreur dans fetch:", error);
-        setLoading(false);
-      });
-  }, []);
+      .catch((err) => console.error("Erreur :", err))
+      .finally(() => setIsFetching(false));
+  }, [isAuthenticated, isLoading]);
 
-  if (isLoading || loading) return <div>Chargement...</div>;
+  if (isLoading) return <p>Chargement utilisateur...</p>;
   if (!isAuthenticated || user?.role_id !== 1) return null;
 
   return (
-    <section className="user-table-section">
+    <section>
       <h2>Liste des bornes</h2>
-      <div className="user-table-container">
-        <table className="user-table">
+
+      {isFetching && <p>Chargement des bornes...</p>}
+
+      <div className="table-container">
+        <table>
           <thead>
             <tr>
               <th>Nom de la station</th>
@@ -55,7 +61,7 @@ function TerminalList() {
             </tr>
           </thead>
           <tbody>
-            {terminal.map((t) => (
+            {terminals.slice(0, visibleCount).map((t) => (
               <tr key={t.id}>
                 <td>{t.nom_station}</td>
                 <td>{t.adresse_station}</td>
@@ -64,6 +70,17 @@ function TerminalList() {
           </tbody>
         </table>
       </div>
+
+      {!isFetching && visibleCount < terminals.length && (
+        <div className="button-container">
+          <button
+            type="button"
+            onClick={() => setVisibleCount(visibleCount + 10)}
+          >
+            Charger plus
+          </button>
+        </div>
+      )}
     </section>
   );
 }
