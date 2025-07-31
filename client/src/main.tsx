@@ -1,13 +1,60 @@
 // Import necessary modules from React and React Router
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router";
+import {
+  Navigate,
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
 /* ************************************************************************* */
 
 // Import the main app component
 import App from "./App";
+import Bookings from "./pages/Booking/Bookings";
+import Contact from "./pages/ContactPage";
+import HomePage from "./pages/HomePage";
+import MapPage from "./pages/MapPage";
+import Profile from "./pages/Profile";
+import Login from "./pages/User/Login/Login";
+import Register from "./pages/User/Registrer/Registrer";
 
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import ReviewForm from "./pages/ReviewForm/ReviewForm";
+
+type ProtectedRoute = {
+  children?: React.ReactNode;
+  requiredRole: number;
+};
+
+const ProtectedRoute: React.FC<ProtectedRoute> = ({
+  children,
+  requiredRole,
+}) => {
+  const { isAuthenticated, user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Vérification de la session...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (requiredRole !== undefined && user?.role_id !== requiredRole) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children ? <>{children}</> : <Outlet />;
+};
+
+import axios from "axios";
+import AdminPage from "./pages/Admin/Admin";
+import NewsPage from "./pages/NewsPage";
+import NotFoundPage from "./pages/NotFoundPage";
+
+axios.defaults.withCredentials = true;
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
 
@@ -18,14 +65,77 @@ import App from "./App";
 
 // Create router configuration with routes
 // You can add more routes as you build out your app!
+
 const router = createBrowserRouter([
   {
-    path: "/", // The root path
-    element: <App />, // Renders the App component for the home page
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "/inscription",
+        element: <Register />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/actualités",
+        element: <NewsPage />,
+      },
+      {
+        path: "/*",
+        element: <NotFoundPage />,
+      },
+      {
+        path: "",
+        element: <ProtectedRoute requiredRole={2} />,
+        children: [
+          {
+            path: "maps",
+            element: <MapPage />,
+          },
+          {
+            path: "bookings",
+            element: <Bookings />,
+          },
+          {
+            path: "bookings/:id",
+            element: <Bookings />,
+          },
+          {
+            path: "profil",
+            element: <Profile />,
+          },
+          {
+            path: "profil",
+            element: <Profile />,
+          },
+          {
+            path: "review/",
+            element: <ReviewForm />,
+          },
+        ],
+      },
+      {
+        path: "/admin",
+        element: (
+          <ProtectedRoute requiredRole={1}>
+            <AdminPage />
+          </ProtectedRoute>
+        ),
+      },
+    ],
   },
   // Try adding a new route! For example, "/about" with an About component
 ]);
-
 /* ************************************************************************* */
 
 // Find the root element in the HTML document
@@ -37,7 +147,9 @@ if (rootElement == null) {
 // Render the app inside the root element
 createRoot(rootElement).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 );
 

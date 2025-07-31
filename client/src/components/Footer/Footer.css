@@ -1,0 +1,127 @@
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/inter/Inter_24pt-Bold.ttf") format("ttf");
+}
+
+footer {
+  background-color: #1f2a2d;
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+.ListFooter li a,
+.ListFooter li {
+  color: white;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.ListFooter li a::after,
+.ListFooter li::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.ListFooter li a:hover::after,
+.ListFooter li:hover::after {
+  width: 100%;
+}
+
+.ListFooter li {
+  transition: transform 0.3s ease;
+}
+
+.ListFooter li:hover {
+  transform: scale(1.05);
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .ListFooter {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    gap: 1rem;
+  }
+  .StorePicture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .StoreBadge {
+    height: 60px;
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  .ListFooter {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 1rem 3rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .StorePicture {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    order: -1;
+  }
+
+  .ListFooter a {
+    text-decoration-color: transparent;
+    color: white;
+  }
+
+  .ListFooter li a {
+    color: white;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .ListFooter li a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -4px;
+    background-color: white;
+    transition: width 0.3s ease;
+  }
+
+  .ListFooter li a:hover::after {
+    width: 100%;
+  }
+}

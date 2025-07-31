@@ -1,7 +1,7 @@
 // Load the express module to create a web application
 
+import cookieParser from "cookie-parser";
 import express from "express";
-
 const app = express();
 
 // Configure it
@@ -21,7 +21,14 @@ const app = express();
 import cors from "cors";
 
 if (process.env.CLIENT_URL != null) {
-  app.use(cors({ origin: [process.env.CLIENT_URL] }));
+  app.use(
+    cors({
+      origin: [process.env.CLIENT_URL],
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+    }),
+  );
 }
 
 // If you need to allow extra origins, you can add something like this:
@@ -52,10 +59,20 @@ app.use(
 
 // Uncomment one or more of these options depending on the format of the data sent by your client:
 
-// app.use(express.json());
+app.use(express.json());
+app.use(cookieParser());
+app.get("/me", (req, res) => {
+  const token = req.cookies.token; // <- ici on récupère le cookie "token"
+  if (token) {
+    // vérifier sa validité, etc.
+    res.send({ loggedIn: true });
+  } else {
+    res.send({ loggedIn: false });
+  }
+});
 // app.use(express.urlencoded());
 // app.use(express.text());
-// app.use(express.raw());
+//app.use(express.raw());
 
 /* ************************************************************************* */
 

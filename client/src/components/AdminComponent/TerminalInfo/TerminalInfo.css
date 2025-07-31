@@ -1,0 +1,31 @@
+/* TerminalInfo.css */
+td {
+  padding: 0.5rem;
+  text-align: left;
+}
+
+/* Affiche bien le bouton */
+.delete-button {
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  color: red;
+}
+/* TerminalList.css */
+
+.table-container {
+  width: 100%;
+  overflow-x: auto; /* 👈 Scroll horizontal */
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-container table {
+  width: 100%;
+  min-width: 600px; /* 👈 Forcer scroll si écran trop petit */
+  border-collapse: collapse;
+  border-spacing: 0;
+}

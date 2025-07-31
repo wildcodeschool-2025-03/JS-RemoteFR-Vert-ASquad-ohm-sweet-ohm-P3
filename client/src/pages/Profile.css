@@ -1,0 +1,209 @@
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/inter/Inter_24pt-Bold.ttf") format("ttf");
+}
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  background-color: #e9e9e9;
+  font-family: "Inter", sans-serif;
+  min-height: calc(
+    100vh -
+    var(--header-height, 0px) -
+    var(--footer-height, 0px)
+  );
+  justify-content: center;
+}
+
+.titleProfile {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #292929;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.profile-form-container {
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.form-columns {
+  display: flex;
+  gap: 5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  align-items: stretch;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+.form-column {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.column-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  border: 3px solid #7cd858;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.userProfile,
+.carProfile {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #292929;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+  margin-top: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: #1e293b;
+  text-align: left;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-family: "Inter", sans-serif;
+  outline-color: #7cd858;
+}
+
+.error {
+  color: #e53935;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+  font-family: "Inter", sans-serif;
+  text-align: left;
+}
+
+.profile-page .submit-btn {
+  width: 100%;
+  max-width: 250px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  background: linear-gradient(270deg, #7cd858 1.35%, #21a89a 101.35%);
+  color: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  letter-spacing: 0.5px;
+}
+
+.profile-page .submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.profile-page .submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.form-column > form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex-grow: 1;
+}
+
+@media (min-width: 769px) {
+  .form-column > form .submit-btn {
+    margin-top: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-form-container {
+    padding: 1.5rem;
+  }
+
+  .titleProfile {
+    font-size: 1.8rem;
+  }
+
+  .userProfile,
+  .carProfile {
+    font-size: 1.3rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group label {
+    font-size: 1rem;
+  }
+
+  .form-columns {
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    padding: 0;
+  }
+
+  .form-column {
+    min-width: unset;
+    width: 100%;
+    flex-grow: unset;
+  }
+
+  .column-image {
+    margin-bottom: 0.5rem;
+  }
+
+  .userProfile,
+  .carProfile {
+    margin-top: 1.5rem;
+  }
+
+  .profile-page .submit-btn {
+    max-width: 100%;
+    margin-top: 2rem;
+  }
+
+  .form-column > form {
+    flex-grow: unset;
+    padding-bottom: 2rem;
+  }
+}
