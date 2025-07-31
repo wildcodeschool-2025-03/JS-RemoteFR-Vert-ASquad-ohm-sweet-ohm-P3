@@ -3,6 +3,10 @@
   src: url("./assets/fonts/inter/Inter_24pt-Bold.ttf") format("ttf");
 }
 
+.Toastify:empty {
+  display: none;
+}
+
 .login-container {
   display: flex;
   flex-direction: column;
@@ -26,6 +30,10 @@
   padding: 2rem;
   background-color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.login-form {
+  max-width: 400px;
 }
 
 .form-group {

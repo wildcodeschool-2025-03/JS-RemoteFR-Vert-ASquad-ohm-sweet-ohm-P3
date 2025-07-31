@@ -42,7 +42,7 @@ function MapContainers() {
     const southWestLng = mapLimit.getSouthWest().lng;
 
     const bbox = `${southWestLng},${southWestLat},${northEastLng},${northEastLat}`;
-    const apiUrl = `${import.meta.env.VITE_API_URL}/api/terminals?bbox=${bbox}`;
+    const apiUrl = `${import.meta.env.VITE_API_URL}/api/terminalsformap?bbox=${bbox}`;
 
     fetch(apiUrl)
       .then((res) => {

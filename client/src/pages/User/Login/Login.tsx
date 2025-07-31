@@ -49,7 +49,7 @@ function Login() {
         transition={Bounce}
       />
       <div className="login-box">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="login-form">
           <div className="form-group">
             <label className="form-label" htmlFor="email">
               Email
